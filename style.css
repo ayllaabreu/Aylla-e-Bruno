@@ -1728,3 +1728,276 @@ button:focus-visible {
   .tl-date { font-size: 7px; }
   .tl-content { padding: 18px 16px; max-height: 340px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   DESIGN REFINEMENT — v5
+   UX/Frontend audit completo · todos os defeitos identificados
+   ══════════════════════════════════════════════════════════════ */
+
+/* ─── 1. TOKENS DE DESIGN — base de todos os cards ─────────── */
+:root {
+  --card:        #0D1119;          /* fundo de card — visível sobre --bg */
+  --card-alt:    #0F1420;          /* variante ligeiramente mais clara */
+  --border-card: rgba(189,147,249,.22);
+  --depth:       0 2px 6px rgba(0,0,0,.6),
+                 0 8px 28px rgba(0,0,0,.4),
+                 inset 0 1px 0 rgba(255,255,255,.045);
+  --depth-hover: 0 4px 12px rgba(0,0,0,.65),
+                 0 16px 48px rgba(0,0,0,.45),
+                 inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* ─── 2. HERO STAT CARDS — presença real ───────────────────── */
+.hstat.s1 {
+  background: var(--card) !important;
+  border-color: rgba(255,121,198,.26) !important;
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,121,198,.75),
+    var(--depth) !important;
+}
+.hstat.s2 {
+  background: var(--card) !important;
+  border-color: rgba(189,147,249,.26) !important;
+  box-shadow:
+    inset 0 2.5px 0 rgba(189,147,249,.8),
+    var(--depth) !important;
+}
+.hstat.s3 {
+  background: var(--card) !important;
+  border-color: rgba(80,250,123,.22) !important;
+  box-shadow:
+    inset 0 2.5px 0 rgba(80,250,123,.65),
+    var(--depth) !important;
+}
+.hstat.s1:hover {
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,121,198,.9),
+    var(--depth-hover),
+    0 0 48px rgba(255,121,198,.1) !important;
+}
+.hstat.s2:hover {
+  box-shadow:
+    inset 0 2.5px 0 rgba(189,147,249,.9),
+    var(--depth-hover),
+    0 0 48px rgba(189,147,249,.1) !important;
+}
+.hstat.s3:hover {
+  box-shadow:
+    inset 0 2.5px 0 rgba(80,250,123,.8),
+    var(--depth-hover),
+    0 0 44px rgba(80,250,123,.07) !important;
+}
+
+/* ─── 3. CONFLICT PANELS — Aylla (roxo) · Bruno (verde) ────── */
+.panel {
+  background: var(--card) !important;
+  box-shadow: var(--depth) !important;
+  transition: border-color .35s, box-shadow .35s, transform .35s cubic-bezier(.4,0,.2,1) !important;
+}
+.panel.lft {
+  border-color: rgba(189,147,249,.28) !important;
+  background: linear-gradient(150deg,
+    rgba(189,147,249,.055) 0%,
+    var(--card) 55%) !important;
+  box-shadow:
+    var(--depth),
+    0 0 44px rgba(189,147,249,.05) !important;
+}
+.panel:not(.lft) {
+  border-color: rgba(80,250,123,.24) !important;
+  background: linear-gradient(150deg,
+    rgba(80,250,123,.04) 0%,
+    var(--card) 55%) !important;
+  box-shadow:
+    var(--depth),
+    0 0 44px rgba(80,250,123,.04) !important;
+}
+.panel.lft:hover {
+  border-color: rgba(189,147,249,.48) !important;
+  box-shadow: var(--depth-hover), 0 0 60px rgba(189,147,249,.07) !important;
+}
+.panel:not(.lft):hover {
+  border-color: rgba(80,250,123,.4) !important;
+  box-shadow: var(--depth-hover), 0 0 56px rgba(80,250,123,.06) !important;
+}
+
+/* ─── 4. TIMELINE PANEL — destaque nítido ──────────────────── */
+.tl-panel {
+  background: var(--card) !important;
+  border-color: rgba(189,147,249,.26) !important;
+  box-shadow: var(--depth) !important;
+}
+.tl-content {
+  background: transparent !important;
+}
+/* accent superior colorido por nó ativo */
+#cn1.active  { border-top: 2px solid #9D90E0 !important; }
+#cn2.active  { border-top: 2px solid #B89ED8 !important; }
+#cn3.active  { border-top: 2px solid #C8A0C8 !important; }
+#cnSad.active { border-top: 2px solid rgba(139,148,158,.5) !important; }
+#cn4.active  { border-top: 2px solid #D4A0B4 !important; }
+#cn5.active  { border-top: 2px solid #D880A8 !important; }
+#cn6.active  { border-top: 2px solid #6DC49A !important; }
+
+/* ─── 5. TERMINAL FOREVER — card sólido ────────────────────── */
+.tw {
+  background: #0A0E17 !important;
+  border-color: rgba(189,147,249,.26) !important;
+  box-shadow:
+    var(--depth),
+    0 0 60px rgba(189,147,249,.045) !important;
+}
+.tw:hover {
+  border-color: rgba(189,147,249,.42) !important;
+  box-shadow:
+    var(--depth-hover),
+    0 0 80px rgba(189,147,249,.07) !important;
+}
+
+/* ─── 6. TICKET / PR CARD — elevação premium ───────────────── */
+.prc {
+  background: var(--card) !important;
+  border-color: rgba(189,147,249,.24) !important;
+  box-shadow:
+    var(--depth),
+    0 0 80px rgba(189,147,249,.045) !important;
+}
+.prc:hover {
+  box-shadow:
+    var(--depth-hover),
+    0 0 100px rgba(189,147,249,.07) !important;
+}
+.pr-topbar {
+  background: rgba(255,255,255,.03) !important;
+  border-bottom-color: rgba(189,147,249,.16) !important;
+}
+.pr-metric {
+  background: rgba(9,12,19,.9) !important;
+}
+.pr-metrics {
+  background: rgba(189,147,249,.14) !important;
+}
+
+/* ─── 7. REVIEWER CARDS + EMAIL BOXES ──────────────────────── */
+.rv {
+  background: var(--card) !important;
+  border-color: rgba(189,147,249,.22) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03) !important;
+  transition: border-color .25s, box-shadow .25s !important;
+}
+.rv:hover {
+  border-color: rgba(189,147,249,.38) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+.ebox {
+  background: var(--card) !important;
+  border-color: rgba(189,147,249,.2) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.03) !important;
+}
+.ebox.green {
+  border-color: rgba(80,250,123,.25) !important;
+  background: linear-gradient(180deg,
+    rgba(80,250,123,.02) 0%,
+    var(--card) 40%) !important;
+}
+.ehdr {
+  background: rgba(255,255,255,.025) !important;
+}
+
+/* ─── 8. GIT TERMINAL INLINE — consistência ────────────────── */
+.gtw {
+  box-shadow:
+    var(--depth),
+    0 0 60px rgba(80,250,123,.06) !important;
+}
+
+/* ─── 9. SEÇÕES — atmosfera por capítulo ───────────────────── */
+#conflict {
+  background: radial-gradient(
+    ellipse 70% 55% at 5% 50%,
+    rgba(189,147,249,.028) 0%,
+    transparent 65%) !important;
+}
+#timeline {
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 20%,
+    rgba(157,144,224,.022) 0%,
+    transparent 65%) !important;
+}
+#ticket {
+  background: radial-gradient(
+    ellipse 55% 55% at 50% 50%,
+    rgba(80,250,123,.016) 0%,
+    transparent 60%) !important;
+}
+#memories {
+  background: radial-gradient(
+    ellipse 60% 45% at 95% 55%,
+    rgba(255,121,198,.022) 0%,
+    transparent 65%) !important;
+}
+#forever {
+  background: radial-gradient(
+    ellipse 55% 50% at 50% 65%,
+    rgba(80,250,123,.02) 0%,
+    transparent 60%) !important;
+}
+
+/* ─── 10. DIVISORES ENTRE SEÇÕES — mais visíveis ───────────── */
+.sec + .sec::before {
+  background: linear-gradient(
+    90deg,
+    transparent            0%,
+    rgba(189,147,249,.22) 15%,
+    rgba(255,121,198,.30) 42%,
+    rgba(139,233,253,.22) 60%,
+    rgba(80,250,123,.18)  82%,
+    transparent           100%
+  ) !important;
+  height: 1px !important;
+}
+
+/* ─── 11. SLABEL — hierarquia mais clara ───────────────────── */
+.slabel {
+  color: rgba(139,148,158,.8) !important;
+}
+
+/* ─── 12. BENTO GRID — tall cards sem aspect-ratio fixo ────── */
+.bi:nth-child(1),
+.bi:nth-child(2),
+.bi:nth-child(8),
+.bi:nth-child(9),
+.bi:nth-child(10),
+.bi:nth-child(11) {
+  aspect-ratio: unset !important;
+}
+/* itens 9 e 11 → retângulos altos (2 linhas) */
+.bi:nth-child(9)  { grid-column: 3; grid-row: 4/6 !important; }
+.bi:nth-child(11) { grid-column: 6; grid-row: 4/6 !important; }
+/* esconde 12 e ghost */
+.bi:nth-child(12), .bi.bi-ghost { display: none !important; }
+
+/* ─── 13. SPACING — título com fôlego coerente ─────────────── */
+#conflict .stitle,
+#timeline .stitle { margin-bottom: 48px; }
+#ticket   .stitle { margin-bottom: 40px; }
+#forever  .stitle { margin-bottom: 40px; }
+
+/* ─── 14. MODAL FRAME — glow mais intenso ──────────────────── */
+.mph {
+  background: var(--card) !important;
+  border-color: rgba(255,121,198,.3) !important;
+  box-shadow:
+    0 0 80px rgba(255,121,198,.2),
+    0 0 160px rgba(189,147,249,.12),
+    inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+/* ─── 15. INLINE TERM — padding topo após título ───────────── */
+.inline-term { margin-top: 8px; }
+
+/* ─── 16. RESPONSIVO — ajuste de cards em mobile ───────────── */
+@media (max-width: 640px) {
+  .hstat { box-shadow: inset 0 2.5px 0 currentColor, 0 2px 8px rgba(0,0,0,.5) !important; }
+  .panel.lft, .panel:not(.lft) { border-color: var(--border-card) !important; }
+}
