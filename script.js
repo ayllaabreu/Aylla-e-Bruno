@@ -60,12 +60,22 @@ var currentChapter = 'index';
 window.go = function(id){ showChapter(id); };
 
 function showChapter(id){
+  /* direction-based enter animation */
+  var prevIdx = CHAPTERS.indexOf(currentChapter);
+  var nextIdx = CHAPTERS.indexOf(id);
+  var dir = nextIdx > prevIdx ? 'right' : 'left';
+
   document.querySelectorAll('.sec').forEach(function(s){
-    s.classList.remove('ch-active','visible');
+    s.classList.remove('ch-active','visible','ch-enter-right','ch-enter-left');
   });
   var el = document.getElementById(id);
   if(!el) return;
-  el.classList.add('ch-active');
+  /* set entry direction, then activate on next frame for transition to work */
+  el.classList.add(dir === 'right' ? 'ch-enter-right' : 'ch-enter-left');
+  requestAnimationFrame(function(){
+    el.classList.remove('ch-enter-right','ch-enter-left');
+    el.classList.add('ch-active');
+  });
   el.scrollTop = 0;
   currentChapter = id;
   document.getElementById('sbar').style.width = '0%';
@@ -86,6 +96,7 @@ function showChapter(id){
     animateCounter(document.getElementById('cM'), days(TICKET));
   }, 350); }
   if(id === 'timeline'){ el.classList.add('tl-visible'); }
+  if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
   if(id === 'ticket'){
     setTimeout(function(){
       var m = document.querySelector('.pr-metrics');
@@ -123,12 +134,17 @@ function updateNavButtons(){
 
 window.prevChapter = function(){
   var idx = CHAPTERS.indexOf(currentChapter);
-  if(idx > 0) showChapter(CHAPTERS[idx-1]);
+  if(idx > 0){ hideSwipeHint(); showChapter(CHAPTERS[idx-1]); }
 };
 window.nextChapter = function(){
   var idx = CHAPTERS.indexOf(currentChapter);
-  if(idx < CHAPTERS.length-1) showChapter(CHAPTERS[idx+1]);
+  if(idx < CHAPTERS.length-1){ hideSwipeHint(); showChapter(CHAPTERS[idx+1]); }
 };
+
+function hideSwipeHint(){
+  var hint = document.getElementById('swipe-hint');
+  if(hint){ hint.classList.remove('hint-show'); hint.classList.add('hint-hide'); }
+}
 
 /* keyboard navigation: ← → */
 document.addEventListener('keydown', function(e){
@@ -249,33 +265,35 @@ function typeNext(){
 }
 setTimeout(typeNext, 900);
 
-/* ── TERMINAL intro typewriter ── */
-(function initTerminal(){
+/* ── TERMINAL intro typewriter — disparado por showChapter('forever') ── */
+/* NOTA: IntersectionObserver removido — em chapter mode todas as seções ficam
+   em position:absolute inset:0, logo estão sempre "no viewport".
+   triggerForeverTerminal() é chamada diretamente em showChapter().           */
+var foreverTermFired = false;
+function triggerForeverTerminal(){
+  if(foreverTermFired) return;
+  foreverTermFired = true;
   var lsTyped  = document.getElementById('lsTyped');
   var lsCur    = document.getElementById('lsCur');
   var lsOut    = document.getElementById('lsOut');
   var promptLn = document.getElementById('promptLine');
-  var lsText   = 'ls memories/';
+  if(!lsTyped) return;
+  var lsText = 'ls memories/';
   var i = 0;
   function typeLs(){
     if(i < lsText.length){
       lsTyped.textContent += lsText[i++];
       setTimeout(typeLs, 70);
     } else {
-      lsCur.style.display = 'none';
+      if(lsCur) lsCur.style.display = 'none';
       setTimeout(function(){
-        lsOut.style.display = 'block';
-        setTimeout(function(){ promptLn.style.display = 'flex'; }, 400);
+        if(lsOut) lsOut.style.display = 'block';
+        setTimeout(function(){ if(promptLn) promptLn.style.display = 'flex'; }, 400);
       }, 300);
     }
   }
-  /* Start typing when section enters view */
-  var termObs = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){ termObs.disconnect(); setTimeout(typeLs, 600); }
-  }, {threshold:0.3});
-  var foreverSec = document.getElementById('forever');
-  if(foreverSec) termObs.observe(foreverSec);
-})();
+  setTimeout(typeLs, 600);
+}
 
 /* ── LAUNCH ── */
 window.launch = function(){
@@ -296,8 +314,23 @@ window.launch = function(){
       chapNav.classList.add('visible');
       setTimeout(function(){ chapNav.classList.add('nav-in'); }, 80);
     }
+    /* swipe hint — aparece só em touch, some ao primeiro capítulo trocado */
+    showSwipeHint();
   }, 900);
 };
+
+function showSwipeHint(){
+  /* só em touch devices */
+  if(!('ontouchstart' in window)) return;
+  var hint = document.getElementById('swipe-hint');
+  if(!hint) return;
+  /* mostra após 1.5s */
+  setTimeout(function(){
+    hint.classList.add('hint-show');
+    /* some automaticamente após 3s */
+    setTimeout(function(){ hint.classList.add('hint-hide'); }, 3000);
+  }, 1500);
+}
 
 /* ── TABS ── */
 /* window.go já definido acima como alias de showChapter — sem redefinição aqui */
@@ -647,8 +680,8 @@ function stopHearts(){
   }
 
   document.addEventListener('mousemove', function(e){
-    /* só processa quando o hero está visível */
-    if (window.scrollY > window.innerHeight * .75) return;
+    /* só processa quando o hero (index) está ativo */
+    if (typeof currentChapter !== 'undefined' && currentChapter !== 'index') return;
     hTX = (e.clientX / window.innerWidth  - 0.5);
     hTY = (e.clientY / window.innerHeight - 0.5);
   });
@@ -656,8 +689,8 @@ function stopHearts(){
   (function loop(){
     requestAnimationFrame(loop);
     if (!basesSaved) saveBase();
-    /* para o parallax quando o usuário rola para fora do hero */
-    if (window.scrollY > window.innerHeight * .75) return;
+    /* para o parallax quando o hero não está ativo */
+    if (typeof currentChapter !== 'undefined' && currentChapter !== 'index') return;
 
     /* lerp suave */
     hMX += (hTX - hMX) * .052;
