@@ -909,7 +909,7 @@ canvas#hc{ position:absolute; inset:0; pointer-events:none; }
 .gttitle{ font-family:'Fira Code',monospace; font-size:11px; color:#8B949E; margin-left:6px; }
 .gtbody{
   padding:24px; font-family:'Fira Code',monospace; font-size:13px;
-  line-height:2; min-height:280px; max-height:70vh; overflow-y:auto;
+  line-height:2; height:280px; overflow-y:auto;
   scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth;
 }
 .gtbody::-webkit-scrollbar{ display:none; }
@@ -2513,18 +2513,17 @@ main {
   background: rgba(0,0,0,.5);
 }
 
-/* ── 2. CONFLICT — remove excess space below resolved button ── */
-/* espaço entre terminal e botão: compacto */
+/* ── 2. CONFLICT — espaços após terminal ── */
+/* apenas margem entre terminal e botão — sem tocar no padding do botão */
 #conflict .rbtn.done {
   margin-top: 20px;
   margin-bottom: 0;
-  padding-bottom: 0;
 }
-/* espaço entre botão e fim da section: mantém respiro generoso */
+/* respiro generoso abaixo do botão */
 #conflict:has(.rbtn.done) {
   padding-bottom: clamp(64px, 10vh, 120px) !important;
 }
-/* margem inferior do terminal: só o necessário antes do botão */
+/* margem inferior do terminal antes do botão */
 #conflict .inline-term {
   margin-bottom: 0;
 }
