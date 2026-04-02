@@ -2509,16 +2509,19 @@ main {
 }
 
 /* ── 2. CONFLICT — remove excess space below resolved button ── */
+/* espaço entre terminal e botão: compacto */
 #conflict .rbtn.done {
+  margin-top: 20px;
   margin-bottom: 0;
   padding-bottom: 0;
 }
-#conflict .inline-term {
-  margin-bottom: 8px;
-}
-/* reduz o padding-bottom da section conflict quando o terminal aparece */
+/* espaço entre botão e fim da section: mantém respiro generoso */
 #conflict:has(.rbtn.done) {
-  padding-bottom: clamp(32px, 5vh, 60px) !important;
+  padding-bottom: clamp(64px, 10vh, 120px) !important;
+}
+/* margem inferior do terminal: só o necessário antes do botão */
+#conflict .inline-term {
+  margin-bottom: 0;
 }
 
 /* ── 5. GALLERY STAGGER — cards aparecem em cascata ── */
