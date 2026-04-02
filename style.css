@@ -86,9 +86,11 @@ body{ background:var(--bg); color:var(--text); font-family:'Fira Code',monospace
 /* ── HEADER — refined pill style ── */
 #hdr{
   position:fixed; top:0; left:0; right:0; height:48px;
-  background:rgba(11,14,20,.85); backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(189,147,249,.1); z-index:100;
+  background:transparent;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  border-bottom:none;
+  z-index:100;
   display:flex; align-items:center; justify-content:center;
   padding:0 16px;
   opacity:0; transform:translateY(-6px); pointer-events:none;
@@ -100,10 +102,13 @@ body{ background:var(--bg); color:var(--text); font-family:'Fira Code',monospace
 /* inner pill container */
 .hdr-inner{
   display:flex; align-items:center; gap:2px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(189,147,249,.12);
+  background:rgba(11,14,20,.72);
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:1px solid rgba(189,147,249,.14);
   border-radius:12px;
   padding:4px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
 }
 .tab{
   font-family:'Fira Code',monospace; font-size:11px; color:var(--muted);
@@ -2070,7 +2075,7 @@ main {
   top: 48px;
   left: 0;
   right: 0;
-  bottom: 44px;
+  bottom: 60px;
   padding-top: 0 !important;
   overflow: hidden;
 }
@@ -2128,11 +2133,11 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 44px;
-  background: rgba(11,14,20,.88);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-top: 1px solid rgba(189,147,249,.1);
+  height: 60px;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-top: none;
   z-index: 100;
   display: none;
   align-items: center;
@@ -2573,40 +2578,87 @@ body.forever-next-hidden #chapNext {
   transition: opacity .5s ease, transform .5s ease;
 }
 
-/* ── 7. HEADER + BOTTOM NAV — unified visual language ── */
-/* Ambas as barras compartilham: mesmo bg, mesmo blur, mesma borda espectral */
+/* ── 7. HEADER + BOTTOM NAV — transparent, no lines ── */
+/* header: pill container já tem seu próprio glass — header fica só como posicionador */
 #hdr {
-  border-bottom: 1px solid rgba(189,147,249,.14) !important;
-  box-shadow: 0 1px 0 rgba(255,121,198,.06), 0 4px 24px rgba(0,0,0,.35);
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 #chap-nav {
-  background: rgba(11,14,20,.88) !important;
-  border-top: 1px solid rgba(189,147,249,.14) !important;
-  box-shadow: 0 -1px 0 rgba(255,121,198,.06), 0 -4px 24px rgba(0,0,0,.35) !important;
+  background: transparent !important;
+  border-top: none !important;
+  box-shadow: none !important;
   padding: 0 clamp(16px,4vw,64px) !important;
+  bottom: 8px !important;  /* flutua levemente acima da borda */
 }
-/* nav buttons com mesmo estilo dos tabs */
+
+/* ── PILL BUTTONS — prev e next destacados ── */
 .chap-btn {
   font-family: 'Fira Code', monospace;
   font-size: 11px;
   letter-spacing: .14em;
-  border-radius: 8px;
-  background: transparent;
-  border: none;
-  transition: color .2s, background .2s;
+  min-height: 36px;
+  padding: 0 18px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: transform .22s cubic-bezier(.4,0,.2,1),
+              box-shadow .22s cubic-bezier(.4,0,.2,1),
+              opacity .22s;
 }
-.chap-btn:hover:not(:disabled) {
-  background: rgba(189,147,249,.09) !important;
-  color: var(--text) !important;
-}
-/* setas com cor de acento igual aos dots das tabs */
-.chap-prev .chap-arrow { color: var(--purple); font-size: 13px; }
-.chap-next .chap-arrow { color: var(--pink);   font-size: 13px; }
 
-/* indicator dots (já existente) — alinha visualmente com as tabs */
-.chap-indicator {
-  gap: 8px !important;
+/* prev — pill roxo */
+.chap-prev {
+  color: var(--purple);
+  background: rgba(189,147,249,.10);
+  border: 1px solid rgba(189,147,249,.28);
+  box-shadow: 0 0 18px rgba(189,147,249,.12),
+              inset 0 1px 0 rgba(255,255,255,.06);
 }
+.chap-prev:hover:not(:disabled) {
+  background: rgba(189,147,249,.18) !important;
+  border-color: rgba(189,147,249,.52) !important;
+  box-shadow: 0 0 28px rgba(189,147,249,.28),
+              inset 0 1px 0 rgba(255,255,255,.08) !important;
+  transform: translateX(-2px) scale(1.03);
+  color: #fff !important;
+}
+
+/* next — pill rosa */
+.chap-next {
+  color: var(--pink);
+  background: rgba(255,121,198,.10);
+  border: 1px solid rgba(255,121,198,.28);
+  box-shadow: 0 0 18px rgba(255,121,198,.12),
+              inset 0 1px 0 rgba(255,255,255,.06);
+}
+.chap-next:hover:not(:disabled) {
+  background: rgba(255,121,198,.18) !important;
+  border-color: rgba(255,121,198,.52) !important;
+  box-shadow: 0 0 28px rgba(255,121,198,.28),
+              inset 0 1px 0 rgba(255,255,255,.08) !important;
+  transform: translateX(2px) scale(1.03);
+  color: #fff !important;
+}
+
+/* disabled: mantém o pill mas apagado */
+.chap-btn:disabled {
+  opacity: .22 !important;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* setas */
+.chap-prev .chap-arrow { color: inherit; font-size: 13px; }
+.chap-next .chap-arrow { color: inherit; font-size: 13px; }
+
+/* indicator dots */
+.chap-indicator { gap: 8px !important; }
 .chap-dot {
   width: 5px; height: 5px;
   transition: background .25s, transform .3s cubic-bezier(.4,0,.2,1), box-shadow .25s;
