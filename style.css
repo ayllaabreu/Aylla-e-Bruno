@@ -733,6 +733,7 @@ main{ padding-top:48px; }
 .bento{
   display:grid;
   grid-template-columns:repeat(6,1fr);
+  grid-auto-rows:minmax(clamp(70px,13vw,155px),auto);
   gap:10px; max-width:1000px; margin:0 auto;
 }
 .bi{
@@ -830,7 +831,7 @@ main{ padding-top:48px; }
 .td{ width:10px; height:10px; border-radius:50%; }
 .td.r{ background:#FF5F57; } .td.y{ background:#FFBD2E; } .td.g2{ background:#28C840; }
 .ttl{ font-size:11px; color:var(--muted); margin-left:8px; }
-.tbody{ padding:24px; min-height:240px; font-size:13px; line-height:2; overflow-y:auto; max-height:320px; scrollbar-width:none; -ms-overflow-style:none; }
+.tbody{ padding:24px; min-height:240px; font-size:13px; line-height:2; overflow-y:auto; max-height:320px; scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth; }
 .tbody::-webkit-scrollbar{ display:none; }
 .tline{ display:flex; gap:8px; }
 .tpr{ color:var(--purple); } .tcmd{ color:var(--text); }
@@ -904,10 +905,9 @@ canvas#hc{ position:absolute; inset:0; pointer-events:none; }
 .gtbody{
   padding:24px; font-family:'Fira Code',monospace; font-size:13px;
   line-height:2; min-height:280px; max-height:70vh; overflow-y:auto;
-  scrollbar-width:none; -ms-overflow-style:none;
+  scrollbar-width:none; -ms-overflow-style:none; scroll-behavior:smooth;
 }
 .gtbody::-webkit-scrollbar{ display:none; }
-}
 .gt-prompt{ display:flex; gap:6px; margin-bottom:0; }
 .gt-ps{ color:#BD93F9; } .gt-dollar{ color:#8B949E; }
 .gt-cmd{ color:#E6EDF3; }
@@ -1076,6 +1076,8 @@ body::after {
 .orb { animation: orbBreath 14s ease-in-out infinite; }
 .orb:nth-child(2) { animation-delay: -5s;  animation-duration: 18s; }
 .orb:nth-child(3) { animation-delay: -10s; animation-duration: 22s; }
+/* hero orbs are controlled by JS parallax — disable CSS animation */
+#index .orb { animation: none; }
 
 /* ── 5. HERO NAMES — gradient shimmer sweep ── */
 @keyframes shimmer {
@@ -1084,7 +1086,7 @@ body::after {
 }
 .opt1-aylla {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(58px,11vw,118px); font-weight: 300;
+  /* font-size inherited from .hero-names */ font-weight: 300;
   background: linear-gradient(105deg,#BD93F9 0%,#FF79C6 30%,#fff 50%,#FF79C6 70%,#BD93F9 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -1093,7 +1095,7 @@ body::after {
 }
 .opt1-bruno {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(58px,11vw,118px); font-weight: 300;
+  /* font-size inherited from .hero-names */ font-weight: 300;
   background: linear-gradient(105deg,#50FA7B 0%,#8BE9FD 30%,#fff 50%,#8BE9FD 70%,#50FA7B 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
@@ -1125,6 +1127,7 @@ body::after {
   transition: border-color .4s, box-shadow .4s, transform .35s cubic-bezier(.4,0,.2,1);
   backdrop-filter: blur(12px) saturate(140%);
   -webkit-backdrop-filter: blur(12px) saturate(140%);
+  will-change: transform;
 }
 .hstat:hover { transform: translateY(-5px) scale(1.025) !important; }
 .hstat.s1:hover { border-color:rgba(255,121,198,.4); box-shadow:0 16px 48px rgba(255,121,198,.14), 0 0 0 1px rgba(255,121,198,.18), inset 0 1px 0 rgba(255,255,255,.04); }
@@ -1193,7 +1196,7 @@ body::after {
 
 /* ── SEÇÃO: tint sutil de fundo por capítulo — apenas hero e ticket ── */
 #index    { background: radial-gradient(ellipse 65% 50% at 50% 40%, rgba(189,147,249,.03) 0%, transparent 70%); }
-#ticket   { background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(80,250,123,.018) 0%, transparent 60%); }
+/* #ticket background defined once in premium v3, section 9 — duplicate removed */
 
 /* ── SCROLL PROGRESS BAR — shimmer refinado ── */
 @keyframes sbarShine {
@@ -1511,14 +1514,7 @@ button:focus-visible {
   border-radius: 8px;
 }
 
-/* ── A11. MOBILE HEADER — gradient mask indica mais tabs à direita ── */
-@media (max-width: 640px) {
-  .hdr-inner {
-    -webkit-mask-image: linear-gradient(to right, white 0%, white 78%, transparent 100%);
-            mask-image: linear-gradient(to right, white 0%, white 78%, transparent 100%);
-    padding-right: 32px;
-  }
-}
+/* mobile header redesign já tratado acima no bloco chapter mode */
 
 /* ── H4. MODAL — transição real com opacity + spring scale ── */
 /* Override do display:none para permitir transição */
@@ -1646,15 +1642,15 @@ button:focus-visible {
 }
 .tl-date {
   font-family: 'Fira Code', monospace;
-  font-size: 8px;
-  color: rgba(139,148,158,.55);
+  font-size: 10px;
+  color: rgba(139,148,158,.65);
   letter-spacing: .05em;
   white-space: nowrap;
 }
 .tl-msg {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 10px;
-  color: rgba(230,237,243,.5);
+  font-size: 12px;
+  color: rgba(230,237,243,.65);
   text-align: center;
   line-height: 1.3;
   white-space: nowrap;
@@ -1724,8 +1720,8 @@ button:focus-visible {
 /* ── RESPONSIVE ── */
 @media (max-width: 720px) {
   .tl-node { min-width: 68px; padding: 12px 2px 6px; }
-  .tl-msg  { font-size: 9px; }
-  .tl-date { font-size: 7px; }
+  .tl-msg  { font-size: 10px; }
+  .tl-date { font-size: 8px; }
   .tl-content { padding: 18px 16px; max-height: 340px; }
 }
 
@@ -1795,13 +1791,13 @@ button:focus-visible {
   transition: border-color .35s, box-shadow .35s, transform .35s cubic-bezier(.4,0,.2,1) !important;
 }
 .panel.lft {
-  border-color: rgba(189,147,249,.28) !important;
+  border-color: rgba(255,121,198,.32) !important;
   background: linear-gradient(150deg,
-    rgba(189,147,249,.055) 0%,
+    rgba(255,121,198,.06) 0%,
     var(--card) 55%) !important;
   box-shadow:
     var(--depth),
-    0 0 44px rgba(189,147,249,.05) !important;
+    0 0 44px rgba(255,121,198,.06) !important;
 }
 .panel:not(.lft) {
   border-color: rgba(80,250,123,.24) !important;
@@ -1813,8 +1809,8 @@ button:focus-visible {
     0 0 44px rgba(80,250,123,.04) !important;
 }
 .panel.lft:hover {
-  border-color: rgba(189,147,249,.48) !important;
-  box-shadow: var(--depth-hover), 0 0 60px rgba(189,147,249,.07) !important;
+  border-color: rgba(255,121,198,.55) !important;
+  box-shadow: var(--depth-hover), 0 0 60px rgba(255,121,198,.09) !important;
 }
 .panel:not(.lft):hover {
   border-color: rgba(80,250,123,.4) !important;
@@ -2000,4 +1996,620 @@ button:focus-visible {
 @media (max-width: 640px) {
   .hstat { box-shadow: inset 0 2.5px 0 currentColor, 0 2px 8px rgba(0,0,0,.5) !important; }
   .panel.lft, .panel:not(.lft) { border-color: var(--border-card) !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CHAPTER NAVIGATION — v1.0
+   Audit fixes + per-chapter experience
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── FIX: modal via opacity — sem flash de display:none ── */
+#modal {
+  display: flex !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .38s ease;
+}
+#modal.open {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+.min2 {
+  transform: scale(.95);
+  transition: transform .42s cubic-bezier(.4,0,.2,1);
+}
+#modal.open .min2 { transform: scale(1); }
+
+/* ── FIX: focus-visible em todos os botões ── */
+.rbtn:focus-visible,
+.secbtn:focus-visible,
+.sp-btn:focus-visible,
+.prxbtn:focus-visible,
+.mclose:focus-visible,
+.chap-btn:focus-visible {
+  outline: 1px solid var(--purple);
+  outline-offset: 4px;
+}
+
+/* ── MOBILE HEADER — esconde abas, exibe título do capítulo ativo ── */
+@media(max-width:640px) {
+  .hdr-inner {
+    display: none;
+  }
+  /* título do capítulo centralizado no lugar das abas */
+  #hdr-mobile-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .18em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100vw - 32px);
+    transition: opacity .25s ease, transform .25s ease;
+  }
+  #hdr-mobile-title .hmt-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    flex-shrink: 0;
+    animation: blink 2s ease-in-out infinite;
+  }
+  /* #hdr precisa de justify-content:center para centrar o título */
+  #hdr { justify-content: center; }
+}
+
+/* ── CHAPTER MODE — layout ── */
+html, body { overflow: hidden; height: 100%; }
+
+main {
+  position: fixed !important;
+  top: 48px;
+  left: 0;
+  right: 0;
+  bottom: 44px;
+  padding-top: 0 !important;
+  overflow: hidden;
+}
+
+/* ── SEÇÕES COMO CAPÍTULOS ── */
+.sec {
+  position: absolute !important;
+  inset: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: opacity .44s cubic-bezier(.4,0,.2,1),
+              transform .44s cubic-bezier(.4,0,.2,1);
+}
+
+/* sec-fade herda opacity:0 — ch-active tem precedência */
+.sec-fade { opacity: 0 !important; }
+
+/* Override: #index tinha opacity:1 !important — neutralizar para chapter mode */
+#index { opacity: 0 !important; }
+/* Fix especificidade: ID (#index) ganha de classe (.sec.ch-active) mesmo com !important.
+   Esta regra restaura a visibilidade quando o capítulo está ativo. */
+#index.ch-active { opacity: 1 !important; }
+#index .hero-eyebrow,
+#index .hero-names,
+#index .hero-sub,
+#index .hero-stats { opacity: 1 !important; transform: none !important; }
+
+/* Capítulo ativo */
+.sec.ch-active {
+  opacity: 1 !important;
+  pointer-events: auto;
+  transform: translateY(0) !important;
+}
+
+/* Capítulo ativo + reveal = animações internas disparam */
+.sec.ch-active.visible .slabel { opacity: 1; transform: translateY(0); filter: blur(0); }
+.sec.ch-active.visible .stitle { opacity: 1; transform: translateY(0); filter: blur(0); }
+.sec.ch-active.visible .split,
+.sec.ch-active.visible .rbtn,
+.sec.ch-active.visible .gg,
+.sec.ch-active.visible .prc,
+.sec.ch-active.visible .bento,
+.sec.ch-active.visible .tw,
+.sec.ch-active.visible .runbtn,
+.sec.ch-active.visible .inline-term,
+.sec.ch-active.visible #secret > *:not(.slabel):not(.stitle),
+.sec.ch-active.visible > p:not(.slabel) { opacity: 1; transform: translateY(0); }
+
+/* ── BARRA DE CAPÍTULOS — bottom nav ── */
+#chap-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: rgba(11,14,20,.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(189,147,249,.1);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px,5vw,72px);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .45s ease .2s, transform .45s ease .2s;
+}
+#chap-nav.visible {
+  display: flex;
+}
+#chap-nav.nav-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chap-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  /* mínimo 44px de altura para touch (Apple HIG / Material) */
+  min-height: 44px;
+  padding: 0 16px;
+  letter-spacing: .12em;
+  transition: color .2s, background .2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  /* área de toque expandida invisível */
+  position: relative;
+}
+.chap-btn:hover:not(:disabled) { color: var(--text); background: rgba(189,147,249,.07); }
+.chap-btn:disabled { opacity: .2; cursor: default; }
+
+.chap-prev .chap-arrow { color: var(--purple); }
+.chap-next .chap-arrow { color: var(--pink); }
+.chap-btn:disabled .chap-arrow { color: var(--muted); }
+
+.chap-indicator {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .3em;
+  opacity: .5;
+  user-select: none;
+}
+
+/* ── SECTION DIVIDERS — fix content rule ── */
+.sec + .sec::before {
+  content: '';
+  display: none; /* irrelevante em chapter mode — mantido para compatibilidade */
+}
+
+/* ── Timeline: altura adaptativa no chapter mode ── */
+#timeline .gg {
+  min-height: 0;
+}
+.tl-content {
+  max-height: calc(100vh - 340px) !important;
+}
+@media(max-width:720px) {
+  .tl-content { max-height: calc(100vh - 320px) !important; }
+}
+
+/* ── Secret section: centralizar verticalmente no chapter ── */
+#secret {
+  min-height: calc(100vh - 92px);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM v6 — Bug Fixes + UX Layer Final
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── BENTO responsive grid-auto-rows ── */
+@media(max-width:820px){
+  .bento{ grid-auto-rows:minmax(clamp(80px,28vw,200px),auto); }
+}
+@media(max-width:540px){
+  .bento{ grid-auto-rows:minmax(clamp(90px,42vw,220px),auto); }
+}
+
+/* ── LIGHTBOX ── */
+#lb{
+  position:fixed; inset:0; z-index:700;
+  background:rgba(0,0,0,.97); backdrop-filter:blur(28px) saturate(150%);
+  -webkit-backdrop-filter:blur(28px) saturate(150%);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .36s cubic-bezier(.4,0,.2,1);
+}
+#lb.lb-open{ opacity:1; pointer-events:auto; }
+#lb-img{
+  max-width:min(90vw,1100px); max-height:88vh;
+  object-fit:contain; border-radius:6px;
+  transform:scale(.93); opacity:0;
+  transition:transform .44s cubic-bezier(.34,1.45,.64,1), opacity .38s ease;
+  user-select:none; -webkit-user-drag:none;
+  box-shadow:0 32px 80px rgba(0,0,0,.7);
+}
+#lb.lb-open #lb-img{ transform:scale(1); opacity:1; }
+#lb-cap{
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  font-family:'Fira Code',monospace; font-size:11px; color:rgba(230,237,243,.4);
+  letter-spacing:.18em; white-space:nowrap;
+}
+#lb-close{
+  position:absolute; top:20px; right:24px;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.5); border-radius:6px;
+  font-family:'Fira Code',monospace; font-size:11px;
+  padding:6px 14px; cursor:pointer; transition:all .2s;
+}
+#lb-close:hover{ background:rgba(255,255,255,.1); color:var(--text); }
+#lb-prev, #lb-next{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.45); font-size:18px;
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .2s;
+  font-family:'Fira Code',monospace;
+}
+#lb-prev{ left:24px; }
+#lb-next{ right:24px; }
+#lb-prev:hover, #lb-next:hover{
+  background:rgba(189,147,249,.12); border-color:rgba(189,147,249,.35);
+  color:var(--purple);
+}
+
+/* ── CHAPTER INDICATOR — progress dots ── */
+.chap-indicator{
+  display:flex; gap:7px; align-items:center;
+  opacity:1 !important;
+}
+.chap-dot{
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(139,148,158,.25);
+  transition:background .25s, transform .25s, box-shadow .25s;
+}
+.chap-dot.active{
+  background:var(--purple);
+  transform:scale(1.45);
+  box-shadow:0 0 6px rgba(189,147,249,.5);
+}
+
+/* ── SLIDING TAB GLIDE PILL ── */
+.hdr-inner{ position:relative; }
+.tab-glide{
+  position:absolute; top:4px; border-radius:8px;
+  background:rgba(189,147,249,.14);
+  box-shadow:0 0 0 1px rgba(189,147,249,.1);
+  transition:left .32s cubic-bezier(.4,0,.2,1), width .32s cubic-bezier(.4,0,.2,1);
+  pointer-events:none; z-index:0;
+}
+.tab{ position:relative; z-index:1; }
+
+/* ── STAT CARDS — pulse idle glow contínuo ── */
+@keyframes statPulse1{
+  0%,100%{ box-shadow:inset 0 2.5px 0 rgba(255,121,198,.75),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045); }
+  50%{     box-shadow:inset 0 2.5px 0 rgba(255,121,198,.9),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045),0 0 28px rgba(255,121,198,.1); }
+}
+@keyframes statPulse2{
+  0%,100%{ box-shadow:inset 0 2.5px 0 rgba(189,147,249,.8),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045); }
+  50%{     box-shadow:inset 0 2.5px 0 rgba(189,147,249,.95),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045),0 0 28px rgba(189,147,249,.1); }
+}
+@keyframes statPulse3{
+  0%,100%{ box-shadow:inset 0 2.5px 0 rgba(80,250,123,.65),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045); }
+  50%{     box-shadow:inset 0 2.5px 0 rgba(80,250,123,.85),0 2px 6px rgba(0,0,0,.6),0 8px 28px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045),0 0 24px rgba(80,250,123,.08); }
+}
+.hstat.s1{ animation:statPulse1 4s ease-in-out infinite; }
+.hstat.s2{ animation:statPulse2 4.4s ease-in-out infinite .6s; }
+.hstat.s3{ animation:statPulse3 3.8s ease-in-out infinite 1.2s; }
+.hstat:hover{ animation:none !important; }
+
+/* ── TERMINAL — cursor piscante ao final do output ── */
+.term-final-cursor{
+  display:inline-block; width:8px; height:14px;
+  background:var(--green); vertical-align:text-bottom;
+  animation:blink 1s step-end infinite; margin-left:2px;
+}
+
+/* ── CONFETTI HEARTS CANVAS (forever.exe) ── */
+#confetti-cv{
+  position:fixed; inset:0; pointer-events:none;
+  z-index:9997; opacity:0;
+  transition:opacity .6s ease;
+}
+#confetti-cv.cv-show{ opacity:1; }
+
+/* ── prefers-reduced-motion ── */
+@media(prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  html{ scroll-behavior:auto !important; }
+  .opt1-aylla, .opt1-bruno{ animation:none !important; }
+  .orb{ animation:none !important; }
+  .hstat.s1,.hstat.s2,.hstat.s3{ animation:none !important; }
+  .sp-btn.ready,.runbtn,.rbtn,.secbtn{ animation:none !important; }
+  #lb-img{ transition:opacity .22s ease !important; transform:scale(1) !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PREMIUM v7 — 8-point patch
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. INSTAGRAM DM — proper app chrome ── */
+.ig-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 36px;
+  border: 1px solid rgba(255,255,255,.08);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 6px rgba(255,255,255,.03),
+    0 24px 64px rgba(0,0,0,.7),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+/* header bar */
+.ig-header {
+  background: #000;
+  padding: 14px 18px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  font-family: '-apple-system','BlinkMacSystemFont','Segoe UI',sans-serif;
+}
+/* message area */
+.ig-messages {
+  background: #000;
+  padding: 16px 16px 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.ig-messages::-webkit-scrollbar { display: none; }
+/* input bar at bottom */
+.ig-inputbar {
+  background: #000;
+  border-top: 1px solid rgba(255,255,255,.07);
+  padding: 10px 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: '-apple-system','BlinkMacSystemFont','Segoe UI',sans-serif;
+}
+.ig-input-fake {
+  flex: 1;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 22px;
+  padding: 9px 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,.28);
+  user-select: none;
+}
+.ig-input-icon {
+  font-size: 20px;
+  opacity: .45;
+  user-select: none;
+  cursor: default;
+}
+
+/* ── REELS EMBED — video player look ── */
+.ig-reel {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  width: 100%;
+  max-width: 240px;
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+.ig-reel-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px 6px;
+  font-family: '-apple-system','BlinkMacSystemFont',sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,.65);
+  background: rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.ig-reel-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+  flex-shrink: 0;
+}
+.ig-reel-check { color: #3897f0; font-size: 10px; }
+/* Thumb: true vertical 9:16 */
+.ig-reel-thumb {
+  position: relative;
+  width: 100%;
+  padding-bottom: 177.78%; /* 9:16 */
+  background: #000;
+  overflow: hidden;
+}
+.ig-reel-thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .8;
+}
+/* dark gradient scrim at bottom */
+.ig-reel-thumb::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+  pointer-events: none;
+}
+.ig-reel-caption {
+  position: absolute;
+  bottom: 38px; left: 12px; right: 12px;
+  font-family: '-apple-system',sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,.9);
+  line-height: 1.4;
+  z-index: 2;
+  text-shadow: 0 1px 4px rgba(0,0,0,.8);
+}
+.ig-reel-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.18);
+  border: 2px solid rgba(255,255,255,.55);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: #fff;
+  padding-left: 3px;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+/* progress bar */
+.ig-reel-progress {
+  position: absolute;
+  bottom: 6px; left: 10px; right: 10px;
+  height: 2px;
+  background: rgba(255,255,255,.25);
+  border-radius: 1px;
+  z-index: 2;
+}
+.ig-reel-progress-fill {
+  width: 38%;
+  height: 100%;
+  background: #fff;
+  border-radius: 1px;
+}
+.ig-reel-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-family: '-apple-system',sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,.45);
+  background: rgba(0,0,0,.5);
+}
+
+/* ── 2. CONFLICT — remove excess space below resolved button ── */
+#conflict .rbtn.done {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+#conflict .inline-term {
+  margin-bottom: 8px;
+}
+/* reduz o padding-bottom da section conflict quando o terminal aparece */
+#conflict:has(.rbtn.done) {
+  padding-bottom: clamp(32px, 5vh, 60px) !important;
+}
+
+/* ── 5. GALLERY STAGGER — cards aparecem em cascata ── */
+@keyframes cardReveal {
+  from { opacity: 0; transform: scale(.9) translateY(16px); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0);    filter: blur(0); }
+}
+/* reset: cards invisíveis quando o capítulo está inativo */
+#memories:not(.ch-active) .bi { opacity: 0; }
+/* quando ativo+visible, dispara a animação com delay por card */
+#memories.ch-active.visible .bi {
+  animation: cardReveal .5s cubic-bezier(.4,0,.2,1) both;
+}
+#memories.ch-active.visible .bi:nth-child(1)  { animation-delay: .05s; }
+#memories.ch-active.visible .bi:nth-child(2)  { animation-delay: .12s; }
+#memories.ch-active.visible .bi:nth-child(3)  { animation-delay: .17s; }
+#memories.ch-active.visible .bi:nth-child(4)  { animation-delay: .22s; }
+#memories.ch-active.visible .bi:nth-child(5)  { animation-delay: .27s; }
+#memories.ch-active.visible .bi:nth-child(6)  { animation-delay: .32s; }
+#memories.ch-active.visible .bi:nth-child(7)  { animation-delay: .37s; }
+#memories.ch-active.visible .bi:nth-child(8)  { animation-delay: .42s; }
+#memories.ch-active.visible .bi:nth-child(9)  { animation-delay: .47s; }
+#memories.ch-active.visible .bi:nth-child(10) { animation-delay: .52s; }
+#memories.ch-active.visible .bi:nth-child(11) { animation-delay: .57s; }
+#memories.ch-active.visible .bi:nth-child(12) { animation-delay: .62s; }
+
+/* ── 6. LOCK ICON na tab secret ── */
+.tab-lock {
+  font-size: 13px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(255,184,108,.7));
+  transition: filter .2s;
+}
+.tab:hover .tab-lock {
+  filter: drop-shadow(0 0 10px rgba(255,184,108,1));
+}
+.tab.on .tab-lock {
+  filter: drop-shadow(0 0 8px rgba(255,184,108,.9));
+}
+
+/* ── 6b. CHAPNEXT hidden on forever until animation ends ── */
+body.forever-next-hidden #chapNext {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(8px);
+  transition: opacity .5s ease, transform .5s ease !important;
+}
+#chapNext {
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+/* ── 7. HEADER + BOTTOM NAV — unified visual language ── */
+/* Ambas as barras compartilham: mesmo bg, mesmo blur, mesma borda espectral */
+#hdr {
+  border-bottom: 1px solid rgba(189,147,249,.14) !important;
+  box-shadow: 0 1px 0 rgba(255,121,198,.06), 0 4px 24px rgba(0,0,0,.35);
+}
+#chap-nav {
+  background: rgba(11,14,20,.88) !important;
+  border-top: 1px solid rgba(189,147,249,.14) !important;
+  box-shadow: 0 -1px 0 rgba(255,121,198,.06), 0 -4px 24px rgba(0,0,0,.35) !important;
+  padding: 0 clamp(16px,4vw,64px) !important;
+}
+/* nav buttons com mesmo estilo dos tabs */
+.chap-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  letter-spacing: .14em;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  transition: color .2s, background .2s;
+}
+.chap-btn:hover:not(:disabled) {
+  background: rgba(189,147,249,.09) !important;
+  color: var(--text) !important;
+}
+/* setas com cor de acento igual aos dots das tabs */
+.chap-prev .chap-arrow { color: var(--purple); font-size: 13px; }
+.chap-next .chap-arrow { color: var(--pink);   font-size: 13px; }
+
+/* indicator dots (já existente) — alinha visualmente com as tabs */
+.chap-indicator {
+  gap: 8px !important;
+}
+.chap-dot {
+  width: 5px; height: 5px;
+  transition: background .25s, transform .3s cubic-bezier(.4,0,.2,1), box-shadow .25s;
+}
+
+/* ── prefers-reduced-motion: desativa stagger ── */
+@media(prefers-reduced-motion: reduce){
+  #memories.ch-active.visible .bi { animation: none !important; opacity: 1 !important; }
 }
