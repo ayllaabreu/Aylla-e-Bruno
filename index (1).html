@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aylla & Bruno — encrypted_love_story.exe</title>
+<meta name="description" content="Um ano de commit. Uma história criptografada com amor.">
+<meta property="og:title" content="Aylla & Bruno — encrypted_love_story.exe">
+<meta property="og:description" content="Um ano de commit. Uma história criptografada com amor.">
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Fira+Code:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="ring"></div>
+<div id="sbar"></div>
+<!-- SPLASH -->
+<div id="splash">
+  <p class="sp-title"><span>//</span> encrypted_love_story</p>
+  <div class="sp-term">
+    <span id="tprompt" style="color:#BD93F9">~/love_story</span>
+    <span style="color:#8B949E"> main</span> $
+    <span id="ttext"></span><span class="sp-cur" id="scur"></span>
+  </div>
+  <button class="sp-btn" onclick="launch()">[ START_SESSION.exe ]</button>
+</div>
+
+<!-- git terminal is now inline inside #conflict section -->
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="min2">
+    <canvas id="hc"></canvas>
+    <div class="mcon">
+      <div class="mph">
+        <div class="mpt">
+          <span class="big">📸</span>
+          <span style="color:var(--muted);font-size:10px;letter-spacing:.25em;opacity:.45">memories/nossa_foto.jpg</span>
+        </div>
+      </div>
+      <p class="mmsg">Um ano de <span class="pk">amor</span>,<br>infinitos <span class="pu">commits</span>.</p>
+      <p class="msub">// 04.04.2025 → 04.04.2026 → forever.exe</p>
+      <button class="mclose" onclick="closeModal()">[ close_session ]</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div id="hdr">
+  <div class="hdr-inner">
+    <div class="tab on" onclick="go('index')"><div class="dot"></div><span>index<span class="ejs">.js</span></span></div>
+    <div class="tab" onclick="go('conflict')"><div class="dot"></div><span>conflict<span class="ediff">.diff</span></span></div>
+    <div class="tab" onclick="go('timeline')"><div class="dot"></div><span>timeline<span class="egit">.git</span></span></div>
+    <div class="tab" onclick="go('ticket')"><div class="dot"></div><span>ticket<span class="emd">.md</span></span></div>
+    <div class="tab" onclick="go('memories')"><div class="dot"></div><span>memories<span class="ejpg">.jpg</span></span></div>
+    <div class="tab" onclick="go('forever')"><div class="dot"></div><span>forever<span class="ejs">.exe</span></span></div>
+    <div class="tab" onclick="go('secret')"><div class="dot"></div><span>secret<span class="ediff">.enc</span></span></div>
+  </div>
+</div>
+
+<main id="main" style="display:none">
+
+<!-- INDEX -->
+<section class="sec" id="index">
+  <div class="gbg"></div>
+  <div class="orb" style="background:#BD93F9;width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+
+  <p class="hero-eyebrow">// encrypted_love_story.exe · v1.0.0</p>
+
+  <h1 class="hero-names">
+    <span class="opt1-aylla">Aylla</span>
+    <span class="hero-amp">&amp;</span>
+    <span class="opt1-bruno">Bruno</span>
+  </h1>
+
+  <p class="hero-sub">Uma história de amor contada através de código,<br>commits e conexões digitais que se tornaram reais.</p>
+
+  <div class="hero-stats">
+    <div class="hstat s1">
+      <div class="hstat-val" id="hstatV1">00</div>
+      <div class="hstat-label">Chapters</div>
+    </div>
+    <div class="hstat s2">
+      <div class="hstat-val" id="hstatV2">∞</div>
+      <div class="hstat-label">Memories</div>
+    </div>
+    <div class="hstat s3">
+      <div class="hstat-val" id="hstatV3">00</div>
+      <div class="hstat-label">Days Together</div>
+    </div>
+  </div>
+
+  </section>
+
+
+
+<!-- CAP I -->
+<section class="sec sec-fade" id="conflict">
+  <div class="gbg"></div>
+  <div class="orb" style="background:#BD93F9;width:380px;height:380px;top:-80px;left:-80px"></div>
+  <p class="slabel">// cap. I &nbsp; conflict_merge.diff</p>
+  <h2 class="stitle">Dois pontos de <span class="ac-p">origem</span>,<br>uma única <span class="ac-pk">história</span>.</h2>
+
+  <div class="split" id="splitV">
+    <div class="panel lft" data-l="AYLLA.js">
+      <div class="dh">
+        <div class="av a">A</div>
+        <div><div style="color:#BD93F9;font-weight:600">Aylla</div><div>branch: <span style="color:#F1FA8C">main</span></div></div>
+      </div>
+      <div class="cblock">
+        <div class="cnum p" id="cA">—</div>
+        <div class="clabel">DAYS_SINCE_WE_MET</div>
+        <div class="csub">// desde 21.11.2024</div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="dl add">+ const coragem = "aparecer";</div>
+        <div class="dl add">+ const Bruno = require("./certo");</div>
+        <div class="dl neu">  const data = "2024-11-21";</div>
+        <div class="dl rem">- return medo;</div>
+      </div>
+    </div>
+    <div class="panel" data-l="BRUNO.js">
+      <div class="dh">
+        <div class="av b">B</div>
+        <div><div style="color:#50FA7B;font-weight:600">Bruno</div><div>branch: <span style="color:#F1FA8C">feat/aylla</span></div></div>
+      </div>
+      <div class="cblock">
+        <div class="cnum g" id="cB">—</div>
+        <div class="clabel">DAYS_SINCE_THE_TICKET</div>
+        <div class="csub">// desde 04.04.2025</div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="dl add">+ await Aylla.aparecer();</div>
+        <div class="dl add">+ const espera = "valeu_a_pena";</div>
+        <div class="dl neu">  const data = "2025-04-04";</div>
+        <div class="dl rem">- return vazio;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TERMINAL INLINE — aparece no lugar do merged-view -->
+  <div class="inline-term" id="inlineTerm">
+    <div class="gtw">
+      <div class="gttop">
+        <div class="gtdots"><div class="gtd r"></div><div class="gtd y"></div><div class="gtd g"></div></div>
+        <span class="gttitle">bash — love-story/main</span>
+      </div>
+      <div class="gtbody" id="gtBody" style="min-height:220px;max-height:360px"></div>
+    </div>
+  </div>
+
+  <button class="rbtn" id="resolveBtn" onclick="resolveConflict()">git merge --resolve-conflict ♥</button>
+</section>
+
+
+
+<!-- CAP II -->
+<section class="sec sec-fade" id="timeline">
+  <div class="gbg"></div>
+  <div class="orb" style="background:#BD93F9;width:350px;height:350px;top:0;right:0"></div>
+  <p class="slabel">// cap. II &nbsp; timeline.git</p>
+  <h2 class="stitle"><span class="ac-g">git log</span> --all<br>--love --no-limit</h2>
+
+  <div class="gg">
+
+    <!-- HORIZONTAL TRACK -->
+    <div class="tl-track">
+      <div class="tl-line"></div>
+
+      <button class="tl-node active" id="tln-cn1" onclick="selectCommit('cn1')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">Jul 2024</span><span class="tl-msg">Inner Circle 🔵</span></div>
+      </button>
+
+      <button class="tl-node" id="tln-cn2" onclick="selectCommit('cn2')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">17 Jul 2024</span><span class="tl-msg">Tinder 🔥</span></div>
+      </button>
+
+      <button class="tl-node" id="tln-cn3" onclick="selectCommit('cn3')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">18 Jul 2024</span><span class="tl-msg">WhatsApp 💬</span></div>
+      </button>
+
+      <button class="tl-node tl-node-sad" id="tln-cnSad" onclick="selectCommit('cnSad')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">Jul→Nov 2024</span><span class="tl-msg">// pausa ⚠</span></div>
+      </button>
+
+      <button class="tl-node" id="tln-cn4" onclick="selectCommit('cn4')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">21 Nov 2024</span><span class="tl-msg">Encontro 🤍</span></div>
+      </button>
+
+      <button class="tl-node" id="tln-cn5" onclick="selectCommit('cn5')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">04 Abr 2025</span><span class="tl-msg">The Ticket 💌</span></div>
+      </button>
+
+      <button class="tl-node" id="tln-cn6" onclick="selectCommit('cn6')">
+        <div class="tl-dot"></div>
+        <div class="tl-meta"><span class="tl-date">04 Abr 2026</span><span class="tl-msg">365 dias 🚀</span></div>
+      </button>
+    </div>
+
+    <!-- CONTENT PANEL -->
+    <div class="tl-panel">
+
+      <!-- cn1 — Inner Circle -->
+      <div class="tl-content active" id="cn1">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Inner Circle · primeiro sinal do universo</p>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.7);line-height:1.8">
+          <p>O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.</p>
+          <p style="margin-top:10px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>
+        </div>
+      </div>
+
+      <!-- cn2 — Tinder -->
+      <div class="tl-content" id="cn2">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Tinder · segunda tentativa do destino</p>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.7);line-height:1.8">
+          <p>Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.</p>
+          <p style="margin-top:10px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>
+        </div>
+      </div>
+
+      <!-- cn3 — WhatsApp (avatares ao lado, sem label) -->
+      <div class="tl-content" id="cn3">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// WhatsApp · perspectiva dele · 18.07.2024</p>
+        <div class="ct">
+
+          <div class="br">
+            <div class="bav bav-a">A</div>
+            <div class="brow"><div class="bub ay">Oiii!!<div class="btm">13:07</div></div></div>
+          </div>
+          <div class="br">
+            <div class="bav bav-a">A</div>
+            <div class="brow"><div class="bub ay">Aqui é Aylla lá do tinder/inner 😄<div class="btm">13:07</div></div></div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow"><div class="bub br2">Oooooi Aylla!! 😊😊<div class="btm">13:21</div></div></div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow"><div class="bub br2">feliz por vc ter me adicionado!!<div class="btm">13:22</div></div></div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow"><div class="bub br2">Então... Me conta sua experiencia lá no tinder?<div class="btm">13:26</div></div></div>
+          </div>
+          <div class="br">
+            <div class="bav bav-a">A</div>
+            <div class="brow">
+              <div class="bub ay">Tava aqui vendo suas fotos no insta. Seu filho é sua cópia! Um fofo<div class="btm">13:26</div></div>
+              <div class="react">❤️</div>
+            </div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow">
+              <div class="bub br2">é o amor da vida de papai!!<div class="btm">13:26</div></div>
+              <div class="react">❤️</div>
+            </div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow">
+              <div class="bub br2">meu grude!<div class="btm">13:27</div></div>
+              <div class="react">❤️</div>
+            </div>
+          </div>
+          <div class="br">
+            <div class="bav bav-a">A</div>
+            <div class="brow">
+              <div class="bub ay">
+                <div style="border-left:2px solid rgba(189,147,249,.4);padding-left:8px;margin-bottom:6px;font-size:10px;color:rgba(189,147,249,.6)">Então... Me conta sua experiencia lá no tinder?</div>
+                Não tenho muitas experiências lá não. Nesse período lá foi só conversas mesmo.<div class="btm">13:29</div>
+              </div>
+            </div>
+          </div>
+          <div class="br r">
+            <div class="bav bav-b">B</div>
+            <div class="brow"><div class="bub br2">entedo, sei como é!<div class="btm">13:29</div></div></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- cnSad — meses difíceis -->
+      <div class="tl-content" id="cnSad">
+        <p style="font-size:11px;color:rgba(139,148,158,.5);margin-bottom:20px;letter-spacing:.1em">// changes not committed · working in progress</p>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.55);line-height:1.9">
+          <p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>
+        </div>
+        <div class="sad-quote">
+          "tudo tem seu tempo..."
+          <span class="attr">— Bruno, repetidas vezes</span>
+        </div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">
+          <p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p>
+        </div>
+        <p style="margin-top:20px;font-family:'Fira Code',monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>
+      </div>
+
+      <!-- cn4 — Primeiro encontro -->
+      <div class="tl-content" id="cn4">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// IRL · o dia que saiu da tela e virou real</p>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.7);line-height:1.8">
+          <p style="color:rgba(139,148,158,.6);font-family:'Fira Code',monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>
+        </div>
+      </div>
+
+      <!-- cn5 — The Ticket / Instagram DM -->
+      <div class="tl-content" id="cn5">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Instagram DM · perspectiva do Bruno · 04.04.2025</p>
+        <div class="ig-wrap">
+          <div class="ig-header">
+            <span class="ig-back">‹</span>
+            <div class="ig-av">A</div>
+            <div>
+              <div class="ig-uname">ayllaabreu</div>
+              <div class="ig-active">ativa agora</div>
+            </div>
+          </div>
+          <div style="padding:16px 16px 12px;background:#0D1117;">
+            <div class="ig-date-sep">4 de abr., 19:47</div>
+            <div class="ct">
+              <div class="br r">
+                <div class="brow">
+                  <div class="ig-reel">
+                    <div class="ig-reel-head"><div class="ig-reel-dot"></div>oreidosites <span class="ig-reel-check">✓</span></div>
+                    <div class="ig-reel-thumb">
+                      <img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.7;">
+                      <div class="ig-reel-caption">Compensa namorar com programador? 🎧</div>
+                      <div class="ig-reel-play">▶</div>
+                    </div>
+                    <div class="ig-reel-foot">▶ Reels</div>
+                  </div>
+                  <div class="react" style="text-align:right">🤣</div>
+                  <div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:47</div>
+                </div>
+              </div>
+              <div class="br"><div class="brow"><div class="bub ig-l">Kkkkkkkkk onde que abre esse chamado? Ninguém me sinalizou que tinha que abrir chamado! Favor formalizar por email. 🤣🤣🤣🤣<div class="btm">19:49</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">Kkkkkkkkk<div class="btm">19:50</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">Por isso ainda não foi atendida!!<div class="btm">19:50</div></div></div></div>
+              <div class="br"><div class="brow"><div class="bub ig-l">Será que o chamado é pedir o programador em namoro com as alianças? 🤔<div class="btm">19:52</div></div></div></div>
+              <div class="br"><div class="brow"><div class="bub ig-l">Vixee...<div class="btm">19:52</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">dev@brunoamorim.dev<div class="btm">19:54</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
+              <div class="br">
+                <div class="brow">
+                  <div class="ig-gif l">
+                    <div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-calculando.gif" alt="mulher calculando" style="width:100%;height:100%;object-fit:cover;"></div>
+                    <div class="ig-gif-desc">V = ⁴⁄₃πr³ · mulher calculando...</div>
+                  </div>
+                  <div class="btm" style="font-family:'-apple-system',sans-serif">19:55</div>
+                </div>
+              </div>
+              <div class="br"><div class="brow"><div class="bub ig-l">Perai<div class="btm">19:55</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">É brincadeira menina linda do meu coração<div class="btm">19:55</div></div></div></div>
+              <div class="br"><div class="brow"><div class="bub ig-l">1 min<div class="btm">19:56</div></div></div></div>
+              <div class="br r">
+                <div class="brow">
+                  <div class="ig-gif r">
+                    <div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-menina.gif" alt="menina esperando" style="width:100%;height:100%;object-fit:cover;"></div>
+                    <div class="ig-gif-desc">menina esperando pacientemente...</div>
+                  </div>
+                  <div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:56</div>
+                </div>
+              </div>
+              <div class="br"><div class="brow"><div class="bub ig-l">Prezado, favor verificar seu e-mail<div class="btm">19:57</div></div></div></div>
+              <div class="br"><div class="brow"><div class="bub ig-l" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
+              <div class="ig-seen">Visto ✓✓</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(139,148,158,.45);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm · escalado para: email → chamado_001.md → merged ♥</p>
+      </div>
+
+      <!-- cn6 — 365 dias -->
+      <div class="tl-content" id="cn6">
+        <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// release notes · um ano depois</p>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:rgba(230,237,243,.8);line-height:1.8">
+          <p style="color:#50FA7B;font-family:'Fira Code',monospace;font-size:11px;margin-bottom:12px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>
+          <p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>
+          <p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>
+          <p>⚡ <strong>Improved:</strong> felicidade +∞%</p>
+          <p>🔒 <strong>Security:</strong> coração protegido por você</p>
+          <p style="margin-top:12px;color:#FF79C6">Status: <span style="color:#50FA7B">stable · production-ready · forever</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+<!-- CAP III -->
+<section class="sec sec-fade" id="ticket">
+  <div class="gbg"></div>
+  <div class="orb" style="background:#BD93F9;width:360px;height:360px;top:10%;right:-80px"></div>
+  <p class="slabel">// cap. III &nbsp; ticket.md</p>
+  <h2 class="stitle">Pull Request<br><span class="ac-p">#001</span> — O Chamado</h2>
+
+  <div class="prc">
+
+    <!-- IDE top bar -->
+    <div class="pr-topbar">
+      <div class="pr-dots">
+        <div class="pr-dot r"></div>
+        <div class="pr-dot y"></div>
+        <div class="pr-dot g"></div>
+      </div>
+      <div class="pr-filepath">love-story / <span>chamado-001</span>.md &nbsp;·&nbsp; MERGED</div>
+    </div>
+
+    <!-- PR header -->
+    <div class="prt">
+      <div class="pr-num">// pull request #001 &nbsp;·&nbsp; 04.04.2025</div>
+      <div class="prst">● MERGED</div>
+      <div class="prtl">[CHAMADO #001] — Solicitação de Relacionamento Oficial</div>
+      <div class="prm">opened by <span>@aylla</span> &nbsp;·&nbsp; reviewed by <span>@bruno</span> &nbsp;·&nbsp; merged into <span>main</span></div>
+    </div>
+
+    <!-- Diff metrics -->
+    <div class="pr-metrics">
+      <div class="pr-metric add">
+        <div class="pr-metric-val">+∞</div>
+        <div class="pr-metric-lbl">LINHAS DE AMOR</div>
+      </div>
+      <div class="pr-metric rem">
+        <div class="pr-metric-val">−0</div>
+        <div class="pr-metric-lbl">CONFLITOS</div>
+      </div>
+      <div class="pr-metric neu">
+        <div class="pr-metric-val">v1.0</div>
+        <div class="pr-metric-lbl">RELEASE TAG</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="prb">
+
+      <!-- Reviewers -->
+      <div class="prrev">
+        <div class="rv">
+          <div class="rva a">A</div>
+          <div class="rvn">
+            <strong>Aylla</strong>
+            <span class="req">⟳ requested review</span>
+          </div>
+        </div>
+        <div class="rv">
+          <div class="rva b">B</div>
+          <div class="rvn">
+            <strong>Bruno</strong>
+            <span class="appr">✓ approved & merged</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thread toggle -->
+      <button class="prxbtn" onclick="togglePR()">
+        <span id="prArrow">▶</span>
+        <span id="prBtnText">view_full_thread.md</span>
+      </button>
+
+      <!-- Email thread -->
+      <div class="premail" id="prEmail">
+        <div class="pr-thread">
+
+          <!-- AYLLA comment -->
+          <div class="ebox">
+            <div class="ehdr">
+              <div class="ehdr-av a">A</div>
+              <span class="ehdr-name">Aylla Abreu</span>
+              <span>&lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b7d6cedbdbd6f7dbd8c1d299d2cfd2">[email&#160;protected]</a>&gt;</span>
+              <span class="ehdr-date">04 abr 2025 · 20:12</span>
+            </div>
+            <div class="econtent">
+              <div class="esub">[CHAMADO #001] — Solicitação de Relacionamento Oficial</div>
+              <div class="emeta">
+                <strong>Solicitante:</strong> Aylla Abreu<br>
+                <strong>Departamento:</strong> Coração / Vida Amorosa<br>
+                <strong>Prioridade:</strong> <span style="color:var(--pink)">Alta</span> &nbsp;·&nbsp;
+                <strong>Status:</strong> <span style="color:var(--yellow)">Pendente de Aceite</span>
+              </div>
+              <div class="ebody">
+                <p>Venho, por meio deste chamado, solicitar oficialmente a atualização do nosso status de relacionamento de <em>"ficantes beta"</em> para <em>"namorados oficiais v1.0"</em>. Considerando a compatibilidade de sistemas, integração emocional estável e alta performance nos testes de convivência, acredito que estamos prontos para o deploy do amor oficial.</p>
+                <br>
+                <p><strong>Critérios de Aceitação:</strong></p>
+                <div class="pr-code-block">
+                  • Beijos e abraços constantes<br>
+                  • Apoio mútuo em bugs emocionais<br>
+                  • Atualizações frequentes de carinho<br>
+                  • Compromisso com o SLA da lealdade e transparência
+                </div>
+                <p>Este chamado pode ser escalado diretamente para o coração do desenvolvedor, caso haja demora na resposta.</p>
+                <br>
+                <p>Aguardo retorno com o aceite para darmos <em>commit</em> nesse relacionamento.</p>
+              </div>
+              <div class="esig">Aylla Abreu &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1e7f6772727f5e7271687b307b667b">[email&#160;protected]</a></div>
+            </div>
+          </div>
+
+          <!-- BRUNO reply -->
+          <div class="ebox green">
+            <div class="ehdr">
+              <div class="ehdr-av b">B</div>
+              <span class="ehdr-name">Bruno Amorim</span>
+              <span style="color:var(--green)">&lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93f1e1e6fdfcd3f5fce1f6e5f6e1bdf6ebf6">[email&#160;protected]</a>&gt;</span>
+              <span class="ehdr-date">04 abr 2025 · 20:36</span>
+            </div>
+            <div class="econtent">
+              <div class="esub" style="color:var(--green)">[RE: CHAMADO #001] — Aceito com Prioridade Máxima</div>
+              <div class="emeta">
+                <strong>Desenvolvedor:</strong> Bruno Amorim<br>
+                <strong>Status:</strong> <span style="color:var(--green)">Aceito com Prioridade Máxima</span> &nbsp;·&nbsp;
+                <strong>Versão:</strong> LoveAPI 1.0 ❤️
+              </div>
+              <div class="ebody">
+                <p>Querida Aylla,</p><br>
+                <p>Após análise profunda da solicitação, validamos todos os critérios com total êxito. Os testes de compatibilidade apresentaram estabilidade emocional acima da média, integração afetiva sem falhas críticas e conexão entre os sistemas fluindo em alta frequência.</p><br>
+                <p>Portanto, o deploy do <strong>relacionamento oficial v1.0</strong> está autorizado, autenticado e assinado digitalmente pelo meu coração ❤️.</p>
+                <div class="pr-code-block">
+                  ✅ Beijos e abraços constantes (modo automático ativado)<br>
+                  ✅ Suporte full-time para bugs emocionais<br>
+                  ✅ Atualizações frequentes de carinho (push diário garantido)<br>
+                  ✅ SLA de lealdade com uptime de 100%
+                </div>
+                <p>Commits futuros já previstos: <span style="color:var(--cyan)">v2.0</span> viagens juntos · <span style="color:var(--cyan)">v3.0</span> morar junto · <span style="color:var(--cyan)">LTS</span> casamento 😄</p>
+                <div class="pr-final-status">💚 Status Final: ACEITO E EM EXECUÇÃO CONTÍNUA</div>
+              </div>
+              <div class="esig">Bruno Amorim &nbsp;·&nbsp; 💻 Desenvolvedor do seu sorriso</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- CAP IV -->
+<section class="sec sec-fade" id="memories">
+  <div class="gbg"></div>
+  <p class="slabel">// cap. IV &nbsp; memories.jpg</p>
+  <h2 class="stitle"><span class="ac-pk">Gallery</span> —<br>frames que ficam.</h2>
+
+  <div class="bento">
+    <!-- 01 · hero tall esquerdo -->
+    <div class="bi"><div class="bph bp1"><img src="assets/gallery/foto1.jpg" alt="memoria 01" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 01</span></div><span class="bnum">001</span><div class="bov"><div class="bcap"><span class="tg">#memory</span><br>minha foto favorita ✨</div></div></div>
+    <!-- 02 -->
+    <div class="bi"><div class="bph bp2"><img src="assets/gallery/foto2.jpg" alt="memoria 02" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 02</span></div><span class="bnum">002</span><div class="bov"><div class="bcap"><span class="tg">#moment</span><br>primeira vez na sua casa</div></div></div>
+    <!-- 03 -->
+    <div class="bi"><div class="bph bp3"><img src="assets/gallery/foto3.jpg" alt="memoria 03" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 03</span></div><span class="bnum">003</span><div class="bov"><div class="bcap"><span class="tg">#us</span><br>tostando no sol</div></div></div>
+    <!-- 04 -->
+    <div class="bi"><div class="bph bp4"><img src="assets/gallery/foto4.jpg" alt="memoria 04" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 04</span></div><span class="bnum">004</span><div class="bov"><div class="bcap"><span class="tg">#love</span><br>a gente sendo a gente</div></div></div>
+    <!-- 05 -->
+    <div class="bi"><div class="bph bp5"><img src="assets/gallery/foto5.jpg" alt="memoria 05" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 05</span></div><span class="bnum">005</span><div class="bov"><div class="bcap"><span class="tg">#forever</span><br>memória favorita</div></div></div>
+    <!-- 06 -->
+    <div class="bi"><div class="bph bp6"><img src="assets/gallery/foto6.jpg" alt="memoria 06" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 06</span></div><span class="bnum">006</span><div class="bov"><div class="bcap"><span class="tg">#random</span><br>um dia qualquer perfeito</div></div></div>
+    <!-- 07 -->
+    <div class="bi"><div class="bph bp7"><img src="assets/gallery/foto7.jpg" alt="memoria 07" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 07</span></div><span class="bnum">007</span><div class="bov"><div class="bcap"><span class="tg">#vibes</span><br>nossa energia toda</div></div></div>
+    <!-- 08 · hero tall direito -->
+    <div class="bi"><div class="bph bp8"><img src="assets/gallery/foto8.jpg" alt="memoria 08" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 08</span></div><span class="bnum">008</span><div class="bov"><div class="bcap"><span class="tg">#us</span><br>365 dias assim ♥</div></div></div>
+    <!-- 09 -->
+    <div class="bi"><div class="bph bp9"><img src="assets/gallery/foto9.jpg" alt="memoria 09" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 09</span></div><span class="bnum">009</span><div class="bov"><div class="bcap"><span class="tg">#love</span><br>olhar que não mente</div></div></div>
+    <!-- 10 -->
+    <div class="bi"><div class="bph bp10"><img src="assets/gallery/foto10.jpg" alt="memoria 10" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 10</span></div><span class="bnum">010</span><div class="bov"><div class="bcap"><span class="tg">#forever</span><br>Wilson e Wilsa</div></div></div>
+    <!-- 11 -->
+    <div class="bi"><div class="bph bp11"><img src="assets/gallery/foto11.jpg" alt="memoria 11" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 11</span></div><span class="bnum">011</span><div class="bov"><div class="bcap"><span class="tg">#memory</span><br>esse sorriso, sempre</div></div></div>
+    <!-- 12 -->
+    <div class="bi"><div class="bph bp12"><img src="assets/gallery/foto12.jpg" alt="memoria 12" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.85;"><span class="ico">// 12</span></div><span class="bnum">012</span><div class="bov"><div class="bcap"><span class="tg">#moment</span><br>commit · v1.0 forever</div></div></div>
+    <!-- ghost — preenche col6/row5 no desktop; invisível e sem efeito no layout responsivo -->
+    <div class="bi bi-ghost" aria-hidden="true" style="grid-column:6;grid-row:5"></div>
+  </div>
+  <p style="margin-top:20px;font-size:10px;color:var(--muted);opacity:.4;letter-spacing:.2em;text-align:center">// 12 frames · substitua pelos seus momentos favoritos</p>
+</section>
+
+
+
+<!-- CAP V -->
+<section class="sec sec-fade" id="forever">
+  <div class="gbg"></div>
+  <div class="orb" style="background:#50FA7B;width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+  <p class="slabel">// cap. V &nbsp; forever.exe</p>
+  <h2 class="stitle">Executando<br><span class="ac-p">loop</span> <span class="ac-pk">infinito</span>...</h2>
+
+  <div class="tw">
+    <div class="ttop">
+      <div class="td r"></div><div class="td y"></div><div class="td g2"></div>
+      <span class="ttl">forever.exe — Terminal v1.0.0</span>
+    </div>
+    <div class="tbody" id="termBody">
+      <div class="tline"><span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;</span><span id="lsTyped"></span><span class="tcur" id="lsCur"></span></div>
+      <div class="tout" id="lsOut" style="display:none">amor &nbsp; risos &nbsp; cumplicidade &nbsp; futuros &nbsp; voce</div>
+      <div class="tline" id="promptLine" style="display:none;margin-top:8px"><span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;<span class="tcur" id="termCur"></span></span></div>
+    </div>
+  </div>
+  <button class="runbtn" id="runBtn" onclick="runForever()">▶ run forever.exe</button>
+</section>
+
+
+
+<!-- SECRET -->
+<section class="sec sec-fade" id="secret">
+  <div class="gbg"></div>
+  <p class="slabel" style="justify-content:center">// classified &nbsp; top_secret.enc</p>
+  <h2 class="stitle" style="text-align:center">Um arquivo<br><span class="ac-pk">criptografado</span> para você.</h2>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:40px;letter-spacing:.15em;text-align:center">// acesso restrito · apenas para Bruno</p>
+  <button class="secbtn" onclick="openModal()">🔓 decrypt_message.enc</button>
+</section>
+
+<!-- FOOTER BADGE -->
+<footer style="
+  text-align:center; padding:40px 24px 52px;
+  font-family:'Fira Code',monospace; font-size:10px;
+  color:rgba(139,148,158,.18); letter-spacing:.22em;
+  line-height:2; user-select:none;
+">
+  session_active &nbsp;·&nbsp; v1.0.0 &nbsp;·&nbsp; 04.04.2025 → ∞<br>
+  <span style="opacity:.6">// process running · never exiting</span>
+</footer>
+
+
+</main>
+
+
+<script src="script.js"></script>
+</body>
+</html>
