@@ -2797,3 +2797,255 @@ body.forever-next-hidden #chapNext {
     transform: none !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   SURFACE LIFT — v9
+   Cards visíveis · legado removido · polish final
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. TOKENS: --card nitidamente mais claro que --bg ──────── */
+/* --bg: #07090E  →  --card antes: #0D1119 (delta ~6pts — invisível)
+   agora: #131D2E (delta ~16pts — claramente percebido no escuro)   */
+:root {
+  --card:     #131D2E;
+  --card-alt: #172135;
+  --rim:      inset 0 1px 0 rgba(255,255,255,.07);
+}
+
+/* ── 2. RIM HIGHLIGHT — filete branco no topo cria profundidade ─ */
+/* Aplica em todos os cards — sobrescreve box-shadow existente
+   mantendo os outros valores que já estavam definidos             */
+.panel.lft {
+  box-shadow:
+    var(--depth),
+    var(--rim),
+    0 0 44px rgba(255,121,198,.07) !important;
+}
+.panel:not(.lft) {
+  box-shadow:
+    var(--depth),
+    var(--rim),
+    0 0 44px rgba(80,250,123,.05) !important;
+}
+.tl-panel {
+  background: #0F182A !important;
+  box-shadow:
+    0 4px 32px rgba(0,0,0,.58),
+    0 0 0 1px rgba(189,147,249,.1),
+    var(--rim) !important;
+}
+.tw, .gtw {
+  box-shadow: var(--depth), var(--rim), 0 0 60px rgba(189,147,249,.05) !important;
+}
+.prc {
+  box-shadow: var(--depth), var(--rim), 0 0 80px rgba(189,147,249,.06) !important;
+}
+.ebox {
+  box-shadow: 0 2px 12px rgba(0,0,0,.55), var(--rim) !important;
+}
+.rv {
+  box-shadow: 0 2px 10px rgba(0,0,0,.5), var(--rim) !important;
+}
+
+/* ── 3. STAT CARDS — rim incluso ───────────────────────────── */
+.hstat.s1 {
+  box-shadow:
+    inset 0 2.5px 0 rgba(255,121,198,.8),
+    var(--depth), var(--rim) !important;
+  animation: statPulse1 4s ease-in-out infinite !important;
+}
+.hstat.s2 {
+  box-shadow:
+    inset 0 2.5px 0 rgba(189,147,249,.85),
+    var(--depth), var(--rim) !important;
+  animation: statPulse2 4.4s ease-in-out infinite .6s !important;
+}
+.hstat.s3 {
+  box-shadow:
+    inset 0 2.5px 0 rgba(80,250,123,.7),
+    var(--depth), var(--rim) !important;
+  animation: statPulse3 3.8s ease-in-out infinite 1.2s !important;
+}
+.hstat:hover { animation: none !important; }
+
+/* ── 4. CONFLICT PANELS — tint + borda reforçados ──────────── */
+.panel.lft {
+  background: linear-gradient(150deg,
+    rgba(255,121,198,.13) 0%,
+    var(--card) 55%) !important;
+  border-color: rgba(255,121,198,.36) !important;
+}
+.panel:not(.lft) {
+  background: linear-gradient(150deg,
+    rgba(80,250,123,.09) 0%,
+    var(--card) 55%) !important;
+  border-color: rgba(80,250,123,.28) !important;
+}
+.panel.lft:hover  { border-color: rgba(255,121,198,.55) !important; }
+.panel:not(.lft):hover { border-color: rgba(80,250,123,.45) !important; }
+
+/* ── 5. CBLOCK — contador vira inner-card destacado ─────────── */
+.cblock {
+  background: rgba(0,0,0,.28);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  padding: 18px 20px 14px;
+  margin: 10px 0 16px;
+  position: relative;
+}
+/* borda superior colorida por painel */
+.panel.lft    .cblock { border-top: 2px solid rgba(255,121,198,.55); }
+.panel:not(.lft) .cblock { border-top: 2px solid rgba(80,250,123,.55); }
+
+/* número com glow mais forte dentro do novo container */
+.cnum.p { text-shadow: 0 0 28px rgba(189,147,249,.6), 0 0 52px rgba(189,147,249,.22) !important; }
+.cnum.g { text-shadow: 0 0 28px rgba(80,250,123,.55), 0 0 52px rgba(80,250,123,.18) !important; }
+
+/* ── 6. TIMELINE — per-node micro-tint no conteúdo ativo ────── */
+#cn1.active  { background: rgba(157,144,224,.03)  !important; }
+#cn2.active  { background: rgba(184,158,216,.03)  !important; }
+#cn3.active  { background: rgba(200,160,200,.03)  !important; }
+#cnSad.active { background: rgba(139,148,158,.018) !important; }
+#cn4.active  { background: rgba(212,160,180,.03)  !important; }
+#cn5.active  { background: rgba(216,128,168,.034) !important; }
+#cn6.active  { background: rgba(109,196,154,.034) !important; }
+/* tl-panel min-height — evita colapso em conteúdos curtos */
+.tl-panel { min-height: 160px; }
+
+/* ── 7. .gg — remove padding legacy do layout vertical antigo ── */
+.gg { padding-left: 0 !important; }
+
+/* ── 8. SECTION TINTS — mais perceptíveis por capítulo ─────── */
+#conflict  { background: radial-gradient(ellipse 80% 65% at 10% 50%, rgba(255,121,198,.055) 0%, transparent 60%) !important; }
+#timeline  { background: radial-gradient(ellipse 70% 60% at 50% 20%, rgba(157,144,224,.055) 0%, transparent 65%) !important; }
+#ticket    { background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(80,250,123,.04)   0%, transparent 60%) !important; }
+#memories  { background: radial-gradient(ellipse 70% 55% at 90% 55%, rgba(255,121,198,.05)  0%, transparent 65%) !important; }
+#forever   { background: radial-gradient(ellipse 60% 60% at 50% 65%, rgba(80,250,123,.045)  0%, transparent 60%) !important; }
+#secret    { background: radial-gradient(ellipse 55% 50% at 50% 50%, rgba(189,147,249,.04)   0%, transparent 60%) !important; }
+
+/* ── 9. FOREVER NEXT HIDDEN — suspense até confetti disparar ── */
+.forever-next-hidden #chapNext {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity .5s ease !important;
+}
+
+/* ── 10. MOBILE HEADER TITLE — styling ausente ──────────────── */
+#hdr-mobile-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 7px;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .14em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.hmt-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 5px var(--green);
+  flex-shrink: 0;
+}
+#hmt-text { color: rgba(230,237,243,.55); }
+
+/* ══════════════════════════════════════════════════════════════
+   POLISH v10 — tl-content fade · swipe hint · chapter transitions
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. TIMELINE CONTENT — fade entre commits ─────────────────
+   display:none → block é abrupto; usamos opacity+pointer-events  */
+.tl-content {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .32s cubic-bezier(.4,0,.2,1) !important;
+}
+.tl-content.active {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── 2. CHAPTER TRANSITIONS — direção por posição ─────────────
+   Próximo capítulo entra da direita, anterior da esquerda        */
+.sec { transition: opacity .38s cubic-bezier(.4,0,.2,1),
+                   transform .38s cubic-bezier(.4,0,.2,1) !important; }
+
+/* override: entrada padrão vem de baixo (translateY 10px já definido).
+   Classes adicionadas pelo JS para direção horizontal             */
+.sec.ch-enter-right { transform: translateX(28px) !important; }
+.sec.ch-enter-left  { transform: translateX(-28px) !important; }
+.sec.ch-active      { transform: translateX(0) !important; }
+
+/* ── 3. SWIPE HINT — mobile (aparece 1x, some ao primeiro swipe) ─ */
+#swipe-hint {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(139,148,158,.55);
+  letter-spacing: .18em;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 99;
+  white-space: nowrap;
+  transition: opacity .5s ease;
+}
+#swipe-hint.hint-show { opacity: 1; }
+#swipe-hint.hint-hide { opacity: 0; }
+
+/* só aparece em touch */
+@media (hover: none) and (pointer: coarse) {
+  #swipe-hint { display: block; }
+}
+@media (hover: hover) {
+  #swipe-hint { display: none !important; }
+}
+
+/* ── 4. FOREVER SECTION — centraliza conteúdo verticalmente ───── */
+#forever {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  min-height: 0 !important;
+  padding-top: clamp(48px, 8vh, 80px) !important;
+  padding-bottom: clamp(48px, 8vh, 80px) !important;
+}
+
+/* ── 5. SECRET SECTION — mais atmosphere ──────────────────────── */
+#secret {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding-top: clamp(60px, 12vh, 120px) !important;
+  padding-bottom: clamp(60px, 12vh, 120px) !important;
+}
+
+/* Pulse animation no secbtn quando estiver idle */
+@keyframes secretPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(255,121,198,.18), 0 0 0 0 rgba(255,121,198,.08); }
+  50%     { box-shadow: 0 0 40px rgba(255,121,198,.38), 0 0 60px rgba(189,147,249,.12); }
+}
+.secbtn { animation: secretPulse 3.5s ease-in-out infinite; }
+.secbtn:hover { animation: none; }
+
+/* ── 6. CONFLICT PANEL — lft agora é rosa (Aylla = pink) ────────
+   Invertendo para ficar coerente com paleta:
+   Aylla (.lft) → rosa · Bruno (default) → verde                  */
+/* Já aplicado no v9, apenas reforçando a cor da borda superior */
+.panel.lft .cblock { border-top-color: rgba(255,121,198,.65) !important; }
+
+/* ── 7. PRINT / ZERO MOTION ────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sec { transition: opacity .001ms !important; }
+  .tl-content { transition: opacity .001ms !important; }
+  #swipe-hint { display: none !important; }
+}
