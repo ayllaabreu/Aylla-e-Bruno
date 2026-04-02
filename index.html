@@ -13,6 +13,18 @@
 </head>
 <body>
 
+<!-- LIGHTBOX -->
+<div id="lb" role="dialog" aria-modal="true" aria-label="Visualizador de fotos">
+  <button id="lb-close" aria-label="Fechar lightbox">[ esc ]</button>
+  <button id="lb-prev" aria-label="Foto anterior">&#8592;</button>
+  <img id="lb-img" src="" alt="Memória">
+  <div id="lb-cap"></div>
+  <button id="lb-next" aria-label="Próxima foto">&#8594;</button>
+</div>
+
+<!-- CONFETTI CANVAS (forever.exe) -->
+<canvas id="confetti-cv" aria-hidden="true"></canvas>
+
 <!-- CURSOR -->
 <div id="cur"></div>
 <div id="ring"></div>
@@ -31,7 +43,7 @@
 <!-- git terminal is now inline inside #conflict section -->
 
 <!-- MODAL -->
-<div id="modal">
+<div id="modal" role="dialog" aria-modal="true" aria-label="Mensagem secreta">
   <div class="min2">
     <canvas id="hc"></canvas>
     <div class="mcon">
@@ -57,7 +69,12 @@
     <div class="tab" onclick="go('ticket')"><div class="dot"></div><span>ticket<span class="emd">.md</span></span></div>
     <div class="tab" onclick="go('memories')"><div class="dot"></div><span>memories<span class="ejpg">.jpg</span></span></div>
     <div class="tab" onclick="go('forever')"><div class="dot"></div><span>forever<span class="ejs">.exe</span></span></div>
-    <div class="tab" onclick="go('secret')"><div class="dot"></div><span>secret<span class="ediff">.enc</span></span></div>
+    <div class="tab" onclick="go('secret')"><div class="dot"></div><span><span class="tab-lock">🔒</span></span></div>
+  </div>
+  <!-- título do capítulo ativo — visível apenas em mobile (≤640px) -->
+  <div id="hdr-mobile-title" style="display:none">
+    <span class="hmt-dot"></span>
+    <span id="hmt-text">index.js</span>
   </div>
 </div>
 
@@ -318,6 +335,7 @@
       <div class="tl-content" id="cn5">
         <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Instagram DM · perspectiva do Bruno · 04.04.2025</p>
         <div class="ig-wrap">
+          <!-- Header -->
           <div class="ig-header">
             <span class="ig-back">‹</span>
             <div class="ig-av">A</div>
@@ -326,17 +344,20 @@
               <div class="ig-active">ativa agora</div>
             </div>
           </div>
-          <div style="padding:16px 16px 12px;background:#0D1117;">
+          <!-- Messages -->
+          <div class="ig-messages">
             <div class="ig-date-sep">4 de abr., 19:47</div>
             <div class="ct">
+              <!-- Reels embed -->
               <div class="br r">
                 <div class="brow">
                   <div class="ig-reel">
                     <div class="ig-reel-head"><div class="ig-reel-dot"></div>oreidosites <span class="ig-reel-check">✓</span></div>
                     <div class="ig-reel-thumb">
-                      <img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.7;">
+                      <img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail">
                       <div class="ig-reel-caption">Compensa namorar com programador? 🎧</div>
                       <div class="ig-reel-play">▶</div>
+                      <div class="ig-reel-progress"><div class="ig-reel-progress-fill"></div></div>
                     </div>
                     <div class="ig-reel-foot">▶ Reels</div>
                   </div>
@@ -351,7 +372,7 @@
               <div class="br"><div class="brow"><div class="bub ig-l">Vixee...<div class="btm">19:52</div></div></div></div>
               <div class="br r"><div class="brow"><div class="bub ig-r">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
               <div class="br r"><div class="brow"><div class="bub ig-r">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
-              <div class="br r"><div class="brow"><div class="bub ig-r">dev@brunoamorim.dev<div class="btm">19:54</div></div></div></div>
+              <div class="br r"><div class="brow"><div class="bub ig-r">brunoamorim@email.com<div class="btm">19:54</div></div></div></div>
               <div class="br r"><div class="brow"><div class="bub ig-r">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
               <div class="br">
                 <div class="brow">
@@ -378,6 +399,13 @@
               <div class="br"><div class="brow"><div class="bub ig-l" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
               <div class="ig-seen">Visto ✓✓</div>
             </div>
+          </div>
+          <!-- Input bar -->
+          <div class="ig-inputbar">
+            <span class="ig-input-icon">📷</span>
+            <div class="ig-input-fake">Mensagem...</div>
+            <span class="ig-input-icon">🎤</span>
+            <span class="ig-input-icon">❤️</span>
           </div>
         </div>
         <p style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(139,148,158,.45);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm · escalado para: email → chamado_001.md → merged ♥</p>
@@ -630,12 +658,22 @@
   line-height:2; user-select:none;
 ">
   session_active &nbsp;·&nbsp; v1.0.0 &nbsp;·&nbsp; 04.04.2025 → ∞<br>
-  <span style="opacity:.6">// process running · never exiting</span>
+  <span style="opacity:.45">made with ❤ · aylla → bruno · forever.exe</span>
 </footer>
-
-
 </main>
 
+<!-- CHAPTER NAVIGATION -->
+<nav id="chap-nav">
+  <button class="chap-btn chap-prev" id="chapPrev" onclick="prevChapter()" disabled>
+    <span class="chap-arrow">←</span>
+    <span>cd ../</span>
+  </button>
+  <span class="chap-indicator" id="chapIndicator">01 / 07</span>
+  <button class="chap-btn chap-next" id="chapNext" onclick="nextChapter()">
+    <span>./next</span>
+    <span class="chap-arrow">→</span>
+  </button>
+</nav>
 
 <script src="script.js"></script>
 </body>
