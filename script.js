@@ -334,55 +334,86 @@ window.resolveConflict = function(){
 function runGitTerminal(onDone){
   var body = document.getElementById('gtBody');
 
-  function appendLine(cls, text, delay, cb){
+  /* mesma arquitetura do forever.exe: array plano + setTimeout absoluto */
+  var seq = [
+    {d:200,   type:'cmd',       text:'git log --oneline --graph'},
+    {d:1700,  type:'out-graph', text:'* 21-11-2024 — deploy emocional não documentado (Aylla)'},
+    {d:3000,  type:'out-graph', text:'* 04-04-2025 — merge request aprovado (Bruno)'},
+    {d:4200,  type:'cmd',       text:'git diff --stat'},
+    {d:5200,  type:'out-yellow',text:'  amor.json         |  +∞  linhas adicionadas'},
+    {d:6300,  type:'out-pink',  text:'  solidao.exe       |  -1  removida'},
+    {d:7100,  type:'out-cyan',  text:'  2 files changed, ∞ additions(+), 1 deletion(-)'},
+    {d:8200,  type:'out-muted', text:''},
+    {d:8350,  type:'out-muted', text:'// o amor já estava em produção.'},
+    {d:9200,  type:'out-muted', text:'// o Bruno só deu pull depois do chamado.'},
+    {d:10200, type:'out-muted', text:'// ambos estão certos — comemoram nos dois dias.'},
+    {d:11400, type:'cursor'},
+  ];
+
+  var CMD_SPD = 55;   /* ms por caractere — comandos */
+  var OUT_SPD = 22;   /* ms por caractere — output   */
+
+  seq.forEach(function(s){
     setTimeout(function(){
-      var d = document.createElement('div');
-      d.className = cls;
-      d.textContent = '';
-      body.appendChild(d);
-      body.scrollTo ? body.scrollTo({top:body.scrollHeight, behavior:'smooth'}) : (body.scrollTop = body.scrollHeight);
-      var i = 0;
-      var spd = cls.indexOf('graph') !== -1 ? 18 : 22;
-      var ti = setInterval(function(){
-        if(i < text.length){ d.textContent = text.slice(0, ++i); body.scrollTo ? body.scrollTo({top:body.scrollHeight,behavior:'smooth'}) : (body.scrollTop=body.scrollHeight); }
-        else{ clearInterval(ti); if(cb) cb(); }
-      }, spd);
-    }, delay);
-  }
 
-  function appendPrompt(cmdText, delay, cb){
-    setTimeout(function(){
-      var row = document.createElement('div');
-      row.className = 'gt-prompt';
-      row.style.marginTop = '8px';
-      row.innerHTML = '<span class="gt-ps">aylla@bruno</span><span class="gt-dollar">:~$&nbsp;</span><span class="gt-cmd"></span>';
-      body.appendChild(row);
-      var cs = row.querySelector('.gt-cmd');
-      var i = 0;
-      var ti = setInterval(function(){
-        if(i < cmdText.length){ cs.textContent = cmdText.slice(0,++i); body.scrollTo ? body.scrollTo({top:body.scrollHeight,behavior:'smooth'}) : (body.scrollTop=body.scrollHeight); }
-        else{ clearInterval(ti); if(cb) cb(); }
-      }, 55);
-    }, delay);
-  }
-
-  /* primeiro prompt aparece direto e digita o comando */
-  appendPrompt('git log --oneline --graph', 200, function(){
-    appendLine('gt-out-graph', '* 21-11-2024 — deploy emocional não documentado (Aylla)', 600);
-    appendLine('gt-out-graph', '* 04-04-2025 — merge request aprovado (Bruno)',            1100);
-
-    appendPrompt('git diff --stat', 1900, function(){
-      appendLine('gt-out-yellow', '  amor.json         |  +∞  linhas adicionadas',  2600);
-      appendLine('gt-out-pink',   '  solidao.exe       |  -1  removida',             3100);
-      appendLine('gt-out-cyan',   '  2 files changed, ∞ additions(+), 1 deletion(-)',3600);
-
-      appendLine('gt-out-muted', '',                                                  4200);
-      appendLine('gt-out-muted', '// o amor já estava em produção.',                  4300);
-      appendLine('gt-out-muted', '// o Bruno só deu pull depois do chamado.',         4900);
-      appendLine('gt-out-muted', '// ambos estão certos — comemoram nos dois dias.',  5500, function(){
+      /* ── cursor final piscante ── */
+      if(s.type === 'cursor'){
+        var curLine = document.createElement('div');
+        curLine.className = 'gt-prompt';
+        curLine.style.marginTop = '8px';
+        curLine.innerHTML = '<span class="gt-ps">aylla@bruno</span>'
+                          + '<span class="gt-dollar">:~$&nbsp;</span>'
+                          + '<span class="gt-cursor"></span>';
+        body.appendChild(curLine);
+        body.scrollTo
+          ? body.scrollTo({top:body.scrollHeight, behavior:'smooth'})
+          : (body.scrollTop = body.scrollHeight);
         if(onDone) setTimeout(onDone, 600);
-      });
-    });
+        return;
+      }
+
+      /* ── linha de comando (prompt + typewriter) ── */
+      if(s.type === 'cmd'){
+        var row = document.createElement('div');
+        row.className = 'gt-prompt';
+        row.style.marginTop = '8px';
+        row.innerHTML = '<span class="gt-ps">aylla@bruno</span>'
+                      + '<span class="gt-dollar">:~$&nbsp;</span>'
+                      + '<span class="gt-cmd"></span>';
+        body.appendChild(row);
+        body.scrollTo
+          ? body.scrollTo({top:body.scrollHeight, behavior:'smooth'})
+          : (body.scrollTop = body.scrollHeight);
+        var cs = row.querySelector('.gt-cmd');
+        var ci = 0;
+        var ti = setInterval(function(){
+          if(ci < s.text.length){
+            cs.textContent = s.text.slice(0, ++ci);
+            body.scrollTo
+              ? body.scrollTo({top:body.scrollHeight, behavior:'smooth'})
+              : (body.scrollTop = body.scrollHeight);
+          } else { clearInterval(ti); }
+        }, CMD_SPD);
+        return;
+      }
+
+      /* ── linha de output (typewriter por caractere) ── */
+      var out = document.createElement('div');
+      out.className = 'gt-' + s.type;   /* gt-out-graph, gt-out-yellow, etc. */
+      out.textContent = '';
+      body.appendChild(out);
+      if(!s.text) return;               /* linha vazia — só ocupa o espaço */
+      var oi = 0;
+      var t2 = setInterval(function(){
+        if(oi < s.text.length){
+          out.textContent = s.text.slice(0, ++oi);
+          body.scrollTo
+            ? body.scrollTo({top:body.scrollHeight, behavior:'smooth'})
+            : (body.scrollTop = body.scrollHeight);
+        } else { clearInterval(t2); }
+      }, OUT_SPD);
+
+    }, s.d);
   });
 }
 
