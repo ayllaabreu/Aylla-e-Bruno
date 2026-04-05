@@ -3081,3 +3081,30 @@ body.forever-next-hidden #chapNext {
 .sp-log-typing {
   color: var(--muted);   /* texto fica cinza enquanto digita, coloriza no final */
 }
+
+/* ══════════════════════════════════════════════
+   FIX: Remove "caixa preta" top e bottom
+   ══════════════════════════════════════════════ */
+
+/* main ocupa tela toda — header e nav flutuam por cima */
+main {
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+/* seções com padding para não ficar sob header/nav */
+.sec {
+  padding-top: 56px !important;
+  padding-bottom: 68px !important;
+}
+
+/* Garante que o fundo da seção cobre a área toda */
+.sec.ch-active {
+  background: var(--bg);
+}
+
+/* Botão prev invisível no index (primeiro capítulo) */
+#chapPrev:disabled {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
