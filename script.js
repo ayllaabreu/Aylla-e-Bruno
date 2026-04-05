@@ -97,15 +97,6 @@ function showChapter(id){
   }, 350); }
   if(id === 'timeline'){ el.classList.add('tl-visible'); }
   if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
-  if(id === 'memories'){
-    var bento = document.querySelector('#memories .bento');
-    if(bento){
-      bento.classList.remove('bento-reveal');
-      /* força reflow para reiniciar a animação toda vez que entrar no capítulo */
-      void bento.offsetWidth;
-      setTimeout(function(){ bento.classList.add('bento-reveal'); }, 120);
-    }
-  }
   if(id === 'ticket'){
     setTimeout(function(){
       var m = document.querySelector('.pr-metrics');
@@ -369,7 +360,7 @@ window.resolveConflict = function(){
 
   /* roda o terminal e ao final atualiza o botão */
   runGitTerminal(function(){
-    btn.textContent = '✓ Conflict Resolved — forever.exe ♥';
+    btn.textContent = '// merge negado — mas o amor foi aprovado';
   });
 };
 
@@ -388,7 +379,7 @@ function runGitTerminal(onDone){
     {d:8200,  type:'out-muted', text:''},
     {d:8350,  type:'out-muted', text:'// o amor já estava em produção.'},
     {d:9200,  type:'out-muted', text:'// o Bruno só deu pull depois do chamado.'},
-    {d:10200, type:'out-muted', text:'// ambos estão certos — comemoram nos dois dias.'},
+    {d:10200, type:'out-muted', text:'// erro 409: conflito de opiniões — nenhum dado corrompido.'},
     {d:11400, type:'cursor'},
   ];
 
