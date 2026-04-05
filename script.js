@@ -57,7 +57,30 @@ document.querySelectorAll('.sec').forEach(function(section){
 var CHAPTERS = ['index','conflict','timeline','ticket','memories','forever','secret'];
 var currentChapter = 'index';
 
-window.go = function(id){ showChapter(id); };
+window.go = function(id){
+  /* cadeado só abre se vier do capítulo forever */
+  if(id === 'secret' && currentChapter !== 'forever'){
+    var tab = document.querySelector('.tab-lock');
+    if(tab){
+      var orig = tab.textContent;
+      tab.textContent = '🔐';
+      tab.style.transition = 'none';
+      /* shake animation */
+      var parent = tab.closest('.tab');
+      if(parent){
+        parent.style.animation = 'none';
+        parent.style.transform = 'translateX(-4px)';
+        setTimeout(function(){ parent.style.transform = 'translateX(4px)'; }, 80);
+        setTimeout(function(){ parent.style.transform = 'translateX(-3px)'; }, 160);
+        setTimeout(function(){ parent.style.transform = 'translateX(3px)'; }, 240);
+        setTimeout(function(){ parent.style.transform = 'translateX(0)'; }, 320);
+        setTimeout(function(){ tab.textContent = orig; }, 1200);
+      }
+    }
+    return;
+  }
+  showChapter(id);
+};
 
 function showChapter(id){
   /* direction-based enter animation */
