@@ -3153,3 +3153,6 @@ main {
   color: rgba(241,250,140,.75) !important;
   box-shadow: 0 0 18px rgba(241,250,140,.07) !important;
 }
+
+/* ── Esconde botão "next" no último capítulo ── */
+#chapNext:disabled { visibility: hidden !important; pointer-events: none !important; }
