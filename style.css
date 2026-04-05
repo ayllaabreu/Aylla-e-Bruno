@@ -3201,3 +3201,24 @@ main {
   font-size: inherit !important;
   content: '' !important;
 }
+
+/* ══ CURSORS — apenas no prompt final (comportamento real de terminal) ══ */
+
+/* remove cursor de todas as linhas de output */
+.gt-cursor,
+.tcur,
+.term-final-cursor,
+.sp-boot-cur {
+  display: inline-block !important;
+  width: 7px !important;
+  height: 13px !important;
+  background: var(--green) !important;
+  color: transparent !important;
+  vertical-align: middle !important;
+  border-radius: 1px !important;
+  margin-left: 3px !important;
+  animation: blink 1s step-end infinite !important;
+}
+
+/* splash: cursor some após linha ser completada (já feito via JS) */
+/* cursor só aparece nas linhas ativas — o JS já remove com cursor.style.display='none' */
