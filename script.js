@@ -513,26 +513,183 @@ function runGitTerminal(onDone){
 }
 
 /* ── TIMELINE COMMITS ── */
-/* ── HORIZONTAL TIMELINE — selectCommit ── */
-window.selectCommit = function(id){
-  /* desativa todos os nodes e conteúdos */
-  document.querySelectorAll('.tl-node').forEach(function(n){ n.classList.remove('active'); });
-  document.querySelectorAll('.tl-content').forEach(function(c){ c.classList.remove('active'); });
+/* ══════════════════════════════════════════════════════════════
+   TIMELINE FULLSCREEN — v10
+   ══════════════════════════════════════════════════════════════ */
 
-  /* ativa o node clicado */
-  var nodeEl = document.getElementById('tln-' + id);
-  if(nodeEl) nodeEl.classList.add('active');
-
-  /* ativa o painel de conteúdo e reseta o scroll para o topo */
-  var content = document.getElementById(id);
-  if(content){
-    content.classList.add('active');
-    content.scrollTop = 0;
+/* mapa de commits: id → { title, accentColor, html } */
+var TL_COMMITS = {
+  cn1: {
+    id: 'cn1',
+    title: 'Inner Circle · Jul 2024',
+    accent: 'rgba(157,144,224,.7)',
+    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Inner Circle · primeiro sinal do universo</p>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<p>O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.</p>'
+        + '<p style="margin-top:14px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
+        + '</div>'
+  },
+  cn2: {
+    id: 'cn2',
+    title: 'Tinder · 17 Jul 2024',
+    accent: 'rgba(184,158,216,.7)',
+    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Tinder · segunda tentativa do destino</p>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<p>Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.</p>'
+        + '<p style="margin-top:14px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
+        + '</div>'
+  },
+  cn3: {
+    id: 'cn3',
+    title: 'WhatsApp · 18 Jul 2024',
+    accent: 'rgba(200,160,200,.7)',
+    html: null  /* populated by initCommitContent() from DOM template */
+  },
+  cnSad: {
+    id: 'cnSad',
+    title: '// pausa · Jul→Nov 2024',
+    accent: 'rgba(139,148,158,.4)',
+    html: '<p style="font-size:11px;color:rgba(139,148,158,.5);margin-bottom:24px;letter-spacing:.1em">// changes not committed · working in progress</p>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9">'
+        + '<p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>'
+        + '</div>'
+        + '<div class="sad-quote">"tudo tem seu tempo..."<span class="attr">— Bruno, repetidas vezes</span></div>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">'
+        + '<p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p></div>'
+        + '<p style="margin-top:24px;font-family:'Fira Code',monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>'
+  },
+  cn4: {
+    id: 'cn4',
+    title: 'Encontro · 21 Nov 2024',
+    accent: 'rgba(212,160,180,.7)',
+    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// IRL · o dia que saiu da tela e virou real</p>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<p style="color:rgba(139,148,158,.6);font-family:'Fira Code',monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>'
+        + '</div>'
+  },
+  cn5: {
+    id: 'cn5',
+    title: 'The Ticket · 04 Abr 2025',
+    accent: 'rgba(216,128,168,.7)',
+    html: null  /* conteúdo do Instagram DM — copiado do HTML original */
+  },
+  cn6: {
+    id: 'cn6',
+    title: '365 dias · 04 Abr 2026',
+    accent: 'rgba(109,196,154,.7)',
+    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// release notes · um ano depois</p>'
+        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.8);line-height:1.8">'
+        + '<p style="color:#50FA7B;font-family:'Fira Code',monospace;font-size:11px;margin-bottom:16px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
+        + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
+        + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
+        + '<p>⚡ <strong>Improved:</strong> felicidade +∞%</p>'
+        + '<p>🔒 <strong>Security:</strong> coração protegido por você</p>'
+        + '<p style="margin-top:16px;color:#FF79C6">Status: <span style="color:#50FA7B">stable · production-ready · forever</span></p>'
+        + '</div>'
   }
 };
 
-/* mantém toggleC como alias por compatibilidade */
-window.toggleC = window.selectCommit;
+/* IDs em ordem para navegação prev/next */
+var TL_ORDER = ['cn1','cn2','cn3','cnSad','cn4','cn5','cn6'];
+var tlCurrentId = null;
+
+/* ── Inicializa conteúdo dos commits que precisam do DOM ── */
+(function initCommitContent(){
+  /* cn3 — WhatsApp: pega o HTML do template escondido no DOM */
+  var cn3Template = document.getElementById('cn3-content-template');
+  if(cn3Template) TL_COMMITS.cn3.html = cn3Template.innerHTML;
+
+  /* cn5 — Instagram DM: pega do template */
+  var cn5Template = document.getElementById('cn5-content-template');
+  if(cn5Template) TL_COMMITS.cn5.html = cn5Template.innerHTML;
+})();
+
+window.openCommit = function(id){
+  var commit = TL_COMMITS[id];
+  if(!commit) return;
+
+  var fs      = document.getElementById('tl-fullscreen');
+  var inner   = document.getElementById('tl-fs-inner');
+  var titleEl = document.getElementById('tl-fs-title');
+  var content = document.getElementById('tl-fs-content');
+  if(!fs || !inner) return;
+
+  var prevId = tlCurrentId;
+  tlCurrentId = id;
+
+  /* direção da animação */
+  var prevIdx = TL_ORDER.indexOf(prevId);
+  var nextIdx = TL_ORDER.indexOf(id);
+  var dir = (!prevId || nextIdx > prevIdx) ? 'next' : 'prev';
+
+  /* preenche conteúdo */
+  inner.classList.remove('fs-slide-next','fs-slide-prev');
+  inner.innerHTML = commit.html || '<p style="color:var(--muted);font-family:'Fira Code',monospace">// em breve...</p>';
+  void inner.offsetWidth; /* reflow */
+  inner.classList.add(dir === 'next' ? 'fs-slide-next' : 'fs-slide-prev');
+
+  /* título e accent */
+  if(titleEl) titleEl.textContent = commit.title;
+  content.style.setProperty('--tl-fs-accent', commit.accent);
+
+  /* nav buttons */
+  var idx = TL_ORDER.indexOf(id);
+  var prevBtn = document.getElementById('tl-fs-prev');
+  var nextBtn = document.getElementById('tl-fs-next');
+  if(prevBtn) prevBtn.disabled = (idx === 0);
+  if(nextBtn) nextBtn.disabled = (idx === TL_ORDER.length - 1);
+
+  /* scroll topo */
+  content.scrollTop = 0;
+
+  /* marca dot ativo */
+  document.querySelectorAll('.tl-node').forEach(function(n){ n.classList.remove('active'); });
+  var nodeEl = document.getElementById('tln-' + id);
+  if(nodeEl) nodeEl.classList.add('active');
+
+  /* abre fullscreen */
+  fs.classList.add('tl-fs-open');
+};
+
+window.closeCommit = function(){
+  var fs = document.getElementById('tl-fullscreen');
+  if(fs) fs.classList.remove('tl-fs-open');
+  tlCurrentId = null;
+};
+
+window.navCommit = function(dir){
+  var idx = TL_ORDER.indexOf(tlCurrentId);
+  var next = idx + dir;
+  if(next >= 0 && next < TL_ORDER.length) window.openCommit(TL_ORDER[next]);
+};
+
+/* teclado: ← → dentro da timeline fullscreen */
+document.addEventListener('keydown', function(e){
+  var fs = document.getElementById('tl-fullscreen');
+  if(!fs || !fs.classList.contains('tl-fs-open')) return;
+  if(e.key === 'ArrowRight') window.navCommit(1);
+  if(e.key === 'ArrowLeft')  window.navCommit(-1);
+  if(e.key === 'Escape')     window.closeCommit();
+});
+
+/* swipe dentro do fullscreen (mobile) */
+(function(){
+  var fs = document.getElementById('tl-fullscreen');
+  if(!fs) return;
+  var tX = 0;
+  fs.addEventListener('touchstart', function(e){
+    tX = e.touches[0].clientX;
+  }, {passive:true});
+  fs.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - tX;
+    if(Math.abs(dx) < 40) return;
+    window.navCommit(dx < 0 ? 1 : -1);
+  }, {passive:true});
+})();
+
+/* mantém selectCommit como alias retrocompatível */
+window.selectCommit = window.openCommit;
+window.toggleC = window.openCommit;
 
 /* ── PR TICKET ── */
 var prOpen = false;
