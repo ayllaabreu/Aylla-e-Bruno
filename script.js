@@ -562,17 +562,19 @@ window.runForever = function(){
   if(curEl && curEl.parentElement) curEl.style.display = 'none';
 
   var seq = [
-    {d:200,  type:'cmd', text:'./forever.exe'},
-    {d:1000, type:'out', text:'initializing_infinite_loop...', c:'#BD93F9'},
-    {d:1700, type:'out', text:'loading: amor.json ..................... ✓', c:'#50FA7B'},
-    {d:2300, type:'out', text:'loading: felicidade.bin ................ ✓', c:'#50FA7B'},
-    {d:2900, type:'out', text:'compiling: memories/* .................. ✓', c:'#50FA7B'},
-    {d:3600, type:'out', text:'status: stable',              c:'#8BE9FD'},
-    {d:4100, type:'out', text:'love_level: 100%',            c:'#FF79C6'},
-    {d:4700, type:'out', text:'uptime: 365d — no errors found', c:'#50FA7B'},
-    {d:5300, type:'out', text:'> loop(∞) { return amor; }',  c:'#F1FA8C'},
-    {d:6000, type:'out', text:'running forever... ♥',        c:'#FF79C6'},
-    {d:6900, type:'cursor'},
+    {d:200,  type:'cmd', text:'inicializando forever.exe...'},
+    {d:1100, type:'out', text:'> verificando compatibilidade emocional...', c:'#BD93F9'},
+    {d:2000, type:'out', text:'✓ conexão estabelecida.',                   c:'#50FA7B'},
+    {d:2700, type:'out', text:'> sincronizando sonhos...',                 c:'#BD93F9'},
+    {d:3400, type:'out', text:'> upload de planos futuros...',             c:'#BD93F9'},
+    {d:4100, type:'out', text:'> removendo inseguranças...',               c:'#BD93F9'},
+    {d:4800, type:'out', text:'> instalando cumplicidade...',              c:'#BD93F9'},
+    {d:5500, type:'out', text:'> aplicando patches de carinho...',         c:'#BD93F9'},
+    {d:6200, type:'out', text:'> processo iniciado...',                    c:'#BD93F9'},
+    {d:7000, type:'out', text:'✓ carregando futuro ao seu lado...',        c:'#50FA7B'},
+    {d:7900, type:'out', text:'',                                          c:'#FF79C6'},
+    {d:8200, type:'out', text:'feliz 1 ano, amor. ♥',                      c:'#FF79C6'},
+    {d:9200, type:'cursor'},
   ];
 
   seq.forEach(function(s){
