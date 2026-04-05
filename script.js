@@ -205,7 +205,7 @@ function triggerHeroStats(){
   }
   if(v3){
     setTimeout(function(){
-      var target = days(TICKET);
+      var target = days(MET);
       var steps = 40;
       var step3 = Math.max(1, Math.floor(target / steps));
       var n3 = 0;
