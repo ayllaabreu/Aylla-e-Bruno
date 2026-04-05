@@ -244,49 +244,50 @@ function triggerHeroStats(){
 /* ── PROGRESSIVE REVEAL — handled by showChapter() in chapter mode ── */
 /* sec-fade classes are triggered via .ch-active + .visible in showChapter */
 
-/* ── TYPEWRITER SPLASH ── */
-var lines = [
-  'accessing_encrypted_love_story...',
-  'decrypting love_data.bin...',
-  'loading timeline.git...',
-  'status: 365_days — stable ✓'
-];
-var li=0, ci=0, phase='type';
-var ttext = document.getElementById('ttext');
-var scur  = document.getElementById('scur');
+/* ── BOOT SEQUENCE SPLASH ── */
+(function(){
+  var log    = document.getElementById('spLog');
+  var btn    = document.getElementById('spBtn');
+  if(!log || !btn) return;
 
-function typeNext(){
-  if(li >= lines.length){ if(scur) scur.style.display='none'; return; }
-  var line = lines[li];
-  if(phase === 'type'){
-    if(ci < line.length){
-      ttext.textContent += line[ci++];
-      setTimeout(typeNext, 46);
-    } else {
-      phase = 'pause';
-      setTimeout(typeNext, 700);
-    }
-  } else if(phase === 'pause'){
-    phase = 'erase';
-    setTimeout(typeNext, 200);
-  } else {
-    if(ci > 0){
-      ttext.textContent = ttext.textContent.slice(0, -1);
-      ci--;
-      setTimeout(typeNext, 18);
-    } else {
-      li++; phase = 'type';
-      if(li < lines.length){
-        setTimeout(typeNext, 320);
-      } else {
-        ttext.textContent = 'session_ready ✓';
-        if(scur) scur.style.display = 'none';
-        document.querySelector('.sp-btn').classList.add('ready');
-      }
-    }
-  }
-}
-setTimeout(typeNext, 900);
+  /* cada linha: [delay_ms, badge, badgeClass, texto_html] */
+  var seq = [
+    [200,  '[BOOT]', 'sp-log-ok',   '<span class="sp-log-text">love_os v1.0.0 — iniciando sistema...</span>'],
+    [700,  '[OK]',   'sp-log-ok',   '<span class="sp-log-text">kernel carregado: </span><span class="sp-log-path">encrypted_love_story.exe</span>'],
+    [1200, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">montando filesystem: </span><span class="sp-log-path">/aylla/bruno</span>'],
+    [1800, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">descriptografando memórias... </span><span class="sp-log-val">366 dias encontrados</span>'],
+    [2500, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">carregando módulo: </span><span class="sp-log-path">amor.json</span> <span class="sp-log-val">∞ linhas</span>'],
+    [3100, '[WARN]', 'sp-log-warn', '<span class="sp-log-text">conflito detectado: </span><span class="sp-log-path">teimosos.diff</span> <span class="sp-log-muted">— ignorado com carinho</span>'],
+    [3800, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">sincronizando corações... </span><span class="sp-log-val">uptime 100%</span>'],
+    [4400, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">todos os sistemas operacionais </span><span class="sp-log-val">✓</span>'],
+    [5000, '[RUN]',  'sp-log-val',  '<span class="sp-log-path">session_ready</span> <span class="sp-log-muted">— aguardando input...</span>'],
+  ];
+
+  seq.forEach(function(item){
+    setTimeout(function(){
+      var row = document.createElement('div');
+      row.className = 'sp-log-line';
+      var badge = document.createElement('span');
+      badge.className = item[2];
+      badge.textContent = item[1];
+      var text = document.createElement('span');
+      text.innerHTML = item[3];
+      row.appendChild(badge);
+      row.appendChild(text);
+      log.appendChild(row);
+      /* força reflow para animar */
+      void row.offsetWidth;
+      row.classList.add('show');
+      /* scroll suave para a última linha */
+      log.scrollTop = log.scrollHeight;
+    }, item[0]);
+  });
+
+  /* botão aparece após última linha */
+  setTimeout(function(){
+    btn.classList.add('ready');
+  }, 5600);
+})();
 
 /* ── TERMINAL intro typewriter — disparado por showChapter('forever') ── */
 /* NOTA: IntersectionObserver removido — em chapter mode todas as seções ficam
