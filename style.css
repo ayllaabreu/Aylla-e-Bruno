@@ -3156,3 +3156,28 @@ main {
 
 /* ── Esconde botão "next" no último capítulo ── */
 #chapNext:disabled { visibility: hidden !important; pointer-events: none !important; }
+
+/* ══ CONFLICT — hierarquia visual: terminal neutro ══ */
+
+/* Terminal: borda e glow neutros — recua visualmente */
+.gtw {
+  border-color: rgba(255,255,255,.07) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,.5),
+              inset 0 1px 0 rgba(255,255,255,.03) !important;
+}
+.gttop {
+  background: rgba(255,255,255,.03) !important;
+  border-bottom-color: rgba(255,255,255,.06) !important;
+}
+.gtw:hover {
+  border-color: rgba(255,255,255,.11) !important;
+  box-shadow: 0 4px 28px rgba(0,0,0,.55),
+              inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+/* Botão âmbar → neutro cinza — texto já comunica o estado */
+.rbtn.done {
+  border-color: rgba(255,255,255,.1) !important;
+  color: rgba(230,237,243,.4) !important;
+  box-shadow: none !important;
+}
