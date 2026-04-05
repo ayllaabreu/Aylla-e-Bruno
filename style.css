@@ -821,36 +821,8 @@ main{ padding-top:48px; }
 }
 
 /* ── BENTO SKELETON SHIMMER — sweep sutil nos placeholders ── */
-@keyframes bentoShimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
-}
-.bph::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(189,147,249,.055) 50%,
-    rgba(255,121,198,.035) 55%,
-    transparent 70%
-  );
-  background-size: 200% 100%;
-  animation: bentoShimmer 5s ease-in-out infinite;
-  pointer-events: none;
-}
-/* stagger por posição — cada card shimmeriza num tempo ligeiramente diferente */
-.bi:nth-child(2)  .bph::after { animation-delay: -.8s; }
-.bi:nth-child(3)  .bph::after { animation-delay: -1.6s; }
-.bi:nth-child(4)  .bph::after { animation-delay: -2.4s; }
-.bi:nth-child(5)  .bph::after { animation-delay: -3.2s; }
-.bi:nth-child(6)  .bph::after { animation-delay: -4.0s; }
-.bi:nth-child(7)  .bph::after { animation-delay: -.4s; }
-.bi:nth-child(8)  .bph::after { animation-delay: -1.2s; }
-.bi:nth-child(9)  .bph::after { animation-delay: -2.0s; }
-.bi:nth-child(10) .bph::after { animation-delay: -2.8s; }
-.bi:nth-child(11) .bph::after { animation-delay: -3.6s; }
-.bi:nth-child(12) .bph::after { animation-delay: -4.4s; }
+/* bentoShimmer removido — sem efeito diagonal nas fotos */
+.bph::after { display: none; }
 
 
 /* overlay hover */
@@ -2559,29 +2531,34 @@ main {
   margin-bottom: 0;
 }
 
-/* ── 5. GALLERY STAGGER — cards aparecem em cascata ── */
-@keyframes cardReveal {
-  from { opacity: 0; transform: scale(.9) translateY(16px); filter: blur(4px); }
-  to   { opacity: 1; transform: scale(1) translateY(0);    filter: blur(0); }
+/* ── 5. GALLERY — puzzle reveal: cada peça aparece do seu lugar ── */
+@keyframes puzzlePiece {
+  0%   { opacity: 0; transform: scale(.88); filter: blur(8px) brightness(.4); }
+  60%  { opacity: 1; filter: blur(0)       brightness(1); }
+  100% { opacity: 1; transform: scale(1);  filter: blur(0) brightness(1); }
 }
+
 /* reset: cards invisíveis quando o capítulo está inativo */
 #memories:not(.ch-active) .bi { opacity: 0; }
-/* quando ativo+visible, dispara a animação com delay por card */
+
+/* quando ativo+visible, cada card aparece do seu próprio lugar */
 #memories.ch-active.visible .bi {
-  animation: cardReveal .5s cubic-bezier(.4,0,.2,1) both;
+  animation: puzzlePiece .65s cubic-bezier(.22,1,.36,1) both;
 }
-#memories.ch-active.visible .bi:nth-child(1)  { animation-delay: .05s; }
-#memories.ch-active.visible .bi:nth-child(2)  { animation-delay: .12s; }
-#memories.ch-active.visible .bi:nth-child(3)  { animation-delay: .17s; }
-#memories.ch-active.visible .bi:nth-child(4)  { animation-delay: .22s; }
-#memories.ch-active.visible .bi:nth-child(5)  { animation-delay: .27s; }
-#memories.ch-active.visible .bi:nth-child(6)  { animation-delay: .32s; }
-#memories.ch-active.visible .bi:nth-child(7)  { animation-delay: .37s; }
-#memories.ch-active.visible .bi:nth-child(8)  { animation-delay: .42s; }
-#memories.ch-active.visible .bi:nth-child(9)  { animation-delay: .47s; }
-#memories.ch-active.visible .bi:nth-child(10) { animation-delay: .52s; }
-#memories.ch-active.visible .bi:nth-child(11) { animation-delay: .57s; }
-#memories.ch-active.visible .bi:nth-child(12) { animation-delay: .62s; }
+
+/* delays distribuídos em ordem de leitura — cria o efeito de montagem */
+#memories.ch-active.visible .bi:nth-child(1)  { animation-delay: .04s; }
+#memories.ch-active.visible .bi:nth-child(2)  { animation-delay: .13s; }
+#memories.ch-active.visible .bi:nth-child(3)  { animation-delay: .20s; }
+#memories.ch-active.visible .bi:nth-child(4)  { animation-delay: .27s; }
+#memories.ch-active.visible .bi:nth-child(5)  { animation-delay: .34s; }
+#memories.ch-active.visible .bi:nth-child(6)  { animation-delay: .40s; }
+#memories.ch-active.visible .bi:nth-child(7)  { animation-delay: .46s; }
+#memories.ch-active.visible .bi:nth-child(8)  { animation-delay: .52s; }
+#memories.ch-active.visible .bi:nth-child(9)  { animation-delay: .57s; }
+#memories.ch-active.visible .bi:nth-child(10) { animation-delay: .62s; }
+#memories.ch-active.visible .bi:nth-child(11) { animation-delay: .67s; }
+#memories.ch-active.visible .bi:nth-child(12) { animation-delay: .72s; }
 
 /* ── 6. LOCK ICON na tab secret ── */
 .tab-lock {
