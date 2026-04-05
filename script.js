@@ -91,6 +91,11 @@ function showChapter(id){
   document.querySelectorAll('.sec').forEach(function(s){
     s.classList.remove('ch-active','visible','ch-enter-right','ch-enter-left');
   });
+  /* reset gallery cards para re-animar na próxima visita */
+  document.querySelectorAll('#memories .bi:not(.bi-ghost)').forEach(function(b){
+    b.classList.remove('bi-reveal','bi-revealed');
+    b.style.animationDelay = '';
+  });
   var el = document.getElementById(id);
   if(!el) return;
   /* set entry direction, then activate on next frame for transition to work */
@@ -120,6 +125,7 @@ function showChapter(id){
   }, 350); }
   if(id === 'timeline'){ el.classList.add('tl-visible'); }
   if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
+  if(id === 'memories'){ setTimeout(triggerMemoriesPuzzle, 120); }
   if(id === 'ticket'){
     setTimeout(function(){
       var m = document.querySelector('.pr-metrics');
@@ -989,6 +995,41 @@ window.addEventListener('resize', function(){
     navLb(dx < 0 ? 1 : -1);
   }, {passive:true});
 })();
+
+/* ── GALLERY PUZZLE — aparece em ordem aleatória ── */
+function triggerMemoriesPuzzle(){
+  var cards = Array.from(
+    document.querySelectorAll('#memories .bi:not(.bi-ghost)')
+  );
+  if(!cards.length) return;
+
+  /* Fisher-Yates shuffle dos índices */
+  var indices = cards.map(function(_, i){ return i; });
+  for(var i = indices.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = indices[i]; indices[i] = indices[j]; indices[j] = tmp;
+  }
+
+  /* distribui os delays: 0ms → ~1100ms com leve aceleração no final */
+  var total  = 1100;                 /* janela total do efeito em ms    */
+  var spread = total / cards.length; /* ~92ms entre cada peça           */
+
+  indices.forEach(function(cardIdx, revealOrder){
+    var card  = cards[cardIdx];
+    var delay = revealOrder * spread;
+
+    card.style.animationDelay = delay + 'ms';
+    card.classList.remove('bi-reveal','bi-revealed');
+
+    setTimeout(function(){
+      card.classList.add('bi-reveal');
+      /* marca como revelado ao fim da animação (0.7s) */
+      setTimeout(function(){
+        card.classList.add('bi-revealed');
+      }, 700);
+    }, delay);
+  });
+}
 
 /* ── CONFETTI CORAÇÕES (mini, após forever.exe) ── */
 function launchConfetti(){
