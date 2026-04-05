@@ -3137,3 +3137,6 @@ main {
 .gttop {
   border-bottom-color: rgba(189,147,249,.16) !important;
 }
+
+/* Contador de Bruno volta para verde */
+#cB { color: var(--green) !important; text-shadow: 0 0 32px rgba(80,250,123,.5) !important; }
