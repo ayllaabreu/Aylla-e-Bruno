@@ -3103,3 +3103,6 @@ body.forever-next-hidden #chapNext {
   color: var(--pink) !important;
   border-color: rgba(255,121,198,.35) !important;
 }
+
+/* ── Esconde botão "prev" no primeiro capítulo ── */
+#chapPrev:disabled { visibility: hidden; pointer-events: none; }
