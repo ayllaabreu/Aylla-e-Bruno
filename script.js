@@ -258,24 +258,16 @@ function triggerHeroStats(){
 
   /* [badge_text, badgeClass, plain_text, html_text] */
   var lines = [
-    ['[BOOT]', 'sp-log-ok',   'love_os v1.0.0 — iniciando sistema...',
-      '<span class="sp-log-text">love_os v1.0.0 — iniciando sistema...</span>'],
-    ['[OK]',   'sp-log-ok',   'kernel carregado: encrypted_love_story.exe',
-      '<span class="sp-log-text">kernel carregado: </span><span class="sp-log-path">encrypted_love_story.exe</span>'],
-    ['[OK]',   'sp-log-ok',   'montando filesystem: /aylla/bruno',
-      '<span class="sp-log-text">montando filesystem: </span><span class="sp-log-path">/aylla/bruno</span>'],
-    ['[OK]',   'sp-log-ok',   'descriptografando memórias... 366 dias encontrados',
-      '<span class="sp-log-text">descriptografando memórias... </span><span class="sp-log-val">366 dias encontrados</span>'],
-    ['[OK]',   'sp-log-ok',   'carregando módulo: amor.json ∞ linhas',
-      '<span class="sp-log-text">carregando módulo: </span><span class="sp-log-path">amor.json</span> <span class="sp-log-val">∞ linhas</span>'],
-    ['[WARN]', 'sp-log-warn', 'conflito detectado: teimosos.diff — ignorado com carinho',
-      '<span class="sp-log-text">conflito detectado: </span><span class="sp-log-path">teimosos.diff</span> <span class="sp-log-muted">— ignorado com carinho</span>'],
-    ['[OK]',   'sp-log-ok',   'sincronizando corações... uptime 100%',
-      '<span class="sp-log-text">sincronizando corações... </span><span class="sp-log-val">uptime 100%</span>'],
-    ['[OK]',   'sp-log-ok',   'todos os sistemas operacionais ✓',
-      '<span class="sp-log-text">todos os sistemas operacionais </span><span class="sp-log-val">✓</span>'],
-    ['[RUN]',  'sp-log-val',  'session_ready — aguardando input...',
-      '<span class="sp-log-path">session_ready</span> <span class="sp-log-muted">— aguardando input...</span>'],
+    ['[BOOT]', 'sp-log-ok',   'love_os v1.0.0 — iniciando...',
+      '<span class="sp-log-text">love_os v1.0.0 — iniciando...</span>'],
+    ['[OK]',   'sp-log-ok',   'mounting: /aylla/bruno',
+      '<span class="sp-log-text">mounting: </span><span class="sp-log-path">/aylla/bruno</span>'],
+    ['[OK]',   'sp-log-ok',   'decrypting memories... 366 days found',
+      '<span class="sp-log-text">decrypting memories... </span><span class="sp-log-val">366 days found</span>'],
+    ['[WARN]', 'sp-log-warn', 'conflict: teimosos.diff — ignored with love',
+      '<span class="sp-log-text">conflict: </span><span class="sp-log-path">teimosos.diff</span> <span class="sp-log-muted">— ignored with love</span>'],
+    ['[RUN]',  'sp-log-val',  'session_ready — awaiting input...',
+      '<span class="sp-log-path">session_ready</span> <span class="sp-log-muted">— awaiting input...</span>'],
   ];
 
   var CHAR_SPD  = 22;   /* ms por caractere */
