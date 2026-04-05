@@ -3108,3 +3108,32 @@ main {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* ══ CONFLICT — fixes ══ */
+
+/* 1. Remove a caixa dos contadores — fica limpo dentro do panel */
+.cblock {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 12px 8px 10px !important;
+  margin: 6px 0 12px !important;
+}
+.panel.lft .cblock,
+.panel:not(.lft) .cblock {
+  border-top: none !important;
+}
+
+/* 2. Números dos contadores → rosa */
+.cnum.p { color: var(--pink) !important; text-shadow: 0 0 32px rgba(255,121,198,.5) !important; }
+.cnum.g { color: var(--pink) !important; text-shadow: 0 0 32px rgba(255,121,198,.5) !important; }
+
+/* 3. Terminal do conflict — borda e glow roxo/pink (neutro, não verde de Bruno) */
+.gtw {
+  border-color: rgba(189,147,249,.28) !important;
+  box-shadow: 0 0 48px rgba(189,147,249,.09),
+              0 0 100px rgba(255,121,198,.05) !important;
+}
+.gttop {
+  border-bottom-color: rgba(189,147,249,.16) !important;
+}
