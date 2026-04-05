@@ -3091,3 +3091,15 @@ body.forever-next-hidden #chapNext {
     border-color .35s,
     box-shadow .35s !important;
 }
+
+/* ── Aylla chat bubbles — rosa ── */
+.bub.ay {
+  background: rgba(255,121,198,.1) !important;
+  border-color: rgba(255,121,198,.25) !important;
+}
+.bub.ay .bpl { color: var(--pink) !important; }
+.bav-a {
+  background: rgba(255,121,198,.18) !important;
+  color: var(--pink) !important;
+  border-color: rgba(255,121,198,.35) !important;
+}
