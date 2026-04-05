@@ -524,9 +524,9 @@ var TL_COMMITS = {
     title: 'Inner Circle · Jul 2024',
     accent: 'rgba(157,144,224,.7)',
     html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Inner Circle · primeiro sinal do universo</p>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
         + '<p>O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
+        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
         + '</div>'
   },
   cn2: {
@@ -534,9 +534,9 @@ var TL_COMMITS = {
     title: 'Tinder · 17 Jul 2024',
     accent: 'rgba(184,158,216,.7)',
     html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Tinder · segunda tentativa do destino</p>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
         + '<p>Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:'Fira Code',monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
+        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
         + '</div>'
   },
   cn3: {
@@ -550,21 +550,21 @@ var TL_COMMITS = {
     title: '// pausa · Jul→Nov 2024',
     accent: 'rgba(139,148,158,.4)',
     html: '<p style="font-size:11px;color:rgba(139,148,158,.5);margin-bottom:24px;letter-spacing:.1em">// changes not committed · working in progress</p>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9">'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9">'
         + '<p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>'
         + '</div>'
         + '<div class="sad-quote">"tudo tem seu tempo..."<span class="attr">— Bruno, repetidas vezes</span></div>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">'
         + '<p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p></div>'
-        + '<p style="margin-top:24px;font-family:'Fira Code',monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>'
+        + '<p style="margin-top:24px;font-family:Fira Code,monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>'
   },
   cn4: {
     id: 'cn4',
     title: 'Encontro · 21 Nov 2024',
     accent: 'rgba(212,160,180,.7)',
     html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// IRL · o dia que saiu da tela e virou real</p>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
-        + '<p style="color:rgba(139,148,158,.6);font-family:'Fira Code',monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+        + '<p style="color:rgba(139,148,158,.6);font-family:Fira Code,monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>'
         + '</div>'
   },
   cn5: {
@@ -578,8 +578,8 @@ var TL_COMMITS = {
     title: '365 dias · 04 Abr 2026',
     accent: 'rgba(109,196,154,.7)',
     html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// release notes · um ano depois</p>'
-        + '<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:rgba(230,237,243,.8);line-height:1.8">'
-        + '<p style="color:#50FA7B;font-family:'Fira Code',monospace;font-size:11px;margin-bottom:16px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
+        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.8);line-height:1.8">'
+        + '<p style="color:#50FA7B;font-family:Fira Code,monospace;font-size:11px;margin-bottom:16px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
         + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
         + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
         + '<p>⚡ <strong>Improved:</strong> felicidade +∞%</p>'
@@ -624,7 +624,7 @@ window.openCommit = function(id){
 
   /* preenche conteúdo */
   inner.classList.remove('fs-slide-next','fs-slide-prev');
-  inner.innerHTML = commit.html || '<p style="color:var(--muted);font-family:'Fira Code',monospace">// em breve...</p>';
+  inner.innerHTML = commit.html || '<p style="color:var(--muted);font-family:Fira Code,monospace">// em breve...</p>';
   void inner.offsetWidth; /* reflow */
   inner.classList.add(dir === 'next' ? 'fs-slide-next' : 'fs-slide-prev');
 
