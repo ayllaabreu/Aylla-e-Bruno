@@ -3140,3 +3140,16 @@ main {
 
 /* Contador de Bruno volta para verde */
 #cB { color: var(--green) !important; text-shadow: 0 0 32px rgba(80,250,123,.5) !important; }
+
+/* ── Forever terminal — largura corrigida ── */
+.tw {
+  max-width: min(640px, 92vw) !important;
+  width: 100% !important;
+}
+
+/* ── Conflict button done — âmbar ── */
+.rbtn.done {
+  border-color: rgba(241,250,140,.32) !important;
+  color: rgba(241,250,140,.75) !important;
+  box-shadow: 0 0 18px rgba(241,250,140,.07) !important;
+}
