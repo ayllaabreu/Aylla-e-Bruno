@@ -3106,3 +3106,12 @@ body.forever-next-hidden #chapNext {
 
 /* ── Esconde botão "prev" no primeiro capítulo ── */
 #chapPrev:disabled { visibility: hidden; pointer-events: none; }
+
+/* ── Remove slabel (// cap. II) e sua linha divisória ── */
+.slabel { display: none !important; }
+
+/* ── Remove footer (session_active / made with) que sangra por baixo das seções ── */
+footer { display: none !important; }
+
+/* ── Compensa o espaço que o slabel ocupava acima do título ── */
+.sec .stitle { margin-top: 0 !important; }
