@@ -3083,3 +3083,14 @@ body.forever-next-hidden #chapNext {
   background-clip: text;
   animation: shimmer 9s linear infinite .6s;
 }
+
+/* ── REMOVE SLABEL — capítulo labels e linha decorativa removidos ── */
+.slabel,
+.slabel::after {
+  display: none !important;
+}
+/* Reduz o espaço que o slabel ocupava (margin-bottom:8px já zerado com display:none,
+   mas o stitle tinha margin-top implícito relativo ao slabel — ajustar) */
+.stitle {
+  margin-top: 0 !important;
+}
