@@ -561,63 +561,107 @@ window.runForever = function(){
   var curEl = document.getElementById('termCur');
   if(curEl && curEl.parentElement) curEl.style.display = 'none';
 
+  /* linhas em ordem — cada uma espera a anterior terminar */
   var seq = [
-    {d:200,  type:'cmd', text:'inicializando forever.exe...'},
-    {d:1100, type:'out', text:'> verificando compatibilidade emocional...', c:'#BD93F9'},
-    {d:2000, type:'out', text:'✓ conexão estabelecida.',                   c:'#50FA7B'},
-    {d:2700, type:'out', text:'> sincronizando sonhos...',                 c:'#BD93F9'},
-    {d:3400, type:'out', text:'> upload de planos futuros...',             c:'#BD93F9'},
-    {d:4100, type:'out', text:'> removendo inseguranças...',               c:'#BD93F9'},
-    {d:4800, type:'out', text:'> instalando cumplicidade...',              c:'#BD93F9'},
-    {d:5500, type:'out', text:'> aplicando patches de carinho...',         c:'#BD93F9'},
-    {d:6200, type:'out', text:'> processo iniciado...',                    c:'#BD93F9'},
-    {d:7000, type:'out', text:'✓ carregando futuro ao seu lado...',        c:'#50FA7B'},
-    {d:7900, type:'out', text:'',                                          c:'#FF79C6'},
-    {d:8200, type:'out', text:'feliz 1 ano, amor. ♥',                      c:'#FF79C6'},
-    {d:9200, type:'cursor'},
+    {type:'cmd', text:'inicializando forever.exe...',           gap:320},
+    {type:'out', text:'> verificando compatibilidade emocional...', c:'#BD93F9', gap:220},
+    {type:'out', text:'\u2713 conexão estabelecida.',               c:'#50FA7B', gap:280},
+    {type:'out', text:'> sincronizando sonhos...',               c:'#BD93F9', gap:220},
+    {type:'out', text:'> upload de planos futuros...',           c:'#BD93F9', gap:220},
+    {type:'out', text:'> removendo inseguranças...',             c:'#BD93F9', gap:220},
+    {type:'out', text:'> instalando cumplicidade...',            c:'#BD93F9', gap:220},
+    {type:'out', text:'> aplicando patches de carinho...',       c:'#BD93F9', gap:220},
+    {type:'out', text:'> processo iniciado...',                  c:'#BD93F9', gap:280},
+    {type:'out', text:'\u2713 carregando futuro ao seu lado...', c:'#50FA7B', gap:500},
+    {type:'out', text:'',                                        c:'#FF79C6', gap:100},
+    {type:'out', text:'feliz 1 ano, amor. \u2665',              c:'#FF79C6', gap:400},
+    {type:'cursor'},
   ];
 
-  seq.forEach(function(s){
-    setTimeout(function(){
-      if(s.type === 'cursor'){
-        var curLine = document.createElement('div');
-        curLine.className = 'tline';
-        curLine.style.marginTop = '8px';
-        curLine.innerHTML = '<span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span> <span class="term-final-cursor"></span>';
-        tbody.appendChild(curLine);
-        tbody.scrollTo ? tbody.scrollTo({top:tbody.scrollHeight,behavior:'smooth'}) : (tbody.scrollTop=tbody.scrollHeight);
-        /* confetti suave após cursor aparecer */
-        setTimeout(launchConfetti, 400);
+  var CMD_SPD  = 52;  /* ms por char — comando */
+  var OUT_SPD  = 24;  /* ms por char — output  */
+
+  function scroll(){ tbody.scrollTo ? tbody.scrollTo({top:tbody.scrollHeight,behavior:'smooth'}) : (tbody.scrollTop=tbody.scrollHeight); }
+
+  function runLine(idx){
+    if(idx >= seq.length) return;
+    var s = seq[idx];
+
+    /* ── cursor final ── */
+    if(s.type === 'cursor'){
+      var curLine = document.createElement('div');
+      curLine.className = 'tline';
+      curLine.style.marginTop = '8px';
+      curLine.innerHTML = '<span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span> <span class="term-final-cursor"></span>';
+      tbody.appendChild(curLine);
+      scroll();
+      setTimeout(launchConfetti, 400);
+      return;
+    }
+
+    /* ── linha de comando (prompt + typewriter) ── */
+    if(s.type === 'cmd'){
+      var row = document.createElement('div');
+      row.className = 'tline';
+      row.style.marginTop = '8px';
+      row.innerHTML = '<span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;</span><span class="tcur"></span>';
+      tbody.appendChild(row);
+      var cmdSpan = row.querySelector('.tcmd');
+      var cur     = row.querySelector('.tcur');
+      var i = 0;
+      function typeCmd(){
+        if(i < s.text.length){
+          cmdSpan.textContent = s.text.slice(0, ++i);
+          scroll();
+          setTimeout(typeCmd, CMD_SPD);
+        } else {
+          cur.style.display = 'none';
+          scroll();
+          setTimeout(function(){ runLine(idx + 1); }, s.gap || 280);
+        }
+      }
+      setTimeout(typeCmd, 80);
+
+    /* ── linha de output (typewriter) ── */
+    } else {
+      var out = document.createElement('div');
+      out.className = 'tout';
+      out.style.color = s.c || '#50FA7B';
+      out.textContent = '';
+      tbody.appendChild(out);
+      scroll();
+
+      if(!s.text){
+        /* linha vazia — só uma pausa */
+        setTimeout(function(){ runLine(idx + 1); }, s.gap || 120);
         return;
       }
-      if(s.type === 'cmd'){
-        var row = document.createElement('div');
-        row.className = 'tline';
-        row.style.marginTop = '8px';
-        row.innerHTML = '<span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;</span>';
-        tbody.appendChild(row);
-        var cmdSpan = row.querySelector('.tcmd');
-        var ci2 = 0;
-        var t = setInterval(function(){
-          if(ci2 < s.text.length){ cmdSpan.textContent = s.text.slice(0, ++ci2); }
-          else{ clearInterval(t); tbody.scrollTo ? tbody.scrollTo({top:tbody.scrollHeight,behavior:'smooth'}) : (tbody.scrollTop=tbody.scrollHeight); }
-        }, 55);
-      } else {
-        /* typewriter for output lines */
-        var out = document.createElement('div');
-        out.className = 'tout';
-        out.style.color = s.c || '#50FA7B';
-        out.textContent = '';
-        tbody.appendChild(out);
-        var ci3 = 0;
-        var t2 = setInterval(function(){
-          if(ci3 < s.text.length){ out.textContent = s.text.slice(0, ++ci3); }
-          else{ clearInterval(t2); }
-          tbody.scrollTo ? tbody.scrollTo({top:tbody.scrollHeight,behavior:'smooth'}) : (tbody.scrollTop=tbody.scrollHeight);
-        }, 28);
+
+      var cur2 = document.createElement('span');
+      cur2.className = 'tcur';
+      out.appendChild(cur2);
+
+      var i2 = 0;
+      var txt = s.text;
+      function typeOut(){
+        if(i2 < txt.length){
+          out.firstChild.textContent = txt.slice(0, ++i2);
+          scroll();
+          setTimeout(typeOut, OUT_SPD);
+        } else {
+          cur2.style.display = 'none';
+          scroll();
+          setTimeout(function(){ runLine(idx + 1); }, s.gap || 200);
+        }
       }
-    }, s.d);
-  });
+      /* inicia typewriter — o cursor já está no DOM antes do texto */
+      out.insertBefore(document.createTextNode(''), cur2);
+      setTimeout(typeOut, 60);
+    }
+  }
+
+  /* pequeno delay inicial e começa */
+  setTimeout(function(){ runLine(0); }, 200);
 };
 
 /* ── MODAL + HEARTS ── */
