@@ -3089,3 +3089,49 @@ body.forever-next-hidden #chapNext {
 /* garante pulse no novo botão */
 #spBtn.ready { animation: btnPulse 2.8s ease-in-out infinite; }
 #spBtn.ready:hover { animation: none; transform:scale(1.04); }
+
+/* ── Splash title — shimmer igual ao Aylla & Bruno da index ── */
+.sp-title {
+  font-size: clamp(18px, 3.5vw, 30px) !important;
+  letter-spacing: .3em !important;
+  margin-bottom: 36px !important;
+  animation: fup .5s ease .2s both !important;
+}
+.sp-title span {
+  background: linear-gradient(105deg,
+    #BD93F9 0%, #FF79C6 30%, #fff 50%, #FF79C6 70%, #BD93F9 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 8s linear infinite;
+}
+.sp-title-rest {
+  background: linear-gradient(105deg,
+    #8B949E 0%, #c0c8d0 40%, #8B949E 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 10s linear infinite .5s;
+}
+
+/* ── Splash title — shimmer Aylla+Bruno (roxo→rosa→verde→ciano) ── */
+.sp-title span {
+  background: linear-gradient(105deg,
+    #BD93F9 0%, #FF79C6 25%, #50FA7B 50%, #8BE9FD 75%, #BD93F9 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 7s linear infinite;
+}
+.sp-title-rest {
+  background: linear-gradient(105deg,
+    #FF79C6 0%, #50FA7B 30%, #8BE9FD 55%, #BD93F9 80%, #FF79C6 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 9s linear infinite .6s;
+}
