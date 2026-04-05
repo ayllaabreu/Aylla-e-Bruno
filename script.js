@@ -97,6 +97,15 @@ function showChapter(id){
   }, 350); }
   if(id === 'timeline'){ el.classList.add('tl-visible'); }
   if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
+  if(id === 'memories'){
+    var bento = document.querySelector('#memories .bento');
+    if(bento){
+      bento.classList.remove('bento-reveal');
+      /* força reflow para reiniciar a animação toda vez que entrar no capítulo */
+      void bento.offsetWidth;
+      setTimeout(function(){ bento.classList.add('bento-reveal'); }, 120);
+    }
+  }
   if(id === 'ticket'){
     setTimeout(function(){
       var m = document.querySelector('.pr-metrics');
