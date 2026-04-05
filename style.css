@@ -3038,33 +3038,15 @@ body.forever-next-hidden #chapNext {
 #spBtn.ready { animation: btnPulse 2.8s ease-in-out infinite; }
 #spBtn.ready:hover { animation: none; transform:scale(1.04); }
 
-/* ── Splash title — shimmer igual ao Aylla & Bruno da index ── */
+/* ── SPLASH TITLE — inline, shimmer, sem quebra de linha ── */
 .sp-title {
-  font-size: clamp(18px, 3.5vw, 30px) !important;
-  letter-spacing: .3em !important;
+  font-size: clamp(16px, 3vw, 26px) !important;
+  letter-spacing: .22em !important;
+  white-space: nowrap !important;     /* // e encrypted_love_story na mesma linha */
   margin-bottom: 36px !important;
-  animation: fup .5s ease .2s both !important;
+  display: block;
+  text-align: center;
 }
-.sp-title span {
-  background: linear-gradient(105deg,
-    #BD93F9 0%, #FF79C6 30%, #fff 50%, #FF79C6 70%, #BD93F9 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 8s linear infinite;
-}
-.sp-title-rest {
-  background: linear-gradient(105deg,
-    #8B949E 0%, #c0c8d0 40%, #8B949E 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 10s linear infinite .5s;
-}
-
-/* ── Splash title — shimmer Aylla+Bruno (roxo→rosa→verde→ciano) ── */
 .sp-title span {
   background: linear-gradient(105deg,
     #BD93F9 0%, #FF79C6 25%, #50FA7B 50%, #8BE9FD 75%, #BD93F9 100%);
@@ -3093,4 +3075,16 @@ body.forever-next-hidden #chapNext {
    mas o stitle tinha margin-top implícito relativo ao slabel — ajustar) */
 .stitle {
   margin-top: 0 !important;
+}
+
+/* ── Boot typing cursor ── */
+.sp-boot-cur {
+  display: inline-block;
+  color: var(--purple);
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  font-size: .9em;
+}
+.sp-log-typing {
+  color: var(--muted);   /* texto fica cinza enquanto digita, coloriza no final */
 }
