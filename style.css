@@ -3115,3 +3115,14 @@ footer { display: none !important; }
 
 /* ── Compensa o espaço que o slabel ocupava acima do título ── */
 .sec .stitle { margin-top: 0 !important; }
+
+/* ── Botão conflict: estado "pending" após rodar o terminal ── */
+.rbtn.done {
+  background: transparent !important;
+  border: 1px solid rgba(241,250,140,.3) !important;
+  color: rgba(241,250,140,.7) !important;
+  box-shadow: 0 0 18px rgba(241,250,140,.08) !important;
+  animation: none !important;
+  letter-spacing: .06em;
+  font-size: 12px;
+}
