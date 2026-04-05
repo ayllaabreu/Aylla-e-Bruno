@@ -244,49 +244,89 @@ function triggerHeroStats(){
 /* ── PROGRESSIVE REVEAL — handled by showChapter() in chapter mode ── */
 /* sec-fade classes are triggered via .ch-active + .visible in showChapter */
 
-/* ── BOOT SEQUENCE SPLASH ── */
+/* ── BOOT SEQUENCE SPLASH — typewriter por linha ── */
 (function(){
-  var log    = document.getElementById('spLog');
-  var btn    = document.getElementById('spBtn');
+  var log = document.getElementById('spLog');
+  var btn = document.getElementById('spBtn');
   if(!log || !btn) return;
 
-  /* cada linha: [delay_ms, badge, badgeClass, texto_html] */
-  var seq = [
-    [200,  '[BOOT]', 'sp-log-ok',   '<span class="sp-log-text">love_os v1.0.0 — iniciando sistema...</span>'],
-    [700,  '[OK]',   'sp-log-ok',   '<span class="sp-log-text">kernel carregado: </span><span class="sp-log-path">encrypted_love_story.exe</span>'],
-    [1200, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">montando filesystem: </span><span class="sp-log-path">/aylla/bruno</span>'],
-    [1800, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">descriptografando memórias... </span><span class="sp-log-val">366 dias encontrados</span>'],
-    [2500, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">carregando módulo: </span><span class="sp-log-path">amor.json</span> <span class="sp-log-val">∞ linhas</span>'],
-    [3100, '[WARN]', 'sp-log-warn', '<span class="sp-log-text">conflito detectado: </span><span class="sp-log-path">teimosos.diff</span> <span class="sp-log-muted">— ignorado com carinho</span>'],
-    [3800, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">sincronizando corações... </span><span class="sp-log-val">uptime 100%</span>'],
-    [4400, '[OK]',   'sp-log-ok',   '<span class="sp-log-text">todos os sistemas operacionais </span><span class="sp-log-val">✓</span>'],
-    [5000, '[RUN]',  'sp-log-val',  '<span class="sp-log-path">session_ready</span> <span class="sp-log-muted">— aguardando input...</span>'],
+  /* [badge_text, badgeClass, plain_text, html_text] */
+  var lines = [
+    ['[BOOT]', 'sp-log-ok',   'love_os v1.0.0 — iniciando sistema...',
+      '<span class="sp-log-text">love_os v1.0.0 — iniciando sistema...</span>'],
+    ['[OK]',   'sp-log-ok',   'kernel carregado: encrypted_love_story.exe',
+      '<span class="sp-log-text">kernel carregado: </span><span class="sp-log-path">encrypted_love_story.exe</span>'],
+    ['[OK]',   'sp-log-ok',   'montando filesystem: /aylla/bruno',
+      '<span class="sp-log-text">montando filesystem: </span><span class="sp-log-path">/aylla/bruno</span>'],
+    ['[OK]',   'sp-log-ok',   'descriptografando memórias... 366 dias encontrados',
+      '<span class="sp-log-text">descriptografando memórias... </span><span class="sp-log-val">366 dias encontrados</span>'],
+    ['[OK]',   'sp-log-ok',   'carregando módulo: amor.json ∞ linhas',
+      '<span class="sp-log-text">carregando módulo: </span><span class="sp-log-path">amor.json</span> <span class="sp-log-val">∞ linhas</span>'],
+    ['[WARN]', 'sp-log-warn', 'conflito detectado: teimosos.diff — ignorado com carinho',
+      '<span class="sp-log-text">conflito detectado: </span><span class="sp-log-path">teimosos.diff</span> <span class="sp-log-muted">— ignorado com carinho</span>'],
+    ['[OK]',   'sp-log-ok',   'sincronizando corações... uptime 100%',
+      '<span class="sp-log-text">sincronizando corações... </span><span class="sp-log-val">uptime 100%</span>'],
+    ['[OK]',   'sp-log-ok',   'todos os sistemas operacionais ✓',
+      '<span class="sp-log-text">todos os sistemas operacionais </span><span class="sp-log-val">✓</span>'],
+    ['[RUN]',  'sp-log-val',  'session_ready — aguardando input...',
+      '<span class="sp-log-path">session_ready</span> <span class="sp-log-muted">— aguardando input...</span>'],
   ];
 
-  seq.forEach(function(item){
-    setTimeout(function(){
-      var row = document.createElement('div');
-      row.className = 'sp-log-line';
-      var badge = document.createElement('span');
-      badge.className = item[2];
-      badge.textContent = item[1];
-      var text = document.createElement('span');
-      text.innerHTML = item[3];
-      row.appendChild(badge);
-      row.appendChild(text);
-      log.appendChild(row);
-      /* força reflow para animar */
-      void row.offsetWidth;
-      row.classList.add('show');
-      /* scroll suave para a última linha */
-      log.scrollTop = log.scrollHeight;
-    }, item[0]);
-  });
+  var CHAR_SPD  = 22;   /* ms por caractere */
+  var LINE_GAP  = 120;  /* pausa entre fim de uma linha e início da próxima */
+  var BADGE_PRE = 80;   /* badge aparece X ms antes do texto começar */
 
-  /* botão aparece após última linha */
+  function typeLine(lineIdx, onDone) {
+    if(lineIdx >= lines.length){ if(onDone) onDone(); return; }
+    var item = lines[lineIdx];
+
+    /* cria a linha e adiciona ao log */
+    var row = document.createElement('div');
+    row.className = 'sp-log-line show';
+
+    var badgeEl = document.createElement('span');
+    badgeEl.className = item[1];
+    badgeEl.textContent = item[0];
+
+    var cursor = document.createElement('span');
+    cursor.className = 'sp-boot-cur';
+    cursor.textContent = '▊';
+
+    var textEl = document.createElement('span');
+    textEl.className = 'sp-log-typing';
+
+    row.appendChild(badgeEl);
+    row.appendChild(textEl);
+    row.appendChild(cursor);
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+
+    /* digita caractere por caractere */
+    var plain = item[2];
+    var html  = item[3];
+    var i = 0;
+    function typeChar(){
+      if(i < plain.length){
+        textEl.textContent = plain.slice(0, ++i);
+        log.scrollTop = log.scrollHeight;
+        setTimeout(typeChar, CHAR_SPD);
+      } else {
+        /* linha completa: aplica HTML colorido, remove cursor */
+        textEl.innerHTML = html;
+        cursor.style.display = 'none';
+        setTimeout(function(){ typeLine(lineIdx + 1, onDone); }, LINE_GAP);
+      }
+    }
+    setTimeout(typeChar, BADGE_PRE);
+  }
+
+  /* pequeno delay inicial para o splash aparecer */
   setTimeout(function(){
-    btn.classList.add('ready');
-  }, 5600);
+    typeLine(0, function(){
+      /* todas as linhas digitadas — mostra botão */
+      setTimeout(function(){ btn.classList.add('ready'); }, 200);
+    });
+  }, 300);
 })();
 
 /* ── TERMINAL intro typewriter — disparado por showChapter('forever') ── */
