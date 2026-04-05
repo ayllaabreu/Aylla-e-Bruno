@@ -2502,34 +2502,27 @@ main {
   margin-bottom: 0;
 }
 
-/* ── 5. GALLERY — puzzle reveal: cada peça aparece do seu lugar ── */
-@keyframes puzzlePiece {
-  0%   { opacity: 0; transform: scale(.88); filter: blur(8px) brightness(.4); }
-  60%  { opacity: 1; filter: blur(0)       brightness(1); }
-  100% { opacity: 1; transform: scale(1);  filter: blur(0) brightness(1); }
+/* ── 5. GALLERY — puzzle reveal aleatório (delays via JS) ── */
+@keyframes puzzleIn {
+  0%   { opacity: 0; transform: scale(.82); filter: blur(12px) brightness(.3); }
+  55%  { opacity: 1; filter: blur(0)        brightness(1.05); }
+  100% { opacity: 1; transform: scale(1);   filter: blur(0)   brightness(1); }
 }
 
-/* reset: cards invisíveis quando o capítulo está inativo */
-#memories:not(.ch-active) .bi { opacity: 0; }
-
-/* quando ativo+visible, cada card aparece do seu próprio lugar */
-#memories.ch-active.visible .bi {
-  animation: puzzlePiece .65s cubic-bezier(.22,1,.36,1) both;
+/* cards invisíveis enquanto o capítulo não está ativo */
+#memories .bi:not(.bi-ghost) {
+  opacity: 0;
 }
 
-/* delays distribuídos em ordem de leitura — cria o efeito de montagem */
-#memories.ch-active.visible .bi:nth-child(1)  { animation-delay: .04s; }
-#memories.ch-active.visible .bi:nth-child(2)  { animation-delay: .13s; }
-#memories.ch-active.visible .bi:nth-child(3)  { animation-delay: .20s; }
-#memories.ch-active.visible .bi:nth-child(4)  { animation-delay: .27s; }
-#memories.ch-active.visible .bi:nth-child(5)  { animation-delay: .34s; }
-#memories.ch-active.visible .bi:nth-child(6)  { animation-delay: .40s; }
-#memories.ch-active.visible .bi:nth-child(7)  { animation-delay: .46s; }
-#memories.ch-active.visible .bi:nth-child(8)  { animation-delay: .52s; }
-#memories.ch-active.visible .bi:nth-child(9)  { animation-delay: .57s; }
-#memories.ch-active.visible .bi:nth-child(10) { animation-delay: .62s; }
-#memories.ch-active.visible .bi:nth-child(11) { animation-delay: .67s; }
-#memories.ch-active.visible .bi:nth-child(12) { animation-delay: .72s; }
+/* classe adicionada pelo JS individualmente com delay aleatório */
+#memories .bi.bi-reveal {
+  animation: puzzleIn .7s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* garante que cards já revelados não somem ao hover/interagir */
+#memories .bi.bi-revealed {
+  opacity: 1;
+}
 
 /* ── 6. LOCK ICON na tab secret ── */
 .tab-lock {
@@ -2644,7 +2637,7 @@ body.forever-next-hidden #chapNext {
 
 /* ── prefers-reduced-motion: desativa stagger ── */
 @media(prefers-reduced-motion: reduce){
-  #memories.ch-active.visible .bi { animation: none !important; opacity: 1 !important; }
+  #memories .bi { opacity: 1 !important; animation: none !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════
