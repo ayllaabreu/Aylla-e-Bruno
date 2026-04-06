@@ -49,11 +49,19 @@
     <canvas id="hc"></canvas>
     <div class="mcon">
       <div class="mph">
-        <div class="mpt">
+        <img
+          src="memories/nossa_foto.jpg"
+          alt="nossa foto"
+          style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.92;border-radius:16px;"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+        >
+        <!-- fallback exibido só se a foto não carregar -->
+        <div class="mpt" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
           <span class="big">📸</span>
           <span style="color:var(--muted);font-size:10px;letter-spacing:.25em;opacity:.45">memories/nossa_foto.jpg</span>
         </div>
       </div>
+      <p style="font-size:10px;color:var(--muted);letter-spacing:.2em;opacity:.4;margin-top:-24px;margin-bottom:24px;">// memories/nossa_foto.jpg</p>
       <p class="mmsg">Um ano de <span class="pk">amor</span>,<br>infinitos <span class="pu">commits</span>.</p>
       <p class="msub">// 04.04.2025 → 04.04.2026 → forever.exe</p>
       <button class="mclose" onclick="closeModal()">[ close_session ]</button>
