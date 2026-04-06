@@ -2924,7 +2924,7 @@ body.forever-next-hidden #chapNext {
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
-  min-height: 0 !important;
+  min-height: calc(100vh - 92px) !important;
   padding-top: clamp(48px, 8vh, 80px) !important;
   padding-bottom: clamp(48px, 8vh, 80px) !important;
 }
