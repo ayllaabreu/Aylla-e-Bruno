@@ -194,7 +194,7 @@ main{ padding-top:48px; }
 }
 .orb{
   position:absolute; border-radius:50%;
-  filter:blur(80px); pointer-events:none; opacity:.03;
+  filter:blur(80px); pointer-events:none; opacity:.02;
 }
 
 /* ── INDEX HERO ── */
