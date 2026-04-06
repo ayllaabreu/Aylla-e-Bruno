@@ -3456,3 +3456,16 @@ main {
 
 /* Node hover */
 .tl-node { cursor: pointer !important; }
+
+/* ── CONFLICT — centraliza painéis entre título e rodapé ── */
+#conflict {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: calc(100vh - 92px) !important;
+}
+#splitV {
+  margin-top: auto !important;
+}
+#conflict .rbtn {
+  margin-bottom: auto !important;
+}
