@@ -96,6 +96,8 @@ function showChapter(id){
     b.classList.remove('bi-reveal','bi-revealed');
     b.style.animationDelay = '';
   });
+  /* reset counters do conflict para re-animar na próxima visita */
+  countersAnimated = {};
   var el = document.getElementById(id);
   if(!el) return;
   /* set entry direction, then activate on next frame for transition to work */
@@ -543,7 +545,7 @@ var TL_COMMITS = {
     id: 'cn3',
     title: 'WhatsApp · 18 Jul 2024',
     accent: 'rgba(200,160,200,.7)',
-    html: null  /* populated by initCommitContent() from DOM template */
+    html: null  /* populated by initCommitContent() — includes header text injected below */
   },
   cnSad: {
     id: 'cnSad',
@@ -594,17 +596,24 @@ var TL_ORDER = ['cn1','cn2','cn3','cnSad','cn4','cn5','cn6'];
 var tlCurrentId = null;
 
 /* ── Inicializa conteúdo dos commits que precisam do DOM ── */
-(function initCommitContent(){
-  /* cn3 — WhatsApp: pega o HTML do template escondido no DOM */
+/* initCommitContent — lazy init on first openCommit, guaranteed after DOM ready */
+var _commitContentReady = false;
+function initCommitContent(){
+  if(_commitContentReady) return;
+  _commitContentReady = true;
   var cn3Template = document.getElementById('cn3-content-template');
-  if(cn3Template) TL_COMMITS.cn3.html = cn3Template.innerHTML;
-
-  /* cn5 — Instagram DM: pega do template */
+  if(cn3Template){
+    var cn3Header = '<p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// WhatsApp · primeira conversa · 18.07.2024</p>';
+    TL_COMMITS.cn3.html = cn3Header + cn3Template.innerHTML;
+  }
   var cn5Template = document.getElementById('cn5-content-template');
   if(cn5Template) TL_COMMITS.cn5.html = cn5Template.innerHTML;
-})();
+}
+/* Also init on DOMContentLoaded as belt-and-suspenders */
+document.addEventListener('DOMContentLoaded', initCommitContent);
 
 window.openCommit = function(id){
+  initCommitContent();  /* ensure templates are loaded */
   var commit = TL_COMMITS[id];
   if(!commit) return;
 
@@ -647,13 +656,17 @@ window.openCommit = function(id){
   var nodeEl = document.getElementById('tln-' + id);
   if(nodeEl) nodeEl.classList.add('active');
 
-  /* abre fullscreen */
+  /* abre fullscreen + bloqueia scroll da section */
+  var tlSec = document.getElementById('timeline');
+  if(tlSec) tlSec.classList.add('tl-commit-open');
   fs.classList.add('tl-fs-open');
 };
 
 window.closeCommit = function(){
   var fs = document.getElementById('tl-fullscreen');
   if(fs) fs.classList.remove('tl-fs-open');
+  var tlSec = document.getElementById('timeline');
+  if(tlSec) tlSec.classList.remove('tl-commit-open');
   tlCurrentId = null;
 };
 
@@ -673,7 +686,7 @@ document.addEventListener('keydown', function(e){
 });
 
 /* swipe dentro do fullscreen (mobile) */
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
   var fs = document.getElementById('tl-fullscreen');
   if(!fs) return;
   var tX = 0;
@@ -685,7 +698,7 @@ document.addEventListener('keydown', function(e){
     if(Math.abs(dx) < 40) return;
     window.navCommit(dx < 0 ? 1 : -1);
   }, {passive:true});
-})();
+});
 
 /* mantém selectCommit como alias retrocompatível */
 window.selectCommit = window.openCommit;
