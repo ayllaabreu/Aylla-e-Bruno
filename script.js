@@ -656,18 +656,22 @@ window.openCommit = function(id){
   var nodeEl = document.getElementById('tln-' + id);
   if(nodeEl) nodeEl.classList.add('active');
 
-  /* abre fullscreen + bloqueia scroll da section */
-  var tlSec = document.getElementById('timeline');
-  if(tlSec) tlSec.classList.add('tl-commit-open');
+  /* abre lightbox + bloqueia scroll do body */
+  document.body.style.overflow = 'hidden';
   fs.classList.add('tl-fs-open');
 };
 
 window.closeCommit = function(){
   var fs = document.getElementById('tl-fullscreen');
   if(fs) fs.classList.remove('tl-fs-open');
-  var tlSec = document.getElementById('timeline');
-  if(tlSec) tlSec.classList.remove('tl-commit-open');
+  document.body.style.overflow = '';
   tlCurrentId = null;
+};
+
+/* fecha ao clicar no backdrop (fora do modal card) */
+window.tlBackdropClose = function(e){
+  var modal = document.getElementById('tl-fs-modal');
+  if(modal && !modal.contains(e.target)) window.closeCommit();
 };
 
 window.navCommit = function(dir){
