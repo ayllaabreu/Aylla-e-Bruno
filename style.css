@@ -1094,22 +1094,26 @@ body::after {
 }
 .opt1-aylla {
   font-family: 'Cormorant Garamond', serif;
-  /* font-size inherited from .hero-names */ font-weight: 300;
-  background: linear-gradient(105deg,#BD93F9 0%,#FF79C6 30%,#fff 50%,#FF79C6 70%,#BD93F9 100%);
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #BD93F9 0%, #FF79C6 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: shimmer 10s linear infinite;
+  filter: drop-shadow(0 0 32px rgba(189,147,249,.55)) drop-shadow(0 0 64px rgba(255,121,198,.25));
+  animation: shimmer 8s linear infinite;
   display: block; line-height: 1.0;
 }
 .opt1-bruno {
   font-family: 'Cormorant Garamond', serif;
-  /* font-size inherited from .hero-names */ font-weight: 300;
-  background: linear-gradient(105deg,#50FA7B 0%,#8BE9FD 30%,#fff 50%,#8BE9FD 70%,#50FA7B 100%);
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #50FA7B 0%, #8BE9FD 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: shimmer 10s linear infinite .8s;
+  filter: drop-shadow(0 0 32px rgba(80,250,123,.50)) drop-shadow(0 0 64px rgba(139,233,253,.22));
+  animation: shimmer 8s linear infinite .8s;
   display: block; line-height: 1.0;
-  margin-top: -12px; /* sobe Bruno para igualar distância com o & */
+  margin-top: -12px;
 }
 
 /* ── 6. SPLASH — background radial premium ── */
@@ -3468,10 +3472,4 @@ main {
 }
 #conflict .rbtn {
   margin-bottom: auto !important;
-}
-
-/* ── SPLIT WIDTH FIX ── */
-#splitV {
-  max-width: 900px !important;
-  width: 100% !important;
 }
