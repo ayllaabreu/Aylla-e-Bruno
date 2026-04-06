@@ -288,16 +288,11 @@ function triggerHeroStats(){
     badgeEl.className = item[1];
     badgeEl.textContent = item[0];
 
-    var cursor = document.createElement('span');
-    cursor.className = 'sp-boot-cur';
-    cursor.textContent = '▊';
-
     var textEl = document.createElement('span');
     textEl.className = 'sp-log-typing';
 
     row.appendChild(badgeEl);
     row.appendChild(textEl);
-    row.appendChild(cursor);
     log.appendChild(row);
     log.scrollTop = log.scrollHeight;
 
@@ -313,7 +308,6 @@ function triggerHeroStats(){
       } else {
         /* linha completa: aplica HTML colorido, remove cursor */
         textEl.innerHTML = html;
-        cursor.style.display = 'none';
         setTimeout(function(){ typeLine(lineIdx + 1, onDone); }, LINE_GAP);
       }
     }
