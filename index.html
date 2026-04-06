@@ -226,21 +226,23 @@
 
   </div>
 
-  <!-- FULLSCREEN COMMIT OVERLAY — direct child of #timeline, not inside .gg -->
-  <div id="tl-fullscreen">
-    <div id="tl-fs-bar">
-      <button id="tl-fs-back" onclick="closeCommit()">
-        <span class="fs-back-arrow">←</span>
-        <span>git log</span>
-      </button>
-      <span id="tl-fs-title"></span>
-      <div id="tl-fs-nav">
-        <button class="tl-fs-nav-btn" id="tl-fs-prev" onclick="navCommit(-1)" disabled>‹</button>
-        <button class="tl-fs-nav-btn" id="tl-fs-next" onclick="navCommit(1)">›</button>
+  <!-- LIGHTBOX COMMIT OVERLAY — fixed backdrop, centered modal card -->
+  <div id="tl-fullscreen" onclick="tlBackdropClose(event)">
+    <div id="tl-fs-modal">
+      <div id="tl-fs-bar">
+        <button id="tl-fs-back" onclick="closeCommit()">
+          <span class="fs-back-arrow">←</span>
+          <span>git log</span>
+        </button>
+        <span id="tl-fs-title"></span>
+        <div id="tl-fs-nav">
+          <button class="tl-fs-nav-btn" id="tl-fs-prev" onclick="navCommit(-1)" disabled>‹</button>
+          <button class="tl-fs-nav-btn" id="tl-fs-next" onclick="navCommit(1)">›</button>
+        </div>
       </div>
-    </div>
-    <div id="tl-fs-content">
-      <div id="tl-fs-inner"></div>
+      <div id="tl-fs-content">
+        <div id="tl-fs-inner"></div>
+      </div>
     </div>
   </div>
   <!-- TEMPLATES: conteúdo dos commits — lido pelo JS, nunca renderizado diretamente -->
