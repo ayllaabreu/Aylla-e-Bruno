@@ -125,7 +125,7 @@ function showChapter(id){
   if(id === 'conflict'){ setTimeout(function(){
     animateCounter(document.getElementById('cA'), days(MET));
     animateCounter(document.getElementById('cB'), days(TICKET));
-    animateCounter(document.getElementById('cM'), days(TICKET));
+    animateCounter(document.getElementById('cM'), days(MET));
   }, 350); }
   if(id === 'timeline'){ el.classList.add('tl-visible'); }
   if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
