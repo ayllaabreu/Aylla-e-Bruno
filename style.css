@@ -194,7 +194,7 @@ main{ padding-top:48px; }
 }
 .orb{
   position:absolute; border-radius:50%;
-  filter:blur(80px); pointer-events:none; opacity:.00;
+  filter:blur(80px); pointer-events:none; opacity:.06;
 }
 
 /* ── INDEX HERO ── */
@@ -1094,24 +1094,22 @@ body::after {
 }
 .opt1-aylla {
   font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 400;
-  background: linear-gradient(135deg, #BD93F9 0%, #FF79C6 100%);
+  /* font-size inherited from .hero-names */ font-weight: 300;
+  background: linear-gradient(105deg,#BD93F9 0%,#FF79C6 30%,#fff 50%,#FF79C6 70%,#BD93F9 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: shimmer 8s linear infinite;
+  animation: shimmer 10s linear infinite;
   display: block; line-height: 1.0;
 }
 .opt1-bruno {
   font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-weight: 400;
-  background: linear-gradient(135deg, #50FA7B 0%, #8BE9FD 100%);
+  /* font-size inherited from .hero-names */ font-weight: 300;
+  background: linear-gradient(105deg,#50FA7B 0%,#8BE9FD 30%,#fff 50%,#8BE9FD 70%,#50FA7B 100%);
   background-size: 200% auto;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  animation: shimmer 8s linear infinite .8s;
+  animation: shimmer 10s linear infinite .8s;
   display: block; line-height: 1.0;
-  margin-top: -12px;
+  margin-top: -12px; /* sobe Bruno para igualar distância com o & */
 }
 
 /* ── 6. SPLASH — background radial premium ── */
@@ -2926,7 +2924,7 @@ body.forever-next-hidden #chapNext {
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
-  min-height: calc(100vh - 92px) !important;
+  min-height: 0 !important;
   padding-top: clamp(48px, 8vh, 80px) !important;
   padding-bottom: clamp(48px, 8vh, 80px) !important;
 }
@@ -3205,8 +3203,8 @@ main {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   TIMELINE LIGHTBOX — v11
-   Backdrop fixo + card centralizado, estilo lightbox.
+   TIMELINE FULLSCREEN — v10
+   Track como índice · commits em viewport próprio
    ══════════════════════════════════════════════════════════════ */
 
 /* ── TRACK — index mode (estado padrão) ── */
@@ -3214,57 +3212,32 @@ main {
   transition: opacity .35s ease, transform .35s cubic-bezier(.4,0,.2,1) !important;
 }
 
-/* ── PANEL — some quando commit lightbox está ativo ── */
+/* ── PANEL — some quando commit fullscreen está ativo ── */
 .tl-panel {
   transition: opacity .3s ease !important;
 }
 
-/* ── BACKDROP ──
-   Cobre toda a tela com blur, como o lightbox de fotos.        */
+/* ── COMMIT FULLSCREEN OVERLAY ──
+   Aparece dentro da #timeline section (position:absolute inset:0)
+   Não sai do contexto do capítulo.                               */
 #tl-fullscreen {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 300;
+  z-index: 10;
+  background: var(--bg);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(16px,4vw,40px);
-  background: rgba(7,9,14,.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  flex-direction: column;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .3s cubic-bezier(.4,0,.2,1);
+  transform: translateY(12px);
+  transition: opacity .38s cubic-bezier(.4,0,.2,1),
+              transform .38s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
 }
 #tl-fullscreen.tl-fs-open {
   opacity: 1;
   pointer-events: auto;
-}
-
-/* ── MODAL CARD ── */
-#tl-fs-modal {
-  position: relative;
-  width: min(700px, 100%);
-  max-height: min(86vh, 760px);
-  background: var(--bg2);
-  border: 1px solid rgba(189,147,249,.20);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  box-shadow:
-    0 32px 80px rgba(0,0,0,.75),
-    0 0 0 1px rgba(189,147,249,.06),
-    inset 0 1px 0 rgba(255,255,255,.05);
-  transform: scale(.93) translateY(22px);
-  opacity: 0;
-  transition:
-    transform .42s cubic-bezier(.34,1.38,.64,1),
-    opacity .28s ease;
-  overflow: hidden;
-}
-#tl-fullscreen.tl-fs-open #tl-fs-modal {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── TOPBAR — barra de navegação do commit ── */
@@ -3272,15 +3245,14 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px 12px;
+  padding: 14px clamp(20px,5vw,72px) 12px;
   flex-shrink: 0;
   border-bottom: 1px solid rgba(189,147,249,.1);
-  background: rgba(7,9,14,.6);
+  background: rgba(7,9,14,.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   position: relative;
   z-index: 2;
-  border-radius: 20px 20px 0 0;
 }
 
 /* botão voltar */
@@ -3350,11 +3322,11 @@ main {
   cursor: default;
 }
 
-/* ── CONTEÚDO DO CARD ── */
+/* ── CONTEÚDO FULLSCREEN ── */
 #tl-fs-content {
   flex: 1;
   overflow-y: auto;
-  padding: clamp(20px,4vh,40px) clamp(20px,5vw,48px);
+  padding: clamp(24px,5vh,56px) clamp(24px,8vw,120px);
   scrollbar-width: thin;
   scrollbar-color: rgba(189,147,249,.18) transparent;
   position: relative;
@@ -3367,7 +3339,7 @@ main {
 #tl-fs-content::before {
   content: '';
   position: absolute;
-  top: 0; left: clamp(20px,5vw,48px); right: clamp(20px,5vw,48px);
+  top: 0; left: clamp(24px,8vw,120px); right: clamp(24px,8vw,120px);
   height: 1px;
   background: var(--tl-fs-accent, rgba(189,147,249,.3));
   box-shadow: 0 0 12px var(--tl-fs-accent, rgba(189,147,249,.3));
@@ -3403,25 +3375,16 @@ main {
 
 /* ── MOBILE ── */
 @media (max-width: 640px) {
-  #tl-fullscreen {
-    padding: 12px;
-    align-items: flex-end; /* modal sobe da base no mobile */
-  }
-  #tl-fs-modal {
-    width: 100%;
-    max-height: 88vh;
-    border-radius: 20px 20px 16px 16px;
-    transform: scale(1) translateY(40px); /* só sobe, sem scale no mobile */
-  }
-  #tl-fullscreen.tl-fs-open #tl-fs-modal {
-    transform: translateY(0);
+  #tl-fs-bar {
+    padding: 12px 16px;
   }
   #tl-fs-title {
     display: none; /* sem espaço no mobile — o botão back basta */
   }
   #tl-fs-content {
-    padding: 20px 16px;
+    padding: 24px 20px;
   }
+   /* no fullscreen não tem limite */
 }
 
 /* ── prefers-reduced-motion ── */
@@ -3432,42 +3395,493 @@ main {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   TIMELINE LIGHTBOX FIX — v11.1
-   #tl-fullscreen agora é fixed (backdrop) — sem depender do
-   contexto de posicionamento do #timeline.
+   TIMELINE FULLSCREEN FIX — v10.1
+   tl-fullscreen agora é filho direto de #timeline (não de .gg)
    ══════════════════════════════════════════════════════════════ */
 
-/* #timeline não precisa de overflow:hidden — o lightbox é fixed */
+/* #timeline precisa de position para o fullscreen se ancorar */
 #timeline {
-  position: relative;
-  overflow: visible;
+  position: relative !important;  /* já é pelo chapter mode (.sec = absolute), mas explícito */
 }
 
-/* Track fica visível por baixo do backdrop (z-index normal) */
+/* Quando fullscreen aberto: bloqueia scroll da section por trás */
+#timeline.tl-commit-open {
+  overflow: hidden !important;
+}
+
+/* .gg não precisa mais de position:relative — fullscreen não é filho dele */
+#timeline .gg {
+  position: static !important;
+}
+
+/* tl-fullscreen preenchimento correto: inset:0 relativo ao #timeline */
+#tl-fullscreen {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 20 !important;   /* acima de qualquer coisa dentro do capítulo */
+}
+
+/* Garante que o track fica abaixo do fullscreen */
 .tl-track {
   position: relative;
   z-index: 1;
 }
 
-/* max-width legível nos textos longos */
-#tl-fs-inner .ct      { max-width: 460px; margin: 0 auto; }
-#tl-fs-inner .ig-wrap { max-width: 460px; margin: 0 auto; }
+
+/* ── TIMELINE FULLSCREEN — polish final ── */
+
+/* Limit bubble width in fullscreen so chats don't stretch across 1440px screens */
+#tl-fs-inner .ct { max-width: 480px; margin: 0 auto; }
+#tl-fs-inner .ig-wrap { max-width: 480px; margin: 0 auto; }
 
 /* Breathing room for text-only commits */
-#tl-fs-inner > p:first-child { margin-bottom: 20px; }
+#tl-fs-inner > p:first-child {
+  margin-bottom: 20px;
+}
 
-/* Node hover */
+/* Node hover — pointer cursor explicitly */
 .tl-node { cursor: pointer !important; }
 
-/* ── CONFLICT — centraliza painéis entre título e rodapé ── */
-#conflict {
+/* ══════════════════════════════════════════════════════════════
+   TIMELINE REDESIGN — v11  (card track + cinematic fullscreen)
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── SECTION LAYOUT ── */
+#timeline {
   display: flex !important;
   flex-direction: column !important;
-  min-height: calc(100vh - 92px) !important;
+  padding-bottom: clamp(60px, 10vh, 100px) !important;
 }
-#splitV {
-  margin-top: auto !important;
+
+/* ── INDEX WRAPPER ── */
+.tl-index {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(20px, 5vw, 72px);
+  gap: 0;
 }
-#conflict .rbtn {
-  margin-bottom: auto !important;
+
+/* ── RAIL — linha espectral centralizada nas dots ── */
+.tl-rail {
+  position: absolute;
+  left: clamp(20px, 5vw, 72px);
+  right: clamp(20px, 5vw, 72px);
+  top: 50%;
+  transform: translateY(calc(-50% + 8px)); /* +8px = metade da altura do tl-card-dot */
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent              0%,
+    rgba(157,144,224,.85)    5%,
+    rgba(189,147,249,.8)    20%,
+    rgba(216,128,168,.85)   50%,
+    rgba(255,121,198,.8)    80%,
+    rgba(80,250,123,.85)    95%,
+    transparent             100%
+  );
+  filter: drop-shadow(0 0 6px rgba(189,147,249,.5))
+          drop-shadow(0 0 14px rgba(255,121,198,.3));
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── CARDS WRAPPER ── */
+.tl-cards {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── INDIVIDUAL CARD ── */
+.tl-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  position: relative;
+  outline: none;
+}
+.tl-card:focus-visible { outline: 1px solid var(--purple); outline-offset: 4px; border-radius: 8px; }
+
+/* top half — fecha o gap com a dot */
+.tl-card-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 10px 10px;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(189,147,249,.1);
+  border-bottom: none;
+  transition: background .25s, border-color .25s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+.tl-card-bot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 10px 14px;
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+  background: rgba(255,255,255,.02);
+  border: 1px solid rgba(189,147,249,.1);
+  border-top: none;
+  transition: background .25s, border-color .25s, transform .25s cubic-bezier(.4,0,.2,1);
+}
+
+/* dot — passa pela linha, atua como "pino" */
+.tl-card-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2.5px solid var(--dc, var(--purple));
+  background: var(--bg);
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  transition: background .25s, transform .3s cubic-bezier(.34,1.45,.64,1), box-shadow .25s;
+  box-shadow: 0 0 0 3px rgba(var(--dr, 189,147,249), .12),
+              0 0 12px rgba(var(--dr, 189,147,249), .35);
+}
+
+/* textos */
+.tl-card-icon {
+  font-size: 14px;
+  line-height: 1;
+  display: block;
+  filter: grayscale(.2);
+  transition: filter .25s, transform .25s;
+}
+.tl-card-date {
+  font-family: 'Fira Code', monospace;
+  font-size: 8.5px;
+  color: rgba(139,148,158,.75);
+  letter-spacing: .06em;
+  white-space: nowrap;
+  text-align: center;
+}
+.tl-card-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(230,237,243,.7);
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition: color .25s;
+}
+
+/* ── HOVER ── */
+.tl-card:hover .tl-card-top,
+.tl-card:hover .tl-card-bot {
+  background: rgba(189,147,249,.07);
+  border-color: rgba(189,147,249,.28);
+  transform: translateY(-3px);
+}
+.tl-card:hover .tl-card-dot {
+  background: var(--dc, var(--purple));
+  transform: scale(1.3);
+  box-shadow: 0 0 0 5px rgba(var(--dr, 189,147,249), .15),
+              0 0 20px rgba(var(--dr, 189,147,249), .6);
+}
+.tl-card:hover .tl-card-label {
+  color: rgba(230,237,243,1);
+}
+.tl-card:hover .tl-card-icon {
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+/* ── ACTIVE STATE ── */
+.tl-card.active .tl-card-top,
+.tl-card.active .tl-card-bot {
+  background: rgba(189,147,249,.1);
+  border-color: rgba(var(--dr, 189,147,249), .35);
+}
+.tl-card.active .tl-card-dot {
+  background: var(--dc, var(--purple));
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(var(--dr, 189,147,249), .2),
+              0 0 18px rgba(var(--dr, 189,147,249), .65);
+}
+.tl-card.active .tl-card-label { color: var(--text); font-weight: 600; }
+
+/* sad node — desaturado */
+.tl-card-sad .tl-card-top,
+.tl-card-sad .tl-card-bot {
+  background: rgba(139,148,158,.03);
+  border-color: rgba(139,148,158,.14);
+  border-style: dashed;
+}
+.tl-card-sad .tl-card-label { color: rgba(139,148,158,.55); font-family: 'Fira Code', monospace; font-size: 10px; }
+.tl-card-sad .tl-card-date  { color: rgba(139,148,158,.5); }
+
+/* ── HINT DE INTERAÇÃO ── */
+.tl-hint {
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(139,148,158,.4);
+  letter-spacing: .18em;
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  animation: hintFloat 2.5s ease-in-out infinite;
+  transition: opacity .5s ease;
+  user-select: none;
+  pointer-events: none;
+}
+.tl-hint.hint-gone { opacity: 0; }
+.tl-hint-arrow {
+  animation: hintBounce 2.5s ease-in-out infinite;
+}
+@keyframes hintFloat {
+  0%,100% { transform: translateY(0); opacity: .4; }
+  50%     { transform: translateY(-4px); opacity: .65; }
+}
+@keyframes hintBounce {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-3px); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FULLSCREEN REDESIGN — v11
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── OVERLAY ── */
+#tl-fullscreen {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(.97);
+  transform-origin: center center;
+  transition: opacity .38s cubic-bezier(.4,0,.2,1),
+              transform .38s cubic-bezier(.4,0,.2,1);
+  overflow: hidden;
+}
+#tl-fullscreen.tl-fs-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+/* ── TOPBAR ── */
+#tl-fs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px clamp(20px, 5vw, 64px) 13px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  background: rgba(7,9,14,.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  z-index: 2;
+}
+
+#tl-fs-back {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px;
+  color: rgba(139,148,158,.7);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  padding: 7px 14px 7px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color .2s, border-color .2s, background .2s;
+  min-height: 36px;
+  letter-spacing: .08em;
+}
+#tl-fs-back:hover {
+  color: var(--purple);
+  border-color: rgba(189,147,249,.35);
+  background: rgba(189,147,249,.07);
+}
+.fs-back-arrow { font-size: 12px; color: var(--purple); }
+.fs-back-label { color: inherit; }
+
+/* counter 01/07 */
+#tl-fs-counter {
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#tl-fs-num {
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  transition: color .25s;
+}
+.tl-fs-sep  { color: rgba(139,148,158,.35); }
+.tl-fs-total{ color: rgba(139,148,158,.45); }
+
+/* prev/next */
+#tl-fs-nav { display: flex; align-items: center; gap: 6px; }
+.tl-fs-nav-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  color: rgba(139,148,158,.6);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: color .2s, background .2s, border-color .2s;
+  letter-spacing: 0;
+}
+.tl-fs-nav-btn:hover:not(:disabled) {
+  color: var(--pink);
+  background: rgba(255,121,198,.08);
+  border-color: rgba(255,121,198,.3);
+}
+.tl-fs-nav-btn:disabled { opacity: .2; cursor: default; }
+
+/* ── PROGRESS BAR ── */
+#tl-fs-progress {
+  height: 2px;
+  background: rgba(255,255,255,.04);
+  flex-shrink: 0;
+  position: relative;
+}
+#tl-fs-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  box-shadow: 0 0 8px rgba(189,147,249,.5);
+  transition: width .38s cubic-bezier(.4,0,.2,1);
+  width: calc(100% / 7);
+}
+
+/* ── CONTENT ── */
+#tl-fs-content {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(189,147,249,.15) transparent;
+  position: relative;
+  /* accent line inherited via CSS var */
+}
+#tl-fs-content::-webkit-scrollbar { width: 3px; }
+#tl-fs-content::-webkit-scrollbar-thumb { background: rgba(189,147,249,.2); border-radius: 2px; }
+
+/* ── INNER ── */
+#tl-fs-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: clamp(36px, 6vh, 72px) clamp(24px, 5vw, 64px);
+}
+
+/* ── COMMIT HEADER (data + título em tipografia grande) ── */
+.commit-header {
+  margin-bottom: clamp(28px, 4vh, 48px);
+}
+.commit-header-date {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: .35em;
+  color: var(--commit-accent, var(--purple));
+  margin-bottom: 10px;
+  display: block;
+  text-transform: uppercase;
+}
+.commit-header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.commit-header-sub {
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(139,148,158,.5);
+  letter-spacing: .12em;
+}
+
+/* ── COMMIT BODY — texto narrativo ── */
+.commit-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px;
+  color: rgba(230,237,243,.72);
+  line-height: 1.85;
+}
+.commit-body p + p { margin-top: 16px; }
+.commit-footer {
+  margin-top: 28px;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  color: rgba(139,148,158,.4);
+  letter-spacing: .12em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fsSlideNext {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fsSlidePrev {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+#tl-fs-inner.fs-slide-next { animation: fsSlideNext .3s cubic-bezier(.4,0,.2,1) both; }
+#tl-fs-inner.fs-slide-prev { animation: fsSlidePrev .3s cubic-bezier(.4,0,.2,1) both; }
+
+/* ── Chat width in fullscreen ── */
+#tl-fs-inner .ct     { max-width: 460px; margin: 0 auto; }
+#tl-fs-inner .ig-wrap{ max-width: 460px; margin: 0 auto; }
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .tl-card-top, .tl-card-bot { padding: 8px 6px 8px; }
+  .tl-card-icon { font-size: 12px; }
+  .tl-card-label{ font-size: 9px; }
+  .tl-card-date { font-size: 7.5px; }
+  .tl-card-dot  { width: 12px; height: 12px; }
+  #tl-fs-bar    { padding: 12px 16px; }
+  #tl-fs-counter{ font-size: 11px; }
+  #tl-fs-inner  { padding: 28px 20px; }
+}
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  #tl-fullscreen { transition: opacity .001ms !important; }
+  .tl-hint, .tl-hint-arrow { animation: none !important; }
+  #tl-fs-inner.fs-slide-next,
+  #tl-fs-inner.fs-slide-prev { animation: none !important; }
+  #tl-fs-progress-fill { transition: none !important; }
 }
