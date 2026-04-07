@@ -621,7 +621,7 @@ function renderCommit(commit){
   }
   else if(commit.html === 'changelog'){
     out += '<div class="commit-body">'
-      + '<p style="color:#50FA7B;font-family:'Fira Code',monospace;font-size:11px;margin-bottom:20px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
+      + '<p style="color:#50FA7B;font-family:"Fira Code",monospace;font-size:11px;margin-bottom:20px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
       + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
       + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
       + '<p>⚡ <strong>Improved:</strong> felicidade +∞%</p>'
