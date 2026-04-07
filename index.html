@@ -49,21 +49,13 @@
     <canvas id="hc"></canvas>
     <div class="mcon">
       <div class="mph">
-        <img
-          src="assets/gallery/nossa_foto.jpg"
-          alt="nossa foto"
-          style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:.92;border-radius:16px;"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-        >
-        <!-- fallback exibido só se a foto não carregar -->
-        <div class="mpt" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;">
+        <div class="mpt">
           <span class="big">📸</span>
-          <span style="color:var(--muted);font-size:10px;letter-spacing:.25em;opacity:.45">assets/gallery/nossa_foto.jpg</span>
+          <span style="color:var(--muted);font-size:10px;letter-spacing:.25em;opacity:.45">memories/nossa_foto.jpg</span>
         </div>
       </div>
-      <p style="font-size:10px;color:var(--muted);letter-spacing:.2em;opacity:.4;margin-top:-24px;margin-bottom:24px;">// assets/gallery/nossa_foto.jpg</p>
-      <p class="mmsg">+ de um ano de <span class="pk">amor</span>,<br>infinitos <span class="pu">commits</span>.</p>
-      <p class="msub">// 21.11.2024 → 04.04.2026 → forever.exe</p>
+      <p class="mmsg">Um ano de <span class="pk">amor</span>,<br>infinitos <span class="pu">commits</span>.</p>
+      <p class="msub">// 04.04.2025 → 04.04.2026 → forever.exe</p>
       <button class="mclose" onclick="closeModal()">[ close_session ]</button>
     </div>
   </div>
@@ -92,6 +84,7 @@
 <!-- INDEX -->
 <section class="sec" id="index">
   <div class="gbg"></div>
+  <div class="orb" style="background:#BD93F9;width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
 
   <p class="hero-eyebrow">// encrypted_love_story.exe · v1.0.0</p>
 
@@ -189,70 +182,127 @@
   <p class="slabel">// cap. II &nbsp; timeline.git</p>
   <h2 class="stitle"><span class="ac-g">git log</span> --all<br>--love --no-limit</h2>
 
-  <div class="gg">
+  <!-- TRACK INDEX -->
+  <div class="tl-index" id="tlIndex">
+    <div class="tl-rail"></div>
 
-    <!-- HORIZONTAL TRACK -->
-    <div class="tl-track">
-      <div class="tl-line"></div>
+    <div class="tl-cards">
 
-      <button class="tl-node active" id="tln-cn1" onclick="openCommit('cn1')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">Jul 2024</span><span class="tl-msg">Inner Circle 🔵</span></div>
-      </button>
-
-      <button class="tl-node" id="tln-cn2" onclick="openCommit('cn2')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">17 Jul 2024</span><span class="tl-msg">Tinder 🔥</span></div>
-      </button>
-
-      <button class="tl-node" id="tln-cn3" onclick="openCommit('cn3')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">18 Jul 2024</span><span class="tl-msg">WhatsApp 💬</span></div>
-      </button>
-
-      <button class="tl-node tl-node-sad" id="tln-cnSad" onclick="openCommit('cnSad')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">Jul→Nov 2024</span><span class="tl-msg">// pausa ⚠</span></div>
-      </button>
-
-      <button class="tl-node" id="tln-cn4" onclick="openCommit('cn4')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">21 Nov 2024</span><span class="tl-msg">Encontro 🤍</span></div>
-      </button>
-
-      <button class="tl-node" id="tln-cn5" onclick="openCommit('cn5')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">04 Abr 2025</span><span class="tl-msg">The Ticket 💌</span></div>
-      </button>
-
-      <button class="tl-node" id="tln-cn6" onclick="openCommit('cn6')">
-        <div class="tl-dot"></div>
-        <div class="tl-meta"><span class="tl-date">04 Abr 2026</span><span class="tl-msg">365 dias 🚀</span></div>
-      </button>
-    </div>
-
-  </div>
-
-  <!-- LIGHTBOX COMMIT OVERLAY — fixed backdrop, centered modal card -->
-  <div id="tl-fullscreen" onclick="tlBackdropClose(event)">
-    <div id="tl-fs-modal">
-      <div id="tl-fs-bar">
-        <button id="tl-fs-back" onclick="closeCommit()">
-          <span class="fs-back-arrow">←</span>
-          <span>git log</span>
-        </button>
-        <span id="tl-fs-title"></span>
-        <div id="tl-fs-nav">
-          <button class="tl-fs-nav-btn" id="tl-fs-prev" onclick="navCommit(-1)" disabled>‹</button>
-          <button class="tl-fs-nav-btn" id="tl-fs-next" onclick="navCommit(1)">›</button>
+      <button class="tl-card" id="tln-cn1" data-id="cn1" onclick="openCommit('cn1')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">◎</span>
+          <span class="tl-card-date">Jul 2024</span>
         </div>
+        <div class="tl-card-dot" style="--dc:#9D90E0;--dr:157,144,224"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">Inner Circle</span>
+        </div>
+      </button>
+
+      <button class="tl-card" id="tln-cn2" data-id="cn2" onclick="openCommit('cn2')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">◎</span>
+          <span class="tl-card-date">17 Jul</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:#B89ED8;--dr:184,158,216"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">Tinder</span>
+        </div>
+      </button>
+
+      <button class="tl-card" id="tln-cn3" data-id="cn3" onclick="openCommit('cn3')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">💬</span>
+          <span class="tl-card-date">18 Jul</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:#C8A0C8;--dr:200,160,200"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">WhatsApp</span>
+        </div>
+      </button>
+
+      <button class="tl-card tl-card-sad" id="tln-cnSad" data-id="cnSad" onclick="openCommit('cnSad')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon" style="opacity:.4">⚠</span>
+          <span class="tl-card-date">Jul→Nov</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:rgba(139,148,158,.5);--dr:139,148,158"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">// pausa</span>
+        </div>
+      </button>
+
+      <button class="tl-card" id="tln-cn4" data-id="cn4" onclick="openCommit('cn4')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">🤍</span>
+          <span class="tl-card-date">21 Nov</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:#D4A0B4;--dr:212,160,180"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">Encontro</span>
+        </div>
+      </button>
+
+      <button class="tl-card" id="tln-cn5" data-id="cn5" onclick="openCommit('cn5')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">💌</span>
+          <span class="tl-card-date">04 Abr 25</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:#D880A8;--dr:216,128,168"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">The Ticket</span>
+        </div>
+      </button>
+
+      <button class="tl-card tl-card-last" id="tln-cn6" data-id="cn6" onclick="openCommit('cn6')">
+        <div class="tl-card-top">
+          <span class="tl-card-icon">🚀</span>
+          <span class="tl-card-date">04 Abr 26</span>
+        </div>
+        <div class="tl-card-dot" style="--dc:#6DC49A;--dr:109,196,154"></div>
+        <div class="tl-card-bot">
+          <span class="tl-card-label">365 dias</span>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- hint de interação — some ao primeiro clique -->
+    <p class="tl-hint" id="tlHint">
+      <span class="tl-hint-arrow">↑</span>
+      clique num commit para expandir
+    </p>
+  </div>
+
+  <!-- FULLSCREEN COMMIT — direct child of #timeline -->
+  <div id="tl-fullscreen">
+    <div id="tl-fs-bar">
+      <button id="tl-fs-back" onclick="closeCommit()" aria-label="Voltar para timeline">
+        <span class="fs-back-arrow">←</span>
+        <span class="fs-back-label">git log</span>
+      </button>
+      <div id="tl-fs-counter">
+        <span id="tl-fs-num">01</span>
+        <span class="tl-fs-sep">/</span>
+        <span class="tl-fs-total">07</span>
       </div>
-      <div id="tl-fs-content">
-        <div id="tl-fs-inner"></div>
+      <div id="tl-fs-nav">
+        <button class="tl-fs-nav-btn" id="tl-fs-prev" onclick="navCommit(-1)" aria-label="Commit anterior" disabled>←</button>
+        <button class="tl-fs-nav-btn" id="tl-fs-next" onclick="navCommit(1)" aria-label="Próximo commit">→</button>
       </div>
     </div>
+
+    <!-- progress bar por commit -->
+    <div id="tl-fs-progress">
+      <div id="tl-fs-progress-fill"></div>
+    </div>
+
+    <div id="tl-fs-content">
+      <div id="tl-fs-inner"></div>
+    </div>
   </div>
-  <!-- TEMPLATES: conteúdo dos commits — lido pelo JS, nunca renderizado diretamente -->
+
+  <!-- TEMPLATES: lidos pelo JS, nunca renderizados diretamente -->
   <div id="cn3-content-template" hidden>
     <div class="ct">
       <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Oiii!!<div class="btm">13:07</div></div></div></div>
@@ -268,29 +318,43 @@
     </div>
   </div>
   <div id="cn5-content-template" hidden>
-    <div class="ct">
-      <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Instagram DM · perspectiva do Bruno · 04.04.2025</p>
-      <div class="ig-date-sep">4 de abr., 19:47</div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="ig-reel"><div class="ig-reel-head"><div class="ig-reel-dot"></div>oreidosites <span class="ig-reel-check">✓</span></div><div class="ig-reel-thumb"><video src="assets/chat/reels-chamado.mp4" poster="assets/chat/reels-thumb.jpg" muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;border-radius:8px;"></video><div class="ig-reel-caption">Compensa namorar com programador? 🎧</div></div><div class="ig-reel-foot">▶ Reels</div></div><div class="react" style="text-align:right">🤣</div><div class="btm" style="text-align:right">19:47</div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Kkkkkkkkk onde que abre esse chamado? Ninguém me sinalizou que tinha que abrir chamado! Favor formalizar por email. 🤣🤣🤣🤣<div class="btm">19:49</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">Kkkkkkkkk<div class="btm">19:50</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">Por isso ainda não foi atendida!!<div class="btm">19:50</div></div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Será que o chamado é pedir o programador em namoro com as alianças? 🤔<div class="btm">19:52</div></div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Vixee...<div class="btm">19:52</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">brunoamorim.dev@gmail.com<div class="btm">19:54</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="ig-gif l"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-calculando.gif" alt="mulher calculando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">V = ⁴⁄₃πr³ · mulher calculando...</div></div><div class="btm">19:55</div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Perai<div class="btm">19:55</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">É brincadeira menina linda do meu coração<div class="btm">19:55</div></div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">1 min<div class="btm">19:56</div></div></div></div>
-      <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="ig-gif r"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-menina.gif" alt="menina esperando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">menina esperando pacientemente...</div></div><div class="btm" style="text-align:right">19:56</div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Prezado, favor verificar seu e-mail<div class="btm">19:57</div></div></div></div>
-      <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
-      <div class="ig-seen" style="text-align:right;font-size:10px;color:var(--muted);margin-top:4px">Visto ✓✓</div>
+    <div class="ig-wrap">
+      <div class="ig-header">
+        <span class="ig-back">‹</span>
+        <div class="ig-av">A</div>
+        <div><div class="ig-uname">ayllaabreu</div><div class="ig-active">ativa agora</div></div>
+      </div>
+      <div class="ig-messages">
+        <div class="ig-date-sep">4 de abr., 19:47</div>
+        <div class="ct">
+          <div class="br r"><div class="brow"><div class="ig-reel"><div class="ig-reel-head"><div class="ig-reel-dot"></div>oreidosites <span class="ig-reel-check">✓</span></div><div class="ig-reel-thumb"><img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail"><div class="ig-reel-caption">Compensa namorar com programador? 🎧</div><div class="ig-reel-play">▶</div><div class="ig-reel-progress"><div class="ig-reel-progress-fill"></div></div></div><div class="ig-reel-foot">▶ Reels</div></div><div class="react" style="text-align:right">🤣</div><div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:47</div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">Kkkkkkkkk onde que abre esse chamado? Ninguém me sinalizou que tinha que abrir chamado! Favor formalizar por email. 🤣🤣🤣🤣<div class="btm">19:49</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">Kkkkkkkkk<div class="btm">19:50</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">Por isso ainda não foi atendida!!<div class="btm">19:50</div></div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">Será que o chamado é pedir o programador em namoro com as alianças? 🤔<div class="btm">19:52</div></div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">Vixee...<div class="btm">19:52</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">bruno@amorim.dev<div class="btm">19:54</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
+          <div class="br"><div class="brow"><div class="ig-gif l"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-calculando.gif" alt="mulher calculando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">V = ⁴⁄₃πr³ · mulher calculando...</div></div><div class="btm" style="font-family:'-apple-system',sans-serif">19:55</div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">Perai<div class="btm">19:55</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="bub ig-r">É brincadeira menina linda do meu coração<div class="btm">19:55</div></div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">1 min<div class="btm">19:56</div></div></div></div>
+          <div class="br r"><div class="brow"><div class="ig-gif r"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-menina.gif" alt="menina esperando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">menina esperando pacientemente...</div></div><div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:56</div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l">Prezado, favor verificar seu e-mail<div class="btm">19:57</div></div></div></div>
+          <div class="br"><div class="brow"><div class="bub ig-l" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
+          <div class="ig-seen">Visto ✓✓</div>
+        </div>
+      </div>
+      <div class="ig-inputbar">
+        <span class="ig-input-icon">📷</span>
+        <div class="ig-input-fake">Mensagem...</div>
+        <span class="ig-input-icon">🎤</span>
+        <span class="ig-input-icon">❤️</span>
+      </div>
     </div>
-    <p style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(139,148,158,.45);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm · escalado para: email → chamado_001.md → merged ♥</p>
+    <p style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(139,148,158,.45);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm → chamado_001.md → merged ♥</p>
   </div>
 
 </section>
