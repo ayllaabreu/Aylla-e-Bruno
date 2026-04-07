@@ -96,8 +96,10 @@ function showChapter(id){
     b.classList.remove('bi-reveal','bi-revealed');
     b.style.animationDelay = '';
   });
-  /* reset counters do conflict para re-animar na próxima visita */
+  /* reset counters do conflict */
   countersAnimated = {};
+  /* reset timeline fullscreen + hint */
+  if(typeof window.resetTimeline === 'function') window.resetTimeline();
   var el = document.getElementById(id);
   if(!el) return;
   /* set entry direction, then activate on next frame for transition to work */
@@ -288,11 +290,16 @@ function triggerHeroStats(){
     badgeEl.className = item[1];
     badgeEl.textContent = item[0];
 
+    var cursor = document.createElement('span');
+    cursor.className = 'sp-boot-cur';
+    cursor.textContent = '▊';
+
     var textEl = document.createElement('span');
     textEl.className = 'sp-log-typing';
 
     row.appendChild(badgeEl);
     row.appendChild(textEl);
+    row.appendChild(cursor);
     log.appendChild(row);
     log.scrollTop = log.scrollHeight;
 
@@ -308,6 +315,7 @@ function triggerHeroStats(){
       } else {
         /* linha completa: aplica HTML colorido, remove cursor */
         textEl.innerHTML = html;
+        cursor.style.display = 'none';
         setTimeout(function(){ typeLine(lineIdx + 1, onDone); }, LINE_GAP);
       }
     }
@@ -510,130 +518,163 @@ function runGitTerminal(onDone){
 
 /* ── TIMELINE COMMITS ── */
 /* ══════════════════════════════════════════════════════════════
-   TIMELINE FULLSCREEN — v10
+   TIMELINE — v11  (card track + cinematic fullscreen)
    ══════════════════════════════════════════════════════════════ */
 
-/* mapa de commits: id → { title, accentColor, html } */
 var TL_COMMITS = {
   cn1: {
-    id: 'cn1',
-    title: 'Inner Circle · Jul 2024',
-    accent: 'rgba(157,144,224,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Inner Circle · primeiro sinal do universo</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
-        + '<p>O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
-        + '</div>'
+    id: 'cn1', order: 1,
+    accent: '#9D90E0',
+    header: { date: 'Julho 2024', title: 'Inner Circle', sub: '// primeiro sinal do universo' },
+    html: 'text',
+    text: 'O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.',
+    footer: '// conexão detectada. tentativa falhou. destino adiado.'
   },
   cn2: {
-    id: 'cn2',
-    title: 'Tinder · 17 Jul 2024',
-    accent: 'rgba(184,158,216,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Tinder · segunda tentativa do destino</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
-        + '<p>Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
-        + '</div>'
+    id: 'cn2', order: 2,
+    accent: '#B89ED8',
+    header: { date: '17 de Julho, 2024', title: 'Tinder', sub: '// segunda tentativa do destino' },
+    html: 'text',
+    text: 'Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.',
+    footer: '// segunda tentativa. conexão estabelecida. migrando para WA...'
   },
   cn3: {
-    id: 'cn3',
-    title: 'WhatsApp · 18 Jul 2024',
-    accent: 'rgba(200,160,200,.7)',
-    html: null  /* populated by initCommitContent() — includes header text injected below */
+    id: 'cn3', order: 3,
+    accent: '#C8A0C8',
+    header: { date: '18 de Julho, 2024', title: 'WhatsApp', sub: '// perspectiva dele · primeira conversa' },
+    html: 'template',
+    templateId: 'cn3-content-template'
   },
   cnSad: {
-    id: 'cnSad',
-    title: '// pausa · Jul→Nov 2024',
-    accent: 'rgba(139,148,158,.4)',
-    html: '<p style="font-size:11px;color:rgba(139,148,158,.5);margin-bottom:24px;letter-spacing:.1em">// changes not committed · working in progress</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9">'
-        + '<p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>'
-        + '</div>'
-        + '<div class="sad-quote">"tudo tem seu tempo..."<span class="attr">— Bruno, repetidas vezes</span></div>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">'
-        + '<p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p></div>'
-        + '<p style="margin-top:24px;font-family:Fira Code,monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>'
+    id: 'cnSad', order: 4,
+    accent: 'rgba(139,148,158,.6)',
+    header: { date: 'Julho → Novembro 2024', title: '// pausa', sub: '// changes not committed · working in progress' },
+    html: 'sad'
   },
   cn4: {
-    id: 'cn4',
-    title: 'Encontro · 21 Nov 2024',
-    accent: 'rgba(212,160,180,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// IRL · o dia que saiu da tela e virou real</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
-        + '<p style="color:rgba(139,148,158,.6);font-family:Fira Code,monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>'
-        + '</div>'
+    id: 'cn4', order: 5,
+    accent: '#D4A0B4',
+    header: { date: '21 de Novembro, 2024', title: 'Encontro', sub: '// IRL · o dia que saiu da tela e virou real' },
+    html: 'text',
+    text: null,
+    footer: '// em breve: mensagens antes do encontro, foto do local e conversa depois 📍'
   },
   cn5: {
-    id: 'cn5',
-    title: 'The Ticket · 04 Abr 2025',
-    accent: 'rgba(216,128,168,.7)',
-    html: null  /* conteúdo do Instagram DM — copiado do HTML original */
+    id: 'cn5', order: 6,
+    accent: '#D880A8',
+    header: { date: '04 de Abril, 2025', title: 'The Ticket', sub: '// Instagram DM · perspectiva do Bruno' },
+    html: 'template',
+    templateId: 'cn5-content-template'
   },
   cn6: {
-    id: 'cn6',
-    title: '365 dias · 04 Abr 2026',
-    accent: 'rgba(109,196,154,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// release notes · um ano depois</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.8);line-height:1.8">'
-        + '<p style="color:#50FA7B;font-family:Fira Code,monospace;font-size:11px;margin-bottom:16px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
-        + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
-        + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
-        + '<p>⚡ <strong>Improved:</strong> felicidade +∞%</p>'
-        + '<p>🔒 <strong>Security:</strong> coração protegido por você</p>'
-        + '<p style="margin-top:16px;color:#FF79C6">Status: <span style="color:#50FA7B">stable · production-ready · forever</span></p>'
-        + '</div>'
+    id: 'cn6', order: 7,
+    accent: '#6DC49A',
+    header: { date: '04 de Abril, 2026', title: '365 dias', sub: '// release notes · um ano depois' },
+    html: 'changelog'
   }
 };
 
-/* IDs em ordem para navegação prev/next */
 var TL_ORDER = ['cn1','cn2','cn3','cnSad','cn4','cn5','cn6'];
 var tlCurrentId = null;
+var tlHintGone  = false;
 
-/* ── Inicializa conteúdo dos commits que precisam do DOM ── */
-/* initCommitContent — lazy init on first openCommit, guaranteed after DOM ready */
+/* ── Lazy init dos templates ── */
 var _commitContentReady = false;
 function initCommitContent(){
   if(_commitContentReady) return;
   _commitContentReady = true;
-  var cn3Template = document.getElementById('cn3-content-template');
-  if(cn3Template){
-    var cn3Header = '<p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// WhatsApp · primeira conversa · 18.07.2024</p>';
-    TL_COMMITS.cn3.html = cn3Header + cn3Template.innerHTML;
-  }
-  var cn5Template = document.getElementById('cn5-content-template');
-  if(cn5Template) TL_COMMITS.cn5.html = cn5Template.innerHTML;
+  TL_ORDER.forEach(function(id){
+    var c = TL_COMMITS[id];
+    if(c.html === 'template'){
+      var tpl = document.getElementById(c.templateId);
+      if(tpl) c._html = tpl.innerHTML;
+    }
+  });
 }
-/* Also init on DOMContentLoaded as belt-and-suspenders */
 document.addEventListener('DOMContentLoaded', initCommitContent);
 
+/* ── Render commit HTML ── */
+function renderCommit(commit){
+  var h = commit.header;
+  var accentStyle = 'style="color:' + commit.accent + '"';
+  var out = '<div class="commit-header">'
+    + '<span class="commit-header-date" ' + accentStyle + '>' + h.date + '</span>'
+    + '<h3 class="commit-header-title">' + h.title + '</h3>'
+    + '<span class="commit-header-sub">' + h.sub + '</span>'
+    + '</div>';
+
+  if(commit.html === 'text'){
+    out += '<div class="commit-body">';
+    if(commit.text) out += '<p>' + commit.text + '</p>';
+    if(commit.footer) out += '</div><p class="commit-footer">' + commit.footer + '</p>';
+    else out += '</div>';
+  }
+  else if(commit.html === 'sad'){
+    out += '<div class="commit-body" style="color:rgba(230,237,243,.55)">'
+      + '<p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>'
+      + '</div>'
+      + '<div class="sad-quote">"tudo tem seu tempo..."<span class="attr">— Bruno, repetidas vezes</span></div>'
+      + '<div class="commit-body" style="color:rgba(230,237,243,.55);margin-top:16px">'
+      + '<p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p>'
+      + '</div>'
+      + '<p class="commit-footer">// status: pending · waiting · never giving up</p>';
+  }
+  else if(commit.html === 'changelog'){
+    out += '<div class="commit-body">'
+      + '<p style="color:#50FA7B;font-family:'Fira Code',monospace;font-size:11px;margin-bottom:20px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
+      + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
+      + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
+      + '<p>⚡ <strong>Improved:</strong> felicidade +∞%</p>'
+      + '<p>🔒 <strong>Security:</strong> coração protegido por você</p>'
+      + '<p style="margin-top:20px;color:#FF79C6">Status: <span style="color:#50FA7B">stable · production-ready · forever</span></p>'
+      + '</div>';
+  }
+  else if(commit.html === 'template'){
+    out += (commit._html || '<p class="commit-footer">// carregando...</p>');
+  }
+
+  return out;
+}
+
+/* ── Open commit ── */
 window.openCommit = function(id){
-  initCommitContent();  /* ensure templates are loaded */
+  initCommitContent();
   var commit = TL_COMMITS[id];
   if(!commit) return;
 
-  var fs      = document.getElementById('tl-fullscreen');
-  var inner   = document.getElementById('tl-fs-inner');
-  var titleEl = document.getElementById('tl-fs-title');
-  var content = document.getElementById('tl-fs-content');
+  var fs       = document.getElementById('tl-fullscreen');
+  var inner    = document.getElementById('tl-fs-inner');
+  var content  = document.getElementById('tl-fs-content');
+  var numEl    = document.getElementById('tl-fs-num');
+  var fillEl   = document.getElementById('tl-fs-progress-fill');
   if(!fs || !inner) return;
 
-  var prevId = tlCurrentId;
+  var prevId  = tlCurrentId;
   tlCurrentId = id;
 
-  /* direção da animação */
+  /* direction */
   var prevIdx = TL_ORDER.indexOf(prevId);
   var nextIdx = TL_ORDER.indexOf(id);
-  var dir = (!prevId || nextIdx > prevIdx) ? 'next' : 'prev';
+  var dir     = (!prevId || nextIdx > prevIdx) ? 'next' : 'prev';
 
-  /* preenche conteúdo */
+  /* render content */
   inner.classList.remove('fs-slide-next','fs-slide-prev');
-  inner.innerHTML = commit.html || '<p style="color:var(--muted);font-family:Fira Code,monospace">// em breve...</p>';
-  void inner.offsetWidth; /* reflow */
+  inner.innerHTML = renderCommit(commit);
+  void inner.offsetWidth;
   inner.classList.add(dir === 'next' ? 'fs-slide-next' : 'fs-slide-prev');
 
-  /* título e accent */
-  if(titleEl) titleEl.textContent = commit.title;
-  content.style.setProperty('--tl-fs-accent', commit.accent);
+  /* accent color on number */
+  if(numEl) {
+    numEl.textContent = commit.order < 10 ? '0' + commit.order : '' + commit.order;
+    numEl.style.color = commit.accent;
+  }
+
+  /* progress bar */
+  if(fillEl){
+    fillEl.style.background = 'linear-gradient(90deg, ' + commit.accent + ', var(--pink))';
+    fillEl.style.boxShadow  = '0 0 8px ' + commit.accent;
+    fillEl.style.width      = (commit.order / TL_ORDER.length * 100) + '%';
+  }
 
   /* nav buttons */
   var idx = TL_ORDER.indexOf(id);
@@ -642,39 +683,42 @@ window.openCommit = function(id){
   if(prevBtn) prevBtn.disabled = (idx === 0);
   if(nextBtn) nextBtn.disabled = (idx === TL_ORDER.length - 1);
 
-  /* scroll topo */
+  /* mark active card */
+  document.querySelectorAll('.tl-card').forEach(function(c){ c.classList.remove('active'); });
+  var card = document.getElementById('tln-' + id);
+  if(card) card.classList.add('active');
+
+  /* scroll to top */
   content.scrollTop = 0;
 
-  /* marca dot ativo */
-  document.querySelectorAll('.tl-node').forEach(function(n){ n.classList.remove('active'); });
-  var nodeEl = document.getElementById('tln-' + id);
-  if(nodeEl) nodeEl.classList.add('active');
+  /* hide hint */
+  if(!tlHintGone){
+    tlHintGone = true;
+    var hint = document.getElementById('tlHint');
+    if(hint) hint.classList.add('hint-gone');
+  }
 
-  /* abre lightbox + bloqueia scroll do body */
-  document.body.style.overflow = 'hidden';
+  /* lock section scroll + open */
+  var tlSec = document.getElementById('timeline');
+  if(tlSec) tlSec.classList.add('tl-commit-open');
   fs.classList.add('tl-fs-open');
 };
 
 window.closeCommit = function(){
   var fs = document.getElementById('tl-fullscreen');
   if(fs) fs.classList.remove('tl-fs-open');
-  document.body.style.overflow = '';
+  var tlSec = document.getElementById('timeline');
+  if(tlSec) tlSec.classList.remove('tl-commit-open');
   tlCurrentId = null;
 };
 
-/* fecha ao clicar no backdrop (fora do modal card) */
-window.tlBackdropClose = function(e){
-  var modal = document.getElementById('tl-fs-modal');
-  if(modal && !modal.contains(e.target)) window.closeCommit();
-};
-
 window.navCommit = function(dir){
-  var idx = TL_ORDER.indexOf(tlCurrentId);
+  var idx  = TL_ORDER.indexOf(tlCurrentId);
   var next = idx + dir;
   if(next >= 0 && next < TL_ORDER.length) window.openCommit(TL_ORDER[next]);
 };
 
-/* teclado: ← → dentro da timeline fullscreen */
+/* keyboard */
 document.addEventListener('keydown', function(e){
   var fs = document.getElementById('tl-fullscreen');
   if(!fs || !fs.classList.contains('tl-fs-open')) return;
@@ -683,14 +727,12 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape')     window.closeCommit();
 });
 
-/* swipe dentro do fullscreen (mobile) */
+/* swipe inside fullscreen */
 document.addEventListener('DOMContentLoaded', function(){
   var fs = document.getElementById('tl-fullscreen');
   if(!fs) return;
   var tX = 0;
-  fs.addEventListener('touchstart', function(e){
-    tX = e.touches[0].clientX;
-  }, {passive:true});
+  fs.addEventListener('touchstart', function(e){ tX = e.touches[0].clientX; }, {passive:true});
   fs.addEventListener('touchend', function(e){
     var dx = e.changedTouches[0].clientX - tX;
     if(Math.abs(dx) < 40) return;
@@ -698,9 +740,23 @@ document.addEventListener('DOMContentLoaded', function(){
   }, {passive:true});
 });
 
-/* mantém selectCommit como alias retrocompatível */
+/* reset hint + active card when leaving timeline chapter */
+/* (called from the chapter reset block in showChapter) */
+window.resetTimeline = function(){
+  tlCurrentId = null;
+  tlHintGone  = false;
+  document.querySelectorAll('.tl-card').forEach(function(c){ c.classList.remove('active'); });
+  var hint = document.getElementById('tlHint');
+  if(hint) hint.classList.remove('hint-gone');
+  var fs = document.getElementById('tl-fullscreen');
+  if(fs) fs.classList.remove('tl-fs-open');
+  var tlSec = document.getElementById('timeline');
+  if(tlSec) tlSec.classList.remove('tl-commit-open');
+};
+
+/* retrocompat aliases */
 window.selectCommit = window.openCommit;
-window.toggleC = window.openCommit;
+window.toggleC      = window.openCommit;
 
 /* ── PR TICKET ── */
 var prOpen = false;
