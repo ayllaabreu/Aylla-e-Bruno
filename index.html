@@ -129,41 +129,67 @@
   <p class="slabel">// cap. I &nbsp; conflict_merge.diff</p>
   <h2 class="stitle">Dois pontos de <span class="ac-p">origem</span>,<br>uma única <span class="ac-pk">história</span>.</h2>
 
-  <div class="split" id="splitV">
-    <div class="panel lft" data-l="AYLLA.js">
-      <div class="dh">
-        <div class="av a">A</div>
-        <div><div style="color:#BD93F9;font-weight:600">Aylla</div><div>branch: <span style="color:#F1FA8C">main</span></div></div>
+  <div class="diff-viewer" id="splitV">
+
+    <!-- IDE top bar -->
+    <div class="diff-topbar">
+      <div class="diff-dots"><div class="diff-dot r"></div><div class="diff-dot y"></div><div class="diff-dot g"></div></div>
+      <div class="diff-tabs">
+        <div class="diff-tab active-tab">
+          <div class="av a" style="width:18px;height:18px;font-size:8px">A</div>
+          <span>AYLLA<span style="color:rgba(189,147,249,.5)">.js</span></span>
+          <span class="diff-branch">main</span>
+        </div>
+        <div class="diff-tab-sep">↔</div>
+        <div class="diff-tab">
+          <div class="av b" style="width:18px;height:18px;font-size:8px">B</div>
+          <span>BRUNO<span style="color:rgba(80,250,123,.5)">.js</span></span>
+          <span class="diff-branch" style="color:rgba(241,250,140,.6)">feat/aylla</span>
+        </div>
       </div>
-      <div class="cblock">
+      <span class="diff-status">⊕ conflict_merge.diff</span>
+    </div>
+
+    <!-- Counters row -->
+    <div class="diff-counters">
+      <div class="diff-counter diff-counter-a">
         <div class="cnum p" id="cA">—</div>
-        <div class="clabel">DAYS_SINCE_WE_MET</div>
-        <div class="csub">// desde 21.11.2024</div>
+        <div class="diff-counter-lbl">DAYS_SINCE_WE_MET</div>
+        <div class="diff-counter-sub">// desde 21.11.2024</div>
       </div>
-      <div style="margin-top:14px">
-        <div class="dl add">+ const coragem = "aparecer";</div>
-        <div class="dl add">+ const Bruno = require("./certo");</div>
-        <div class="dl neu">  const data = "2024-11-21";</div>
-        <div class="dl rem">- return medo;</div>
-      </div>
-    </div>
-    <div class="panel" data-l="BRUNO.js">
-      <div class="dh">
-        <div class="av b">B</div>
-        <div><div style="color:#50FA7B;font-weight:600">Bruno</div><div>branch: <span style="color:#F1FA8C">feat/aylla</span></div></div>
-      </div>
-      <div class="cblock">
+      <div class="diff-counter-divider"></div>
+      <div class="diff-counter diff-counter-b">
         <div class="cnum g" id="cB">—</div>
-        <div class="clabel">DAYS_SINCE_THE_TICKET</div>
-        <div class="csub">// desde 04.04.2025</div>
-      </div>
-      <div style="margin-top:14px">
-        <div class="dl add">+ await Aylla.aparecer();</div>
-        <div class="dl add">+ const espera = "valeu_a_pena";</div>
-        <div class="dl neu">  const data = "2025-04-04";</div>
-        <div class="dl rem">- return vazio;</div>
+        <div class="diff-counter-lbl">DAYS_SINCE_THE_TICKET</div>
+        <div class="diff-counter-sub">// desde 04.04.2025</div>
       </div>
     </div>
+
+    <!-- Diff code area -->
+    <div class="diff-code">
+      <div class="diff-side diff-side-a">
+        <div class="diff-line diff-add"><span class="diff-ln">1</span><span class="diff-gutter add">+</span><span>const coragem = <span class="diff-str">"aparecer"</span>;</span></div>
+        <div class="diff-line diff-add"><span class="diff-ln">2</span><span class="diff-gutter add">+</span><span>const Bruno = <span class="diff-fn">require</span>(<span class="diff-str">"./certo"</span>);</span></div>
+        <div class="diff-line diff-neu"><span class="diff-ln">3</span><span class="diff-gutter">·</span><span>const data = <span class="diff-str">"2024-11-21"</span>;</span></div>
+        <div class="diff-line diff-rem"><span class="diff-ln">4</span><span class="diff-gutter rem">−</span><span class="diff-del">return medo;</span></div>
+      </div>
+      <div class="diff-code-divider"></div>
+      <div class="diff-side diff-side-b">
+        <div class="diff-line diff-add"><span class="diff-ln">1</span><span class="diff-gutter add">+</span><span>await <span class="diff-fn">Aylla</span>.<span class="diff-fn">aparecer</span>();</span></div>
+        <div class="diff-line diff-add"><span class="diff-ln">2</span><span class="diff-gutter add">+</span><span>const espera = <span class="diff-str">"valeu_a_pena"</span>;</span></div>
+        <div class="diff-line diff-neu"><span class="diff-ln">3</span><span class="diff-gutter">·</span><span>const data = <span class="diff-str">"2025-04-04"</span>;</span></div>
+        <div class="diff-line diff-rem"><span class="diff-ln">4</span><span class="diff-gutter rem">−</span><span class="diff-del">return vazio;</span></div>
+      </div>
+    </div>
+
+    <!-- Footer status bar -->
+    <div class="diff-footer">
+      <span class="diff-footer-item" style="color:var(--green)">+2 additions</span>
+      <span class="diff-footer-item" style="color:var(--pink)">−2 deletions</span>
+      <span class="diff-footer-item" style="color:var(--muted)">2 files changed</span>
+      <span class="diff-footer-item diff-footer-right" style="color:rgba(189,147,249,.5)">UTF-8 · JavaScript · love-story/</span>
+    </div>
+
   </div>
 
   <!-- TERMINAL INLINE — aparece no lugar do merged-view -->
@@ -624,21 +650,44 @@
 <section class="sec sec-fade" id="forever">
   <div class="gbg"></div>
   <div class="orb" style="background:#50FA7B;width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
-  <p class="slabel">// cap. V &nbsp; forever.exe</p>
-  <h2 class="stitle">Executando<br><span class="ac-p">loop</span> <span class="ac-pk">infinito</span>...</h2>
+  <div class="forever-layout">
 
-  <div class="tw">
-    <div class="ttop">
-      <div class="td r"></div><div class="td y"></div><div class="td g2"></div>
-      <span class="ttl">forever.exe — Terminal v1.0.0</span>
+    <div class="forever-left">
+      <p class="forever-eyebrow">// cap. V &nbsp; forever.exe</p>
+      <h2 class="forever-title">Executando<br><span class="ac-p">loop</span> <span class="ac-pk">infinito</span>...</h2>
+      <div class="forever-stats-col">
+        <div class="forever-stat-item">
+          <span class="forever-stat-val ac-pk" id="fstatDays">—</span>
+          <span class="forever-stat-lbl">dias juntos</span>
+        </div>
+        <div class="forever-stat-item">
+          <span class="forever-stat-val ac-p">∞</span>
+          <span class="forever-stat-lbl">amor.exe</span>
+        </div>
+        <div class="forever-stat-item">
+          <span class="forever-stat-val ac-g">100%</span>
+          <span class="forever-stat-lbl">uptime</span>
+        </div>
+      </div>
+      <p class="forever-sub">// loop iniciado em 04.04.2025<br>// sem previsão de término</p>
     </div>
-    <div class="tbody" id="termBody">
-      <div class="tline"><span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;</span><span id="lsTyped"></span><span class="tcur" id="lsCur"></span></div>
-      <div class="tout" id="lsOut" style="display:none">amor &nbsp; risos &nbsp; cumplicidade &nbsp; futuros &nbsp; voce</div>
-      <div class="tline" id="promptLine" style="display:none;margin-top:8px"><span class="tpr">aylla@bruno</span><span style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;<span class="tcur" id="termCur"></span></span></div>
+
+    <div class="forever-right">
+      <div class="tw">
+        <div class="ttop">
+          <div class="td r"></div><div class="td y"></div><div class="td g2"></div>
+          <span class="ttl">forever.exe — Terminal v1.0.0</span>
+        </div>
+        <div class="tbody" id="termBody">
+          <div class="tline"><span class="tpr">aylla@bruno</span><span class="tcolon" style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;</span><span id="lsTyped"></span><span class="tcur" id="lsCur"></span></div>
+          <div class="tout" id="lsOut" style="display:none">amor &nbsp; risos &nbsp; cumplicidade &nbsp; futuros &nbsp; voce</div>
+          <div class="tline" id="promptLine" style="display:none;margin-top:8px"><span class="tpr">aylla@bruno</span><span class="tcolon" style="color:#8B949E">:~$</span><span class="tcmd">&nbsp;<span class="tcur" id="termCur"></span></span></div>
+        </div>
+      </div>
+      <button class="runbtn" id="runBtn" onclick="runForever()">▶ run forever.exe</button>
     </div>
+
   </div>
-  <button class="runbtn" id="runBtn" onclick="runForever()">▶ run forever.exe</button>
 </section>
 
 
