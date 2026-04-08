@@ -1064,7 +1064,7 @@ body::after {
 }
 
 /* ── 2. CUSTOM SCROLLBAR ── */
-::-webkit-scrollbar { width: 3px; height: 0px; }
+::-webkit-scrollbar { width: 3px; height: 0; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, var(--purple), var(--pink));
@@ -1072,8 +1072,6 @@ body::after {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
 * { scrollbar-width: thin; scrollbar-color: var(--purple) transparent; }
-body { overflow-x: hidden; }
-::-webkit-scrollbar:horizontal { display: none; }
 
 /* ── 3. SELECTION ── */
 ::selection { background: rgba(189,147,249,.22); color: var(--text); }
@@ -1549,15 +1547,7 @@ button:focus-visible {
 .gl { display: none; }
 
 /* ── TRACK ── */
-.tl-track {
-  display: flex;
-  align-items: flex-start;
-  position: relative;
-  margin-bottom: 20px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 0 0 8px;
-}
+.tl-track { display: none; }
 .tl-track::-webkit-scrollbar { display: none; }
 
 /* linha horizontal passa por trás dos pontos */
@@ -3475,118 +3465,130 @@ main {
 }
 
 /* ══════════════════════════════════════════════════════
-   TIMELINE — CHAPTER STRIPS (cinematic)
+   TIMELINE — CHAPTER STRIPS v3 (cinematic, high contrast)
    ══════════════════════════════════════════════════════ */
 .ch-strip {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  max-width: 680px;
+  max-width: 720px;
   margin: 0 auto;
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .ch-strip-item {
   display: flex;
   align-items: stretch;
-  min-height: 68px;
-  background: transparent;
+  min-height: 72px;
+  background: rgba(255,255,255,.02);
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.05);
   cursor: pointer;
   text-align: left;
   width: 100%;
-  transition: background .25s;
+  transition: background .22s, border-color .22s;
   padding: 0;
   font-family: 'Fira Code', monospace;
+  position: relative;
 }
 .ch-strip-item:last-child { border-bottom: none; }
-.ch-strip-item:hover { background: rgba(255,255,255,.04); }
-.ch-strip-item.active { background: rgba(255,255,255,.03); }
 
+/* hover: levanta o background */
+.ch-strip-item:hover { background: rgba(255,255,255,.055); }
+
+/* active: fundo colorido suave baseado na cor accent */
+.ch-strip-item.active { background: rgba(189,147,249,.07); }
+
+/* número grande — quase invisível por padrão, surge no hover */
 .ch-strip-num {
-  width: 56px;
+  width: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 300;
-  color: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.08);
   flex-shrink: 0;
   font-family: 'Cormorant Garamond', serif;
-  transition: color .25s;
+  transition: color .22s;
 }
-.ch-strip-item:hover .ch-strip-num { color: rgba(255,255,255,.35); }
-.ch-strip-item.active .ch-strip-num { color: rgba(255,255,255,.5); }
+.ch-strip-item:hover .ch-strip-num  { color: rgba(255,255,255,.3); }
+.ch-strip-item.active .ch-strip-num { color: rgba(255,255,255,.45); }
 
+/* accent bar — 3px, cor real */
 .ch-strip-accent {
-  width: 2px;
+  width: 3px;
   flex-shrink: 0;
-  margin: 12px 0;
-  opacity: .35;
-  transition: opacity .25s;
-  border-radius: 1px;
+  margin: 0;
+  align-self: stretch;
+  opacity: .25;
+  transition: opacity .22s;
 }
-.ch-strip-item:hover .ch-strip-accent { opacity: .8; }
+.ch-strip-item:hover .ch-strip-accent  { opacity: .7; }
 .ch-strip-item.active .ch-strip-accent { opacity: 1; }
 
+/* corpo */
 .ch-strip-body {
   flex: 1;
-  padding: 14px 22px;
+  padding: 16px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .ch-strip-tag {
   font-size: 9px;
-  letter-spacing: .28em;
-  color: rgba(139,148,158,.5);
+  letter-spacing: .3em;
+  color: rgba(139,148,158,.45);
   text-transform: uppercase;
-  transition: color .25s;
+  transition: color .22s;
 }
-.ch-strip-item:hover .ch-strip-tag { color: rgba(139,148,158,.8); }
-.ch-strip-item.active .ch-strip-tag { color: rgba(139,148,158,.9); }
+.ch-strip-item:hover .ch-strip-tag  { color: rgba(139,148,158,.85); }
+.ch-strip-item.active .ch-strip-tag { color: rgba(189,147,249,.7); }
 
 .ch-strip-title {
-  font-size: 15px;
-  color: rgba(201,209,217,.55);
+  font-size: 17px;
+  color: rgba(201,209,217,.6);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 300;
-  letter-spacing: .02em;
-  transition: color .25s;
+  letter-spacing: .01em;
+  transition: color .22s;
   line-height: 1.2;
 }
-.ch-strip-item:hover .ch-strip-title { color: rgba(230,237,243,.9); }
-.ch-strip-item.active .ch-strip-title { color: #e6edf3; }
+.ch-strip-item:hover .ch-strip-title  { color: #e6edf3; }
+.ch-strip-item.active .ch-strip-title { color: #fff; font-weight: 400; }
 
 .ch-strip-sub {
   font-size: 10px;
-  color: rgba(139,148,158,.3);
-  letter-spacing: .12em;
-  transition: color .25s;
+  color: rgba(139,148,158,.25);
+  letter-spacing: .14em;
+  transition: color .22s;
 }
-.ch-strip-item:hover .ch-strip-sub { color: rgba(139,148,158,.6); }
-.ch-strip-item.active .ch-strip-sub { color: rgba(139,148,158,.7); }
+.ch-strip-item:hover .ch-strip-sub  { color: rgba(139,148,158,.65); }
+.ch-strip-item.active .ch-strip-sub { color: rgba(139,148,158,.8); }
 
+/* seta */
 .ch-strip-arrow {
-  width: 40px;
+  width: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255,255,255,.1);
-  font-size: 18px;
-  transition: color .25s, transform .25s;
+  color: rgba(255,255,255,.08);
+  font-size: 20px;
+  transition: color .22s, transform .22s;
   flex-shrink: 0;
 }
-.ch-strip-item:hover .ch-strip-arrow { color: rgba(255,255,255,.5); transform: translateX(4px); }
-.ch-strip-item.active .ch-strip-arrow { color: rgba(255,255,255,.4); }
+.ch-strip-item:hover .ch-strip-arrow  { color: rgba(255,255,255,.55); transform: translateX(5px); }
+.ch-strip-item.active .ch-strip-arrow { color: rgba(255,255,255,.45); }
 
-.ch-strip-sad .ch-strip-title { color: rgba(139,148,158,.35) !important; }
-.ch-strip-sad:hover .ch-strip-title { color: rgba(139,148,158,.6) !important; }
+/* pausa — mais apagada */
+.ch-strip-sad .ch-strip-title { color: rgba(139,148,158,.3) !important; font-style: italic; }
+.ch-strip-sad:hover .ch-strip-title { color: rgba(139,148,158,.65) !important; }
+.ch-strip-sad .ch-strip-num { font-size: 16px; }
 
-/* Fade-in animation */
-.sec-fade .ch-strip,
-.sec-fade .ch-strip { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; transition-delay: .25s; }
+/* fade-in */
+.sec-fade .ch-strip { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; transition-delay: .28s; }
 .sec-fade.visible .ch-strip,
 .sec.ch-active.visible .ch-strip { opacity: 1; transform: translateY(0); }
