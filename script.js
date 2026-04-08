@@ -125,7 +125,11 @@ function showChapter(id){
     animateCounter(document.getElementById('cB'), days(TICKET));
     animateCounter(document.getElementById('cM'), days(TICKET));
   }, 350); }
-  if(id === 'timeline'){ el.classList.add('tl-visible'); }
+  if(id === 'timeline'){
+    el.classList.add('tl-visible');
+    initCommitContent();
+    if(!tlCurrentId){ setTimeout(function(){ window.selectTlNode('cn1'); }, 120); }
+  }
   if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
   if(id === 'memories'){ setTimeout(triggerMemoriesPuzzle, 120); }
   if(id === 'ticket'){
@@ -508,73 +512,102 @@ function runGitTerminal(onDone){
   });
 }
 
-/* ── TIMELINE COMMITS ── */
+/* ── TIMELINE SPLIT PANEL ── */
 /* ══════════════════════════════════════════════════════════════
-   TIMELINE FULLSCREEN — v10
+   TIMELINE — inline split-panel v1
+   Sem lightbox. Conteúdo injetado no painel direito.
    ══════════════════════════════════════════════════════════════ */
 
-/* mapa de commits: id → { title, accentColor, html } */
+/* mapa de commits: id → { title, date, file, accentColor, html } */
 var TL_COMMITS = {
   cn1: {
     id: 'cn1',
-    title: 'Inner Circle · Jul 2024',
+    title: 'Inner Circle',
+    date: '// Jul 2024 · inner_circle.json',
     accent: 'rgba(157,144,224,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Inner Circle · primeiro sinal do universo</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+    html: '<div class="tl-ph-eyebrow">// commit selecionado</div>'
+        + '<div class="tl-ph-hash">commit #9D90E0 · cn1a3f7</div>'
+        + '<div class="tl-ph-title">Inner Circle</div>'
+        + '<div class="tl-ph-date">// Jul 2024 · inner_circle.json</div>'
+        + '<div class="tl-ph-divider" style="--tl-accent:rgba(157,144,224,.5)"></div>'
+        + '<div class="tl-ph-body">'
         + '<p>O universo tentou pela primeira vez. Um match no Inner Circle — mas ele não tinha o premium, e a gente não conseguiu conversar por lá.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
+        + '<p style="color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// conexão detectada. tentativa falhou. destino adiado.</p>'
         + '</div>'
   },
   cn2: {
     id: 'cn2',
-    title: 'Tinder · 17 Jul 2024',
+    title: 'Tinder',
+    date: '// 17 Jul 2024 · first_match.exe',
     accent: 'rgba(184,158,216,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// Tinder · segunda tentativa do destino</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
+    html: '<div class="tl-ph-eyebrow">// commit selecionado</div>'
+        + '<div class="tl-ph-hash">commit #B89ED8 · cn2b8e1</div>'
+        + '<div class="tl-ph-title">Tinder</div>'
+        + '<div class="tl-ph-date">// 17 Jul 2024 · first_match.exe</div>'
+        + '<div class="tl-ph-divider" style="--tl-accent:rgba(184,158,216,.5)"></div>'
+        + '<div class="tl-ph-body">'
         + '<p>Alguns dias depois, o universo tentou de novo — dessa vez no Tinder. A gente se "encontrou" novamente. No dia seguinte, a conversa migrou para o WhatsApp.</p>'
-        + '<p style="margin-top:14px;color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
+        + '<p style="color:var(--muted);font-family:Fira Code,monospace;font-size:11px">// segunda tentativa. conexão estabelecida. migrando para WA...</p>'
         + '</div>'
   },
   cn3: {
     id: 'cn3',
-    title: 'WhatsApp · 18 Jul 2024',
+    title: 'WhatsApp',
+    date: '// 18 Jul 2024 · whatsapp_init.js',
     accent: 'rgba(200,160,200,.7)',
-    html: null  /* populated by initCommitContent() — includes header text injected below */
+    html: null  /* populated by initCommitContent() */
   },
   cnSad: {
     id: 'cnSad',
-    title: '// pausa · Jul→Nov 2024',
+    title: '// pausa',
+    date: '// Jul→Nov 2024 · conflict.diff',
     accent: 'rgba(139,148,158,.4)',
-    html: '<p style="font-size:11px;color:rgba(139,148,158,.5);margin-bottom:24px;letter-spacing:.1em">// changes not committed · working in progress</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9">'
+    html: '<div class="tl-ph-eyebrow">// changes not committed</div>'
+        + '<div class="tl-ph-hash" style="color:rgba(139,148,158,.5)">--- · working in progress</div>'
+        + '<div class="tl-ph-title" style="color:rgba(230,237,243,.5);font-style:italic">pausa</div>'
+        + '<div class="tl-ph-date" style="color:rgba(139,148,158,.4)">// Jul→Nov 2024 · conflict.diff</div>'
+        + '<div class="tl-ph-divider" style="--tl-accent:rgba(139,148,158,.25)"></div>'
+        + '<div class="tl-ph-body" style="color:rgba(230,237,243,.55)">'
         + '<p>Foram meses difíceis. Encontros marcados e cancelados. O medo e a insegurança que me paralisavam. Eu disse a ele que, se quisesse seguir em frente, eu ia entender — não queria prender alguém a uma pessoa que ele nem sabia se um dia ia ver pessoalmente.</p>'
         + '</div>'
         + '<div class="sad-quote">"tudo tem seu tempo..."<span class="attr">— Bruno, repetidas vezes</span></div>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.55);line-height:1.9;margin-top:4px">'
+        + '<div class="tl-ph-body" style="color:rgba(230,237,243,.55)">'
         + '<p>Ele não queria desistir de mim. E eu não queria desistir dele. A paciência dele foi o que segurou tudo.</p></div>'
-        + '<p style="margin-top:24px;font-family:Fira Code,monospace;font-size:11px;color:rgba(139,148,158,.4)">// status: pending · waiting · never giving up</p>'
+        + '<p style="margin-top:20px;font-family:Fira Code,monospace;font-size:10px;color:rgba(139,148,158,.38)">// status: pending · waiting · never giving up</p>'
   },
   cn4: {
     id: 'cn4',
-    title: 'Encontro · 21 Nov 2024',
+    title: 'Encontro',
+    date: '// 21 Nov 2024 · first_meeting.exe',
     accent: 'rgba(212,160,180,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// IRL · o dia que saiu da tela e virou real</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.75);line-height:1.9">'
-        + '<p style="color:rgba(139,148,158,.6);font-family:Fira Code,monospace;font-size:11px">// em breve: mensagens antes do encontro, foto do local e conversa depois 📍</p>'
+    html: '<div class="tl-ph-eyebrow">// commit selecionado</div>'
+        + '<div class="tl-ph-hash">commit #D4A0B4 · cn4e7c2</div>'
+        + '<div class="tl-ph-title">Encontro</div>'
+        + '<div class="tl-ph-date">// 21 Nov 2024 · first_meeting.exe</div>'
+        + '<div class="tl-ph-divider" style="--tl-accent:rgba(212,160,180,.5)"></div>'
+        + '<div class="tl-ph-body">'
+        + '<p>21 de novembro. O primeiro encontro presencial — quando o offline confirmou tudo que o online prometeu.</p>'
+        + '<p>Esse é o commit que resolveu o conflito. O branch <code style="color:rgba(255,121,198,.8);font-size:11px">diverged/pausa</code> foi descartado e o merge aconteceu com um único diff: <code style="color:rgba(80,250,123,.8);font-size:11px">+ você.</code></p>'
         + '</div>'
   },
   cn5: {
     id: 'cn5',
-    title: 'The Ticket · 04 Abr 2025',
+    title: 'The Ticket',
+    date: '// 04 Abr 2025 · the_ticket.md',
     accent: 'rgba(216,128,168,.7)',
-    html: null  /* conteúdo do Instagram DM — copiado do HTML original */
+    html: null  /* populated by initCommitContent() */
   },
   cn6: {
     id: 'cn6',
-    title: '365 dias · 04 Abr 2026',
+    title: '365 dias',
+    date: '// 04 Abr 2026 · forever.exe',
     accent: 'rgba(109,196,154,.7)',
-    html: '<p style="font-size:11px;color:var(--muted);margin-bottom:20px;letter-spacing:.1em">// release notes · um ano depois</p>'
-        + '<div style="font-family:Plus Jakarta Sans,sans-serif;font-size:14px;color:rgba(230,237,243,.8);line-height:1.8">'
+    html: '<div class="tl-ph-eyebrow">// release notes</div>'
+        + '<div class="tl-ph-hash" style="color:rgba(109,196,154,.8)">commit #6DC49A · cn6g0f1</div>'
+        + '<div class="tl-ph-title">365 dias</div>'
+        + '<div class="tl-ph-date">// 04 Abr 2026 · forever.exe</div>'
+        + '<div class="tl-ph-divider" style="--tl-accent:rgba(109,196,154,.5)"></div>'
+        + '<div class="tl-ph-body">'
         + '<p style="color:#50FA7B;font-family:Fira Code,monospace;font-size:11px;margin-bottom:16px">CHANGELOG v1.0.0 — "Um Ano de Commit"</p>'
         + '<p>🐛 <strong>Fixed:</strong> solidão (removida permanentemente)</p>'
         + '<p>✨ <strong>Added:</strong> amor, cumplicidade, risadas infinitas</p>'
@@ -585,122 +618,89 @@ var TL_COMMITS = {
   }
 };
 
-/* IDs em ordem para navegação prev/next */
 var TL_ORDER = ['cn1','cn2','cn3','cnSad','cn4','cn5','cn6'];
 var tlCurrentId = null;
 
-/* ── Inicializa conteúdo dos commits que precisam do DOM ── */
-/* initCommitContent — lazy init on first openCommit, guaranteed after DOM ready */
 var _commitContentReady = false;
 function initCommitContent(){
   if(_commitContentReady) return;
   _commitContentReady = true;
-  var cn3Template = document.getElementById('cn3-content-template');
-  if(cn3Template){
-    var cn3Header = '<p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// WhatsApp · primeira conversa · 18.07.2024</p>';
-    TL_COMMITS.cn3.html = cn3Header + cn3Template.innerHTML;
+  var cn3T = document.getElementById('cn3-content-template');
+  if(cn3T){
+    var cn3H = '<div class="tl-ph-eyebrow">// commit selecionado</div>'
+      + '<div class="tl-ph-hash">commit #C8A0C8 · cn3d2f9</div>'
+      + '<div class="tl-ph-title">WhatsApp</div>'
+      + '<div class="tl-ph-date">// 18 Jul 2024 · whatsapp_init.js</div>'
+      + '<div class="tl-ph-divider" style="--tl-accent:rgba(200,160,200,.5)"></div>';
+    TL_COMMITS.cn3.html = cn3H + cn3T.innerHTML;
   }
-  var cn5Template = document.getElementById('cn5-content-template');
-  if(cn5Template) TL_COMMITS.cn5.html = cn5Template.innerHTML;
+  var cn5T = document.getElementById('cn5-content-template');
+  if(cn5T){
+    var cn5H = '<div class="tl-ph-eyebrow">// commit selecionado</div>'
+      + '<div class="tl-ph-hash">commit #D880A8 · cn5f1a0</div>'
+      + '<div class="tl-ph-title">The Ticket</div>'
+      + '<div class="tl-ph-date">// 04 Abr 2025 · the_ticket.md</div>'
+      + '<div class="tl-ph-divider" style="--tl-accent:rgba(216,128,168,.6)"></div>';
+    TL_COMMITS.cn5.html = cn5H + cn5T.innerHTML;
+  }
 }
-/* Also init on DOMContentLoaded as belt-and-suspenders */
 document.addEventListener('DOMContentLoaded', initCommitContent);
 
-window.openCommit = function(id){
-  initCommitContent();  /* ensure templates are loaded */
+/* ── Seleciona um commit no painel inline ── */
+window.selectTlNode = function(id){
+  initCommitContent();
   var commit = TL_COMMITS[id];
   if(!commit) return;
 
-  var fs      = document.getElementById('tl-fullscreen');
-  var inner   = document.getElementById('tl-fs-inner');
-  var titleEl = document.getElementById('tl-fs-title');
-  var content = document.getElementById('tl-fs-content');
-  if(!fs || !inner) return;
+  var panel = document.getElementById('tlPanelInner');
+  var wrap  = document.getElementById('tlPanelWrap');
+  if(!panel) return;
 
-  var prevId = tlCurrentId;
+  var prevIdx = TL_ORDER.indexOf(tlCurrentId);
+  var nextIdx = TL_ORDER.indexOf(id);
+  var dir = (tlCurrentId === null || nextIdx > prevIdx) ? 'next' : 'prev';
   tlCurrentId = id;
 
-  /* direção da animação */
-  var prevIdx = TL_ORDER.indexOf(prevId);
-  var nextIdx = TL_ORDER.indexOf(id);
-  var dir = (!prevId || nextIdx > prevIdx) ? 'next' : 'prev';
+  /* animação */
+  panel.classList.remove('tl-anim-next','tl-anim-prev');
+  panel.innerHTML = commit.html || '<p style="color:var(--muted);font-family:Fira Code,monospace;font-size:12px">// em breve...</p>';
+  void panel.offsetWidth;
+  panel.classList.add(dir === 'next' ? 'tl-anim-next' : 'tl-anim-prev');
 
-  /* preenche conteúdo */
-  inner.classList.remove('fs-slide-next','fs-slide-prev');
-  inner.innerHTML = commit.html || '<p style="color:var(--muted);font-family:Fira Code,monospace">// em breve...</p>';
-  void inner.offsetWidth; /* reflow */
-  inner.classList.add(dir === 'next' ? 'fs-slide-next' : 'fs-slide-prev');
+  /* scroll topo do painel */
+  if(wrap) wrap.scrollTop = 0;
 
-  /* título e accent */
-  if(titleEl) titleEl.textContent = commit.title;
-  content.style.setProperty('--tl-fs-accent', commit.accent);
-
-  /* nav buttons */
-  var idx = TL_ORDER.indexOf(id);
-  var prevBtn = document.getElementById('tl-fs-prev');
-  var nextBtn = document.getElementById('tl-fs-next');
-  if(prevBtn) prevBtn.disabled = (idx === 0);
-  if(nextBtn) nextBtn.disabled = (idx === TL_ORDER.length - 1);
-
-  /* scroll topo */
-  content.scrollTop = 0;
-
-  /* marca dot ativo */
-  document.querySelectorAll('.tl-node, .ch-strip-item').forEach(function(n){ n.classList.remove('active'); });
+  /* marca nó ativo */
+  document.querySelectorAll('.tl-ni').forEach(function(n){ n.classList.remove('active'); });
   var nodeEl = document.getElementById('tln-' + id);
   if(nodeEl) nodeEl.classList.add('active');
 
-  /* abre lightbox + bloqueia scroll do body */
-  document.body.style.overflow = 'hidden';
-  fs.classList.add('tl-fs-open');
+  /* atualiza contador e botões nav */
+  var idx = TL_ORDER.indexOf(id);
+  var counter = document.getElementById('tlCounter');
+  var btnP = document.getElementById('tlBtnPrev');
+  var btnN = document.getElementById('tlBtnNext');
+  if(counter) counter.textContent = '0' + (idx+1) + ' / 0' + TL_ORDER.length;
+  if(btnP) btnP.disabled = (idx === 0);
+  if(btnN) btnN.disabled = (idx === TL_ORDER.length - 1);
 };
 
-window.closeCommit = function(){
-  var fs = document.getElementById('tl-fullscreen');
-  if(fs) fs.classList.remove('tl-fs-open');
-  document.body.style.overflow = '';
-  tlCurrentId = null;
-};
-
-/* fecha ao clicar no backdrop (fora do modal card) */
-window.tlBackdropClose = function(e){
-  var modal = document.getElementById('tl-fs-modal');
-  if(modal && !modal.contains(e.target)) window.closeCommit();
-};
-
-window.navCommit = function(dir){
+window.navTlPanel = function(dir){
   var idx = TL_ORDER.indexOf(tlCurrentId);
+  if(idx === -1) idx = 0;
   var next = idx + dir;
-  if(next >= 0 && next < TL_ORDER.length) window.openCommit(TL_ORDER[next]);
+  if(next >= 0 && next < TL_ORDER.length) window.selectTlNode(TL_ORDER[next]);
 };
 
-/* teclado: ← → dentro da timeline fullscreen */
-document.addEventListener('keydown', function(e){
-  var fs = document.getElementById('tl-fullscreen');
-  if(!fs || !fs.classList.contains('tl-fs-open')) return;
-  if(e.key === 'ArrowRight') window.navCommit(1);
-  if(e.key === 'ArrowLeft')  window.navCommit(-1);
-  if(e.key === 'Escape')     window.closeCommit();
-});
+/* retrocompat — caso algo ainda chame openCommit */
+window.openCommit    = window.selectTlNode;
+window.selectCommit  = window.selectTlNode;
+window.toggleC       = window.selectTlNode;
+window.closeCommit   = function(){};
+window.tlBackdropClose = function(){};
+window.navCommit     = window.navTlPanel;
 
-/* swipe dentro do fullscreen (mobile) */
-document.addEventListener('DOMContentLoaded', function(){
-  var fs = document.getElementById('tl-fullscreen');
-  if(!fs) return;
-  var tX = 0;
-  fs.addEventListener('touchstart', function(e){
-    tX = e.touches[0].clientX;
-  }, {passive:true});
-  fs.addEventListener('touchend', function(e){
-    var dx = e.changedTouches[0].clientX - tX;
-    if(Math.abs(dx) < 40) return;
-    window.navCommit(dx < 0 ? 1 : -1);
-  }, {passive:true});
-});
-
-/* mantém selectCommit como alias retrocompatível */
-window.selectCommit = window.openCommit;
-window.toggleC = window.openCommit;
+/* retrocompat aliases */
 
 /* ── PR TICKET ── */
 var prOpen = false;
