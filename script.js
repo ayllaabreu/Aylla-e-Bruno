@@ -130,7 +130,11 @@ function showChapter(id){
     initCommitContent();
     if(!tlCurrentId){ setTimeout(function(){ window.selectTlNode('cn1'); }, 120); }
   }
-  if(id === 'forever'){ setTimeout(triggerForeverTerminal, 400); }
+  if(id === 'forever'){
+    setTimeout(triggerForeverTerminal, 400);
+    var fstatEl = document.getElementById('fstatDays');
+    if(fstatEl){ fstatEl.textContent = days(TICKET); }
+  }
   if(id === 'memories'){ setTimeout(triggerMemoriesPuzzle, 120); }
   if(id === 'ticket'){
     setTimeout(function(){
@@ -660,6 +664,22 @@ window.selectTlNode = function(id){
   var nextIdx = TL_ORDER.indexOf(id);
   var dir = (tlCurrentId === null || nextIdx > prevIdx) ? 'next' : 'prev';
   tlCurrentId = id;
+
+  /* cores por commit */
+  var TL_NODE_COLORS = {
+    cn1:'#9D90E0', cn2:'#B89ED8', cn3:'#C8A0C8',
+    cnSad:'rgba(139,148,158,.5)', cn4:'#D4A0B4', cn5:'#D880A8', cn6:'#6DC49A'
+  };
+  var nodeColor = TL_NODE_COLORS[id] || 'rgba(189,147,249,.6)';
+
+  /* injecta cor no nó ativo e no painel */
+  document.querySelectorAll('.tl-ni').forEach(function(n){ n.style.removeProperty('--tl-ni-color'); });
+  var activeNi = document.getElementById('tln-' + id);
+  if(activeNi){
+    activeNi.style.setProperty('--tl-ni-color', nodeColor);
+    activeNi.style.setProperty('--tl-ni-shadow', '0 0 0 5px ' + nodeColor.replace(')', ',.18)').replace('rgba','rgba'));
+  }
+  if(wrap) wrap.style.setProperty('--tl-panel-accent', nodeColor);
 
   /* animação */
   panel.classList.remove('tl-anim-next','tl-anim-prev');
