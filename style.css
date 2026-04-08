@@ -1064,7 +1064,7 @@ body::after {
 }
 
 /* ── 2. CUSTOM SCROLLBAR ── */
-::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar { width: 3px; height: 0px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, var(--purple), var(--pink));
@@ -1072,6 +1072,8 @@ body::after {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
 * { scrollbar-width: thin; scrollbar-color: var(--purple) transparent; }
+body { overflow-x: hidden; }
+::-webkit-scrollbar:horizontal { display: none; }
 
 /* ── 3. SELECTION ── */
 ::selection { background: rgba(189,147,249,.22); color: var(--text); }
@@ -3478,7 +3480,7 @@ main {
 .ch-strip {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 0;
   max-width: 680px;
   margin: 0 auto;
 }
@@ -3486,100 +3488,105 @@ main {
 .ch-strip-item {
   display: flex;
   align-items: stretch;
-  min-height: 62px;
+  min-height: 68px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.06);
   cursor: pointer;
   text-align: left;
   width: 100%;
-  transition: background .2s;
+  transition: background .25s;
   padding: 0;
   font-family: 'Fira Code', monospace;
 }
 .ch-strip-item:last-child { border-bottom: none; }
-.ch-strip-item:hover { background: rgba(255,255,255,.03); }
+.ch-strip-item:hover { background: rgba(255,255,255,.04); }
+.ch-strip-item.active { background: rgba(255,255,255,.03); }
 
 .ch-strip-num {
-  width: 52px;
+  width: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 300;
-  color: #252a33;
+  color: rgba(255,255,255,.12);
   flex-shrink: 0;
   font-family: 'Cormorant Garamond', serif;
-  transition: color .2s;
+  transition: color .25s;
 }
-.ch-strip-item:hover .ch-strip-num,
-.ch-strip-item.active .ch-strip-num { color: #555; }
+.ch-strip-item:hover .ch-strip-num { color: rgba(255,255,255,.35); }
+.ch-strip-item.active .ch-strip-num { color: rgba(255,255,255,.5); }
 
 .ch-strip-accent {
-  width: 1px;
+  width: 2px;
   flex-shrink: 0;
-  margin: 10px 0;
-  opacity: .5;
-  transition: opacity .2s;
+  margin: 12px 0;
+  opacity: .35;
+  transition: opacity .25s;
+  border-radius: 1px;
 }
-.ch-strip-item:hover .ch-strip-accent,
+.ch-strip-item:hover .ch-strip-accent { opacity: .8; }
 .ch-strip-item.active .ch-strip-accent { opacity: 1; }
 
 .ch-strip-body {
   flex: 1;
-  padding: 14px 20px;
+  padding: 14px 22px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 .ch-strip-tag {
   font-size: 9px;
-  letter-spacing: .25em;
-  color: #444;
+  letter-spacing: .28em;
+  color: rgba(139,148,158,.5);
   text-transform: uppercase;
+  transition: color .25s;
 }
-.ch-strip-item.active .ch-strip-tag { color: #666; }
+.ch-strip-item:hover .ch-strip-tag { color: rgba(139,148,158,.8); }
+.ch-strip-item.active .ch-strip-tag { color: rgba(139,148,158,.9); }
 
 .ch-strip-title {
-  font-size: 14px;
-  color: #8b949e;
+  font-size: 15px;
+  color: rgba(201,209,217,.55);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 300;
   letter-spacing: .02em;
-  transition: color .2s;
+  transition: color .25s;
+  line-height: 1.2;
 }
-.ch-strip-item:hover .ch-strip-title { color: #c9d1d9; }
+.ch-strip-item:hover .ch-strip-title { color: rgba(230,237,243,.9); }
 .ch-strip-item.active .ch-strip-title { color: #e6edf3; }
 
 .ch-strip-sub {
   font-size: 10px;
-  color: #333;
-  letter-spacing: .1em;
+  color: rgba(139,148,158,.3);
+  letter-spacing: .12em;
+  transition: color .25s;
 }
-.ch-strip-item.active .ch-strip-sub { color: #555; }
+.ch-strip-item:hover .ch-strip-sub { color: rgba(139,148,158,.6); }
+.ch-strip-item.active .ch-strip-sub { color: rgba(139,148,158,.7); }
 
 .ch-strip-arrow {
-  width: 36px;
+  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #252a33;
-  font-size: 16px;
-  transition: color .2s, transform .2s;
+  color: rgba(255,255,255,.1);
+  font-size: 18px;
+  transition: color .25s, transform .25s;
+  flex-shrink: 0;
 }
-.ch-strip-item:hover .ch-strip-arrow { color: #8b949e; transform: translateX(3px); }
-.ch-strip-item.active .ch-strip-arrow { color: #8b949e; }
+.ch-strip-item:hover .ch-strip-arrow { color: rgba(255,255,255,.5); transform: translateX(4px); }
+.ch-strip-item.active .ch-strip-arrow { color: rgba(255,255,255,.4); }
 
-.ch-strip-sad .ch-strip-num { font-size: 14px; }
+.ch-strip-sad .ch-strip-title { color: rgba(139,148,158,.35) !important; }
+.ch-strip-sad:hover .ch-strip-title { color: rgba(139,148,158,.6) !important; }
 
-/* Sec-fade animations para ch-strip */
-.sec-fade .ch-strip {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .65s ease, transform .65s ease;
-  transition-delay: .3s;
-}
+/* Fade-in animation */
+.sec-fade .ch-strip,
+.sec-fade .ch-strip { opacity: 0; transform: translateY(20px); transition: opacity .65s ease, transform .65s ease; transition-delay: .25s; }
 .sec-fade.visible .ch-strip,
 .sec.ch-active.visible .ch-strip { opacity: 1; transform: translateY(0); }
