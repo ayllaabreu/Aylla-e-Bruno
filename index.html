@@ -189,113 +189,149 @@
   <p class="slabel">// cap. II &nbsp; timeline.git</p>
   <h2 class="stitle"><span class="ac-g">git log</span> --all<br>--love --no-limit</h2>
 
-  <div class="gg">
+  <div class="tl-split">
 
-    <!-- CHAPTER STRIPS -->
-    <div class="ch-strip">
+    <!-- COL ESQUERDA: git graph -->
+    <div class="tl-gcol">
+      <div class="tl-gcol-label">// git graph · main</div>
+      <div class="tl-nlist" id="tlNlist">
 
-      <button class="ch-strip-item active" id="tln-cn1" onclick="openCommit('cn1')">
-        <div class="ch-strip-num">01</div>
-        <div class="ch-strip-accent" style="background:#9D90E0"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// Jul 2024</span>
-          <span class="ch-strip-title">Inner Circle</span>
-          <span class="ch-strip-sub">inner_circle.json</span>
+        <div class="tl-ni active" id="tln-cn1" data-id="cn1" onclick="selectTlNode('cn1')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg tl-ni-first"></div>
+            <div class="tl-ni-dot" style="background:#9D90E0;box-shadow:0 0 0 5px rgba(157,144,224,.15)"></div>
+            <div class="tl-ni-seg"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn1a3f7</span>
+            <span class="tl-ni-title">Inner Circle</span>
+            <span class="tl-ni-date">Jul 2024</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
-      <button class="ch-strip-item" id="tln-cn2" onclick="openCommit('cn2')">
-        <div class="ch-strip-num">02</div>
-        <div class="ch-strip-accent" style="background:#B89ED8"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// 17 Jul 2024</span>
-          <span class="ch-strip-title">Tinder</span>
-          <span class="ch-strip-sub">first_match.exe</span>
+        <div class="tl-ni" id="tln-cn2" data-id="cn2" onclick="selectTlNode('cn2')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg"></div>
+            <div class="tl-ni-dot" style="background:#B89ED8;box-shadow:0 0 0 5px rgba(184,158,216,.15)"></div>
+            <div class="tl-ni-seg"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn2b8e1</span>
+            <span class="tl-ni-title">Tinder</span>
+            <span class="tl-ni-date">17 Jul 2024</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
-      <button class="ch-strip-item" id="tln-cn3" onclick="openCommit('cn3')">
-        <div class="ch-strip-num">03</div>
-        <div class="ch-strip-accent" style="background:#C8A0C8"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// 18 Jul 2024</span>
-          <span class="ch-strip-title">WhatsApp</span>
-          <span class="ch-strip-sub">whatsapp_init.js</span>
+        <div class="tl-ni" id="tln-cn3" data-id="cn3" onclick="selectTlNode('cn3')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg"></div>
+            <div class="tl-ni-dot" style="background:#C8A0C8;box-shadow:0 0 0 5px rgba(200,160,200,.15)"></div>
+            <div class="tl-ni-seg"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn3d2f9</span>
+            <span class="tl-ni-title">WhatsApp</span>
+            <span class="tl-ni-date">18 Jul 2024</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
-      <button class="ch-strip-item ch-strip-sad" id="tln-cnSad" onclick="openCommit('cnSad')">
-        <div class="ch-strip-num">—</div>
-        <div class="ch-strip-accent" style="background:rgba(139,148,158,.4)"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// Jul → Nov 2024</span>
-          <span class="ch-strip-title" style="color:#555">pausa</span>
-          <span class="ch-strip-sub">conflict.diff</span>
+        <div class="tl-ni tl-ni-sad" id="tln-cnSad" data-id="cnSad" onclick="selectTlNode('cnSad')">
+          <div class="tl-ni-rail tl-ni-rail-branch">
+            <div class="tl-ni-seg tl-ni-seg-sad"></div>
+            <div class="tl-ni-dot-sad"></div>
+            <div class="tl-ni-seg tl-ni-seg-sad"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash tl-ni-hash-sad">---</span>
+            <span class="tl-ni-title tl-ni-title-sad">pausa</span>
+            <span class="tl-ni-date tl-ni-date-sad">Jul→Nov 2024</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow" style="color:#333">›</div>
-      </button>
 
-      <button class="ch-strip-item" id="tln-cn4" onclick="openCommit('cn4')">
-        <div class="ch-strip-num">04</div>
-        <div class="ch-strip-accent" style="background:#D4A0B4"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// 21 Nov 2024</span>
-          <span class="ch-strip-title">Encontro</span>
-          <span class="ch-strip-sub">first_meeting.exe</span>
+        <div class="tl-ni" id="tln-cn4" data-id="cn4" onclick="selectTlNode('cn4')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg"></div>
+            <div class="tl-ni-dot" style="background:#D4A0B4;box-shadow:0 0 0 5px rgba(212,160,180,.15)"></div>
+            <div class="tl-ni-seg"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn4e7c2</span>
+            <span class="tl-ni-title">Encontro</span>
+            <span class="tl-ni-date">21 Nov 2024</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
-      <button class="ch-strip-item" id="tln-cn5" onclick="openCommit('cn5')">
-        <div class="ch-strip-num">05</div>
-        <div class="ch-strip-accent" style="background:#D880A8"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// 04 Abr 2025</span>
-          <span class="ch-strip-title">The Ticket</span>
-          <span class="ch-strip-sub">the_ticket.md</span>
+        <div class="tl-ni" id="tln-cn5" data-id="cn5" onclick="selectTlNode('cn5')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg"></div>
+            <div class="tl-ni-dot" style="background:#D880A8;box-shadow:0 0 0 5px rgba(216,128,168,.15)"></div>
+            <div class="tl-ni-seg"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn5f1a0</span>
+            <span class="tl-ni-title">The Ticket</span>
+            <span class="tl-ni-date">04 Abr 2025</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
-      <button class="ch-strip-item" id="tln-cn6" onclick="openCommit('cn6')">
-        <div class="ch-strip-num">06</div>
-        <div class="ch-strip-accent" style="background:#6DC49A"></div>
-        <div class="ch-strip-body">
-          <span class="ch-strip-tag">// 04 Abr 2026</span>
-          <span class="ch-strip-title">365 dias</span>
-          <span class="ch-strip-sub">forever.exe</span>
+        <div class="tl-ni" id="tln-cn6" data-id="cn6" onclick="selectTlNode('cn6')">
+          <div class="tl-ni-rail">
+            <div class="tl-ni-seg"></div>
+            <div class="tl-ni-dot" style="background:#6DC49A;box-shadow:0 0 0 5px rgba(109,196,154,.15)"></div>
+            <div class="tl-ni-seg tl-ni-last"></div>
+          </div>
+          <div class="tl-ni-meta">
+            <span class="tl-ni-hash">cn6g0f1</span>
+            <span class="tl-ni-title">365 dias</span>
+            <span class="tl-ni-date">04 Abr 2026</span>
+          </div>
         </div>
-        <div class="ch-strip-arrow">›</div>
-      </button>
 
+      </div>
+    </div>
+
+    <!-- COL DIREITA: painel de conteúdo inline -->
+    <div class="tl-pcol">
+      <div class="tl-panel-wrap" id="tlPanelWrap">
+        <div class="tl-panel-inner" id="tlPanelInner">
+          <!-- JS popula aqui -->
+        </div>
+      </div>
+      <div class="tl-pnav">
+        <button class="tl-pnav-btn" id="tlBtnPrev" onclick="navTlPanel(-1)" disabled>← <span class="tl-pnav-lbl">anterior</span></button>
+        <span class="tl-pnav-count" id="tlCounter">01 / 07</span>
+        <button class="tl-pnav-btn" id="tlBtnNext" onclick="navTlPanel(1)"><span class="tl-pnav-lbl">próximo</span> →</button>
+      </div>
     </div>
 
   </div>
 
-  <!-- LIGHTBOX COMMIT OVERLAY — fixed backdrop, centered modal card -->
-  <div id="tl-fullscreen" onclick="tlBackdropClose(event)">
+  <!-- ── CONTENT TEMPLATES (hidden) ── -->
+  <!-- placeholder para o lightbox que existia antes — mantido vazio para compatibilidade -->
+  <div id="tl-fullscreen" style="display:none" aria-hidden="true">
     <div id="tl-fs-modal">
       <div id="tl-fs-bar">
-        <button id="tl-fs-back" onclick="closeCommit()">
-          <span class="fs-back-arrow">←</span>
-          <span>git log</span>
-        </button>
+        <button id="tl-fs-back"></button>
         <span id="tl-fs-title"></span>
         <div id="tl-fs-nav">
-          <button class="tl-fs-nav-btn" id="tl-fs-prev" onclick="navCommit(-1)" disabled>‹</button>
-          <button class="tl-fs-nav-btn" id="tl-fs-next" onclick="navCommit(1)">›</button>
         </div>
       </div>
-      <div id="tl-fs-content">
-        <div id="tl-fs-inner"></div>
-      </div>
+      <div id="tl-fs-content"><div id="tl-fs-inner"></div></div>
     </div>
   </div>
+
   <!-- TEMPLATES: conteúdo dos commits — lido pelo JS, nunca renderizado diretamente -->
+
+  <!-- cn3: WhatsApp -->
   <div id="cn3-content-template" hidden>
+    <div class="tl-chat-header">
+      <div class="tl-chat-av tl-av-wa">B</div>
+      <div>
+        <div class="tl-chat-name">Bruno</div>
+        <div class="tl-chat-status">// WhatsApp · 18.07.2024</div>
+      </div>
+      <div class="tl-chat-platform tl-platform-wa">whatsapp_init.js</div>
+    </div>
     <div class="ct">
       <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Oiii!!<div class="btm">13:07</div></div></div></div>
       <div class="br"><div class="bav bav-a">A</div><div class="brow"><div class="bub ay">Aqui é Aylla lá do tinder/inner 😄<div class="btm">13:07</div></div></div></div>
@@ -309,45 +345,88 @@
       <div class="br r"><div class="bav bav-b">B</div><div class="brow"><div class="bub br2">entedo, sei como é!<div class="btm">13:29</div></div></div></div>
     </div>
   </div>
+
+  <!-- cn5: Instagram DM — sem wrapper de phone, integrado ao estilo do site -->
   <div id="cn5-content-template" hidden>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:16px;letter-spacing:.1em">// Instagram DM · perspectiva do Bruno · 04.04.2025</p>
-    <div class="ig-wrap">
-      <div class="ig-header">
-        <span class="ig-back">‹</span>
-        <div class="ig-av">A</div>
-        <div><div class="ig-uname">ayllaabreu</div><div class="ig-active">ativa agora</div></div>
+    <div class="tl-chat-header">
+      <div class="tl-chat-av tl-av-ig">A</div>
+      <div>
+        <div class="tl-chat-name">ayllaabreu</div>
+        <div class="tl-chat-status">// Instagram DM · 04.04.2025</div>
       </div>
-      <div class="ig-messages">
-        <div class="ig-date-sep">4 de abr., 19:47</div>
-        <div class="ct">
-          <div class="br r"><div class="brow"><div class="ig-reel"><div class="ig-reel-head"><div class="ig-reel-dot"></div>oreidosites <span class="ig-reel-check">✓</span></div><div class="ig-reel-thumb"><img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail"><div class="ig-reel-caption">Compensa namorar com programador? 🎧</div><div class="ig-reel-play">▶</div><div class="ig-reel-progress"><div class="ig-reel-progress-fill"></div></div></div><div class="ig-reel-foot">▶ Reels</div></div><div class="react" style="text-align:right">🤣</div><div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:47</div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">Kkkkkkkkk onde que abre esse chamado? Ninguém me sinalizou que tinha que abrir chamado! Favor formalizar por email. 🤣🤣🤣🤣<div class="btm">19:49</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">Kkkkkkkkk<div class="btm">19:50</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">Por isso ainda não foi atendida!!<div class="btm">19:50</div></div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">Será que o chamado é pedir o programador em namoro com as alianças? 🤔<div class="btm">19:52</div></div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">Vixee...<div class="btm">19:52</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="187a6a6d7677587d75797174367b7775">[email&#160;protected]</a><div class="btm">19:54</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
-          <div class="br"><div class="brow"><div class="ig-gif l"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-calculando.gif" alt="mulher calculando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">V = ⁴⁄₃πr³ · mulher calculando...</div></div><div class="btm" style="font-family:'-apple-system',sans-serif">19:55</div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">Perai<div class="btm">19:55</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="bub ig-r">É brincadeira menina linda do meu coração<div class="btm">19:55</div></div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">1 min<div class="btm">19:56</div></div></div></div>
-          <div class="br r"><div class="brow"><div class="ig-gif r"><div class="ig-gif-inner"><div class="ig-gif-tag">GIF</div><img src="assets/chat/meme-menina.gif" alt="menina esperando" style="width:100%;height:100%;object-fit:cover;"></div><div class="ig-gif-desc">menina esperando pacientemente...</div></div><div class="btm" style="text-align:right;font-family:'-apple-system',sans-serif">19:56</div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l">Prezado, favor verificar seu e-mail<div class="btm">19:57</div></div></div></div>
-          <div class="br"><div class="brow"><div class="bub ig-l" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
-          <div class="ig-seen">Visto ✓✓</div>
+      <div class="tl-chat-platform tl-platform-ig">instagram_dm.js</div>
+    </div>
+    <div class="tl-date-sep">4 de abr., 19:47</div>
+    <div class="ct">
+
+      <!-- Reel compartilhado (inline card, não phone widget) -->
+      <div class="br r">
+        <div class="brow">
+          <div class="tl-reel-card">
+            <div class="tl-reel-thumb">
+              <img src="assets/chat/reels-thumb.jpg" alt="reel thumbnail" onerror="this.style.display='none'">
+              <div class="tl-reel-overlay">
+                <div class="tl-reel-play-btn">▶</div>
+                <div class="tl-reel-caption">Compensa namorar com programador? 🎧</div>
+              </div>
+            </div>
+            <div class="tl-reel-foot">
+              <span class="tl-reel-user">oreidosites ✓</span>
+              <span class="tl-reel-type">// Reels</span>
+            </div>
+          </div>
+          <div class="react" style="text-align:right">🤣</div>
+          <div class="btm" style="text-align:right">19:47</div>
         </div>
       </div>
-      <div class="ig-inputbar">
-        <span class="ig-input-icon">📷</span>
-        <div class="ig-input-fake">Mensagem...</div>
-        <span class="ig-input-icon">🎤</span>
-        <span class="ig-input-icon">❤️</span>
+
+      <div class="br"><div class="brow"><div class="bub ig-l">Kkkkkkkkk onde que abre esse chamado? Ninguém me sinalizou que tinha que abrir chamado! Favor formalizar por email. 🤣🤣🤣🤣<div class="btm">19:49</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">Kkkkkkkkk<div class="btm">19:50</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">Por isso ainda não foi atendida!!<div class="btm">19:50</div></div></div></div>
+      <div class="br"><div class="brow"><div class="bub ig-l">Será que o chamado é pedir o programador em namoro com as alianças? 🤔<div class="btm">19:52</div></div></div></div>
+      <div class="br"><div class="brow"><div class="bub ig-l">Vixee...<div class="btm">19:52</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">Acredito que é mais facil que isso<div class="btm">19:54</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">Coloca no gpt ai para criar um chamado e envia para meu e-mail<div class="btm">19:54</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">brunoa@email.com<div class="btm">19:54</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">Vai ter que formalizar esse pedido ai!<div class="btm">19:54</div></div></div></div>
+
+      <!-- GIF inline -->
+      <div class="br">
+        <div class="brow">
+          <div class="tl-gif-card">
+            <div class="tl-gif-inner">
+              <span class="tl-gif-badge">GIF</span>
+              <img src="assets/chat/meme-calculando.gif" alt="mulher calculando" onerror="this.style.display='none'">
+            </div>
+            <div class="tl-gif-desc">V = ⁴⁄₃πr³ · mulher calculando...</div>
+          </div>
+          <div class="btm">19:55</div>
+        </div>
       </div>
+
+      <div class="br"><div class="brow"><div class="bub ig-l">Perai<div class="btm">19:55</div></div></div></div>
+      <div class="br r"><div class="brow"><div class="bub ig-r">É brincadeira menina linda do meu coração<div class="btm">19:55</div></div></div></div>
+      <div class="br"><div class="brow"><div class="bub ig-l">1 min<div class="btm">19:56</div></div></div></div>
+
+      <!-- GIF inline direita -->
+      <div class="br r">
+        <div class="brow">
+          <div class="tl-gif-card tl-gif-r">
+            <div class="tl-gif-inner">
+              <span class="tl-gif-badge">GIF</span>
+              <img src="assets/chat/meme-menina.gif" alt="menina esperando" onerror="this.style.display='none'">
+            </div>
+            <div class="tl-gif-desc">menina esperando pacientemente...</div>
+          </div>
+          <div class="btm" style="text-align:right">19:56</div>
+        </div>
+      </div>
+
+      <div class="br"><div class="brow"><div class="bub ig-l">Prezado, favor verificar seu e-mail<div class="btm">19:57</div></div></div></div>
+      <div class="br"><div class="brow"><div class="bub ig-l" style="background:transparent;border:none;padding:4px 0;font-size:18px;letter-spacing:2px">🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣</div></div></div>
     </div>
-    <p style="font-family:'Fira Code',monospace;font-size:10px;color:rgba(139,148,158,.45);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm · escalado para: email → chamado_001.md → merged ♥</p>
+    <div class="tl-seen-label">Visto ✓✓</div>
+    <p style="font-family:'Fira Code',monospace;font-size:9px;color:rgba(139,148,158,.35);margin-top:16px;letter-spacing:.12em">// origin: instagram_dm · escalado para: email → chamado_001.md → merged ♥</p>
   </div>
 
 </section>
