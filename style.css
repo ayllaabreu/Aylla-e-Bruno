@@ -341,7 +341,7 @@ main{ padding-top:48px; }
   border:1px solid rgba(189,147,249,.13); border-radius:16px;
   overflow:hidden; background:rgba(11,14,21,.65);
   backdrop-filter:blur(8px);
-  height:560px;
+  height: clamp(360px, calc(100vh - 360px), 540px);
 }
 
 /* LEFT: git graph column */
@@ -1169,6 +1169,10 @@ body::after {
 }
 
 /* ── 2. CUSTOM SCROLLBAR ── */
+/* global scrollbar hidden on sections */
+.sec::-webkit-scrollbar { display: none !important; }
+.sec { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+
 ::-webkit-scrollbar { width: 3px; height: 0 !important; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
@@ -3804,3 +3808,16 @@ main {
 }
 
 /* ── FOREVER: fstat days counter JS hook ── */
+
+/* ── TIMELINE section — no external scroll, fits viewport ── */
+#timeline {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+}
+/* Make the stitle slightly smaller in timeline to save vertical space */
+#timeline .stitle {
+  font-size: clamp(22px, 3.5vw, 40px) !important;
+  margin-bottom: 20px !important;
+}
