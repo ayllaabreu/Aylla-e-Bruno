@@ -340,7 +340,8 @@ main{ padding-top:48px; }
   display:flex; max-width:960px; margin:0 auto;
   border:1px solid rgba(189,147,249,.13); border-radius:16px;
   overflow:hidden; background:rgba(11,14,21,.65);
-  backdrop-filter:blur(8px); min-height:560px;
+  backdrop-filter:blur(8px);
+  height:560px;
 }
 
 /* LEFT: git graph column */
@@ -349,6 +350,7 @@ main{ padding-top:48px; }
   border-right:1px solid rgba(189,147,249,.1);
   display:flex; flex-direction:column;
   padding:20px 0 16px;
+  overflow-y:auto; overflow-x:hidden;
 }
 .tl-gcol-label{
   font-size:9px; letter-spacing:.3em;
@@ -427,6 +429,7 @@ main{ padding-top:48px; }
 }
 .tl-panel-wrap{
   flex:1; overflow-y:auto; padding:28px 32px 16px;
+  min-height:0;
   scrollbar-width:thin;
   scrollbar-color:rgba(189,147,249,.15) transparent;
 }
@@ -642,11 +645,13 @@ main{ padding-top:48px; }
 /* Mobile timeline */
 @media(max-width:640px){
   .tl-split{ flex-direction:column; min-height:auto; }
+  .tl-split{ height:auto; min-height:480px; flex-direction:column; }
   .tl-gcol{
     width:100%; border-right:none;
     border-bottom:1px solid rgba(189,147,249,.1);
-    padding:14px 0 10px; overflow-x:auto;
+    padding:14px 0 10px; overflow-x:auto; height:auto;
   }
+  .tl-pcol{ height:380px; flex-shrink:0; }
   .tl-gcol-label{ padding-bottom:10px; }
   .tl-nlist{ flex-direction:row; width:max-content; padding:0 12px; }
   .tl-ni{
