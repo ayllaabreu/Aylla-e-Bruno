@@ -418,11 +418,7 @@ window.resolveConflict = function(){
   term.getBoundingClientRect();
   term.classList.add('visible');
 
-  /* scroll suave imediato para o terminal */
-  setTimeout(function(){
-    var sec = document.getElementById('conflict');
-    if(sec) sec.scrollTo({ top: term.offsetTop - 24, behavior: 'smooth' });
-  }, 120);
+  /* no auto-scroll — diff-viewer stays visible, terminal appears below */
 
   /* roda o terminal e ao final atualiza o botão */
   runGitTerminal(function(){
