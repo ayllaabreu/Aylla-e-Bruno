@@ -167,8 +167,8 @@ main{ padding-top:48px; }
 }
 .slabel::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(189,147,249,.22),rgba(255,121,198,.14) 40%,transparent); }
 .stitle{
-  font-size:clamp(28px,5vw,52px); font-weight:300;
-  line-height:1.1; margin-bottom:60px;
+  font-size:clamp(26px, 3.2vw + 0.8vh, 48px); font-weight:300;
+  line-height:1.1; margin-bottom:clamp(20px, 3vh, 52px);
   font-family:'Plus Jakarta Sans',sans-serif;
 }
 .ac-p{
@@ -341,7 +341,7 @@ main{ padding-top:48px; }
   border:1px solid rgba(189,147,249,.13); border-radius:16px;
   overflow:hidden; background:rgba(11,14,21,.65);
   backdrop-filter:blur(8px);
-  height: clamp(360px, calc(100vh - 360px), 540px);
+  height: clamp(340px, calc(100vh - 48px - 60px - clamp(36px,4.5vh,64px) - clamp(24px,3vh,48px) - 110px), 540px);
 }
 
 /* LEFT: git graph column */
@@ -351,7 +351,9 @@ main{ padding-top:48px; }
   display:flex; flex-direction:column;
   padding:20px 0 16px;
   overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:none; -ms-overflow-style:none;
 }
+.tl-gcol::-webkit-scrollbar{ display:none; }
 .tl-gcol-label{
   font-size:9px; letter-spacing:.3em;
   color:rgba(139,148,158,.38); padding:0 16px 14px;
@@ -652,7 +654,8 @@ main{ padding-top:48px; }
     padding:14px 0 10px; overflow-x:auto; height:auto;
   }
   .tl-pcol{ height:380px; flex-shrink:0; }
-  .tl-gcol-label{ padding-bottom:10px; }
+  .tl-gcol::-webkit-scrollbar{ display:none; }
+.tl-gcol-label{ padding-bottom:10px; }
   .tl-nlist{ flex-direction:row; width:max-content; padding:0 12px; }
   .tl-ni{
     flex-direction:column; padding:0 0 10px; min-width:72px;
@@ -874,7 +877,7 @@ main{ padding-top:48px; }
 .bento{
   display:grid;
   grid-template-columns:repeat(6,1fr);
-  grid-auto-rows:minmax(clamp(70px,13vw,155px),auto);
+  grid-auto-rows: clamp(55px, calc((100vh - 500px) / 5), 148px);
   gap:10px; max-width:1000px; margin:0 auto;
 }
 .bi{
@@ -1967,6 +1970,7 @@ button:focus-visible {
     transparent 60%) !important;
 }
 #memories {
+  overflow: hidden !important;
   background: radial-gradient(
     ellipse 60% 45% at 95% 55%,
     rgba(255,121,198,.022) 0%,
@@ -3131,8 +3135,8 @@ main {
 
 /* seções com padding para não ficar sob header/nav */
 .sec {
-  padding-top: 56px !important;
-  padding-bottom: 68px !important;
+  padding-top: clamp(40px, 5.5vh, 72px) !important;
+  padding-bottom: clamp(40px, 5.5vh, 72px) !important;
 }
 
 /* Garante que o fundo da seção cobre a área toda */
@@ -3528,8 +3532,14 @@ main {
 #conflict {
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
-  min-height: calc(100vh - 92px) !important;
+  justify-content: flex-start !important;
+  overflow: hidden !important;
+  padding-top: clamp(36px, 4.5vh, 64px) !important;
+  padding-bottom: clamp(24px, 3vh, 48px) !important;
+}
+/* conflict: terminal appears without layout shift */
+#conflict .inline-term {
+  flex-shrink: 0;
 }
 
 /* ── tl-track: kept for JS compat ── */
@@ -3809,15 +3819,12 @@ main {
 
 /* ── FOREVER: fstat days counter JS hook ── */
 
-/* ── TIMELINE section — no external scroll, fits viewport ── */
+/* ── TIMELINE section — title at top, no external scroll ── */
 #timeline {
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
+  justify-content: flex-start !important;
   overflow: hidden !important;
-}
-/* Make the stitle slightly smaller in timeline to save vertical space */
-#timeline .stitle {
-  font-size: clamp(22px, 3.5vw, 40px) !important;
-  margin-bottom: 20px !important;
+  padding-top: clamp(36px, 4.5vh, 64px) !important;
+  padding-bottom: clamp(24px, 3vh, 48px) !important;
 }
