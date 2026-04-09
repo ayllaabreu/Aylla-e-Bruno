@@ -3533,14 +3533,18 @@ main {
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
-  overflow: hidden !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
   padding-top: clamp(36px, 4.5vh, 64px) !important;
   padding-bottom: clamp(24px, 3vh, 48px) !important;
 }
-/* conflict: terminal appears without layout shift */
-#conflict .inline-term {
-  flex-shrink: 0;
-}
+#conflict::-webkit-scrollbar { display: none !important; }
+/* diff-viewer never shrinks when terminal appears */
+.diff-viewer { flex-shrink: 0 !important; }
+#conflict .rbtn { flex-shrink: 0 !important; }
+#conflict .inline-term { flex-shrink: 0 !important; }
 
 /* ── tl-track: kept for JS compat ── */
 .tl-track { display: none !important; }
