@@ -876,6 +876,33 @@ main{ padding-top:48px; }
    ─────────────────────────────────── */
 
 
+/* ── MASONRY GRID — 4 colunas, alturas por vh ── */
+.masonry-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  max-width:1000px; margin:0 auto;
+}
+.masonry-col{
+  display:flex; flex-direction:column; gap:10px;
+}
+.bi{
+  background:var(--bg3); border:1px solid var(--b); border-radius:14px;
+  overflow:hidden; position:relative; transition:border-color .3s,box-shadow .3s;
+  cursor:pointer; width:100%; flex-shrink:0;
+}
+.bi::before{ content:none; }
+.bi:hover{ border-color:rgba(255,121,198,.4); box-shadow:0 0 24px rgba(255,121,198,.12); }
+
+/* Retrato 3:4 */
+.masonry-col:nth-child(odd)  .bi:nth-child(1),
+.masonry-col:nth-child(odd)  .bi:nth-child(3),
+.masonry-col:nth-child(even) .bi:nth-child(2) { height:clamp(120px,22vh,185px); }
+/* Quadrado 1:1 */
+.masonry-col:nth-child(odd)  .bi:nth-child(2),
+.masonry-col:nth-child(even) .bi:nth-child(1),
+.masonry-col:nth-child(even) .bi:nth-child(3) { height:clamp(90px,16vh,140px); }
+
 .bph{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .bph::before{ content:''; position:absolute; inset:0; }
 .bp1::before{ background:linear-gradient(135deg,rgba(189,147,249,.15),rgba(255,121,198,.08)); }
@@ -1095,7 +1122,13 @@ canvas#hc{ position:absolute; inset:0; pointer-events:none; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
-  .masonry-grid{ grid-template-columns:repeat(2,1fr); gap:7px; height:clamp(280px,70vw,420px); }
+  .masonry-grid{ grid-template-columns:repeat(2,1fr); gap:7px; }
+  .masonry-col:nth-child(odd)  .bi:nth-child(1),
+  .masonry-col:nth-child(odd)  .bi:nth-child(3),
+  .masonry-col:nth-child(even) .bi:nth-child(2) { height: clamp(100px,28vw,160px); }
+  .masonry-col:nth-child(odd)  .bi:nth-child(2),
+  .masonry-col:nth-child(even) .bi:nth-child(1),
+  .masonry-col:nth-child(even) .bi:nth-child(3) { height: clamp(80px,22vw,130px); }
 }
 @media(max-width:640px){
   .split{ grid-template-columns:1fr; }
@@ -1943,19 +1976,6 @@ button:focus-visible {
   color: rgba(139,148,158,.8) !important;
 }
 
-/* ─── 12. BENTO GRID — tall cards sem aspect-ratio fixo ────── */
-.bi:nth-child(1),
-.bi:nth-child(2),
-.bi:nth-child(8),
-.bi:nth-child(9),
-.bi:nth-child(10),
-.bi:nth-child(11) {
-  aspect-ratio: unset !important;
-}
-/* itens 9 e 11 → retângulos altos (2 linhas) */
-.bi:nth-child(9)  { grid-column: 3; grid-row: 4/6 !important; }
-.bi:nth-child(11) { grid-column: 6; grid-row: 4/6 !important; }
-/* esconde 12 e ghost */
 
 
 /* ─── 13. SPACING — título com fôlego coerente ─────────────── */
