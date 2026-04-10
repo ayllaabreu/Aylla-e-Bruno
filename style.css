@@ -1095,7 +1095,7 @@ canvas#hc{ position:absolute; inset:0; pointer-events:none; }
 
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
-  .masonry-grid{ grid-template-columns:repeat(2,1fr); gap:7px; }
+  .masonry-grid{ grid-template-columns:repeat(2,1fr); gap:7px; height:clamp(280px,70vw,420px); }
 }
 @media(max-width:640px){
   .split{ grid-template-columns:1fr; }
