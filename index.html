@@ -10,6 +10,7 @@
 <meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Fira+Code:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="refactor.css">
 </head>
 <body>
 
@@ -72,13 +73,13 @@
 <!-- HEADER -->
 <div id="hdr">
   <div class="hdr-inner">
-    <div class="tab on" onclick="go('index')"><div class="dot"></div><span>index<span class="ejs">.js</span></span></div>
-    <div class="tab" onclick="go('conflict')"><div class="dot"></div><span>conflict<span class="ediff">.diff</span></span></div>
-    <div class="tab" onclick="go('timeline')"><div class="dot"></div><span>timeline<span class="egit">.git</span></span></div>
-    <div class="tab" onclick="go('ticket')"><div class="dot"></div><span>ticket<span class="emd">.md</span></span></div>
-    <div class="tab" onclick="go('memories')"><div class="dot"></div><span>memories<span class="ejpg">.jpg</span></span></div>
-    <div class="tab" onclick="go('forever')"><div class="dot"></div><span>forever<span class="ejs">.exe</span></span></div>
-    <div class="tab" onclick="go('secret')"><div class="dot"></div><span><span class="tab-lock">🔒</span></span></div>
+    <div class="tab on" role="button" tabindex="0" aria-label="Abrir capítulo index.js" onclick="go('index')"><div class="dot"></div><span>index<span class="ejs">.js</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo conflict.diff" onclick="go('conflict')"><div class="dot"></div><span>conflict<span class="ediff">.diff</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo timeline.git" onclick="go('timeline')"><div class="dot"></div><span>timeline<span class="egit">.git</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo ticket.md" onclick="go('ticket')"><div class="dot"></div><span>ticket<span class="emd">.md</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo memories.jpg" onclick="go('memories')"><div class="dot"></div><span>memories<span class="ejpg">.jpg</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo forever.exe" onclick="go('forever')"><div class="dot"></div><span>forever<span class="ejs">.exe</span></span></div>
+    <div class="tab" role="button" tabindex="0" aria-label="Abrir capítulo secreto" onclick="go('secret')"><div class="dot"></div><span><span class="tab-lock">🔒</span></span></div>
   </div>
   <!-- título do capítulo ativo — visível apenas em mobile (≤640px) -->
   <div id="hdr-mobile-title" style="display:none">
@@ -698,12 +699,12 @@
 
 <!-- CHAPTER NAVIGATION -->
 <nav id="chap-nav">
-  <button class="chap-btn chap-prev" id="chapPrev" onclick="prevChapter()" disabled>
+  <button type="button" class="chap-btn chap-prev" id="chapPrev" onclick="prevChapter()" disabled>
     <span class="chap-arrow">←</span>
     <span>cd ../</span>
   </button>
   <span class="chap-indicator" id="chapIndicator">01 / 07</span>
-      <button class="chap-btn chap-next" id="chapNext" onclick="nextChapter()">
+      <button type="button" class="chap-btn chap-next" id="chapNext" onclick="nextChapter()">
     <span>./next</span>
     <span class="chap-arrow">→</span>
   </button>
