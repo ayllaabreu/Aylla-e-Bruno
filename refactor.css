@@ -1,0 +1,375 @@
+/* ==========================================================================
+   Refactor Visual Estruturado
+   Camadas: Base -> Layout -> Componentes -> Responsivo -> Motion
+   ========================================================================== */
+
+/* =========================
+   1) BASE TOKENS & RHYTHM
+   ========================= */
+:root {
+  --rf-space-1: 4px;
+  --rf-space-2: 8px;
+  --rf-space-3: 12px;
+  --rf-space-4: 16px;
+  --rf-space-5: 24px;
+  --rf-space-6: 32px;
+  --rf-space-7: 48px;
+  --rf-space-8: 64px;
+
+  --rf-radius-sm: 8px;
+  --rf-radius-md: 12px;
+  --rf-radius-lg: 16px;
+
+  --rf-border-subtle: 1px solid rgba(189, 147, 249, 0.14);
+  --rf-border-strong: 1px solid rgba(189, 147, 249, 0.28);
+  --rf-shadow-soft: 0 6px 30px rgba(0, 0, 0, 0.32);
+  --rf-shadow-glow: 0 0 0 1px rgba(189, 147, 249, 0.1), 0 10px 46px rgba(189, 147, 249, 0.12);
+  --rf-tint-purple: rgba(189, 147, 249, 0.16);
+  --rf-tint-pink: rgba(255, 121, 198, 0.14);
+  --rf-tint-green: rgba(80, 250, 123, 0.12);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  line-height: 1.55;
+  color: var(--text);
+  background: radial-gradient(circle at 50% -20%, rgba(189, 147, 249, 0.06), transparent 45%), var(--bg);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1200px 560px at 10% 8%, rgba(189, 147, 249, 0.07), transparent 58%),
+    radial-gradient(1000px 540px at 90% 20%, rgba(255, 121, 198, 0.06), transparent 62%),
+    radial-gradient(1200px 700px at 50% 100%, rgba(80, 250, 123, 0.04), transparent 70%);
+}
+
+/* =========================
+   2) APP LAYOUT STABILITY
+   ========================= */
+main {
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}
+
+.sec {
+  padding-left: clamp(20px, 4vw, 72px);
+  padding-right: clamp(20px, 4vw, 72px);
+}
+
+.slabel {
+  opacity: 0.72;
+}
+
+.stitle {
+  max-width: 20ch;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================
+   3) HEADER & NAVIGATION
+   ========================= */
+#hdr {
+  height: 52px;
+  padding: 0 var(--rf-space-4);
+  background: linear-gradient(to bottom, rgba(7, 9, 14, 0.5), rgba(7, 9, 14, 0));
+}
+
+.hdr-inner {
+  min-height: 38px;
+  border: var(--rf-border-subtle);
+  border-radius: var(--rf-radius-md);
+  box-shadow: var(--rf-shadow-soft);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
+    rgba(11, 14, 20, 0.72);
+}
+
+.tab {
+  min-height: 30px;
+  border-radius: var(--rf-radius-sm);
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+}
+
+.tab.on {
+  box-shadow: inset 0 0 0 1px rgba(189, 147, 249, 0.18);
+  background:
+    linear-gradient(115deg, rgba(189, 147, 249, 0.2), rgba(255, 121, 198, 0.12) 50%, rgba(80, 250, 123, 0.1));
+}
+
+.tab .dot {
+  transform: scale(0.95);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tab.on .dot {
+  transform: scale(1.05);
+}
+
+#chap-nav {
+  height: 64px;
+  padding: 0 clamp(14px, 4vw, 52px);
+}
+
+.chap-btn {
+  min-width: 108px;
+  justify-content: center;
+}
+
+.chap-indicator {
+  opacity: 0.75;
+}
+
+/* =========================
+   4) TYPOGRAPHY REFINEMENT
+   ========================= */
+.hero-eyebrow {
+  opacity: 0.82;
+}
+
+.hero-sub {
+  max-width: 64ch;
+  margin-inline: auto;
+  color: rgba(230, 237, 243, 0.72);
+}
+
+.hstat-label,
+.forever-stat-lbl,
+.diff-counter-sub {
+  letter-spacing: 0.12em;
+}
+
+.mmsg,
+.msub,
+.ebody p,
+.tl-ph-body p {
+  line-height: 1.72;
+}
+
+/* =========================
+   5) SURFACES & COMPONENTS
+   ========================= */
+.hstat,
+.diff-viewer,
+.prc,
+.tw,
+.gtw,
+.tl-panel-wrap {
+  border: var(--rf-border-subtle);
+  border-radius: var(--rf-radius-lg);
+  box-shadow: var(--rf-shadow-soft);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
+}
+
+.hstat:hover,
+.tw:hover,
+.prc:hover,
+.tl-panel-wrap:hover {
+  border: var(--rf-border-strong);
+  box-shadow: var(--rf-shadow-glow);
+}
+
+.hstat.s1 { border-color: rgba(255, 121, 198, 0.24); }
+.hstat.s2 { border-color: rgba(189, 147, 249, 0.24); }
+.hstat.s3 { border-color: rgba(80, 250, 123, 0.24); }
+
+.hstat.s1 .hstat-val { text-shadow: 0 0 18px var(--rf-tint-pink); }
+.hstat.s2 .hstat-val { text-shadow: 0 0 18px var(--rf-tint-purple); }
+.hstat.s3 .hstat-val { text-shadow: 0 0 18px var(--rf-tint-green); }
+
+.runbtn,
+.rbtn,
+.secbtn,
+.sp-btn {
+  border-radius: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.runbtn::after,
+.rbtn::after,
+.secbtn::after,
+.sp-btn::after {
+  content: "";
+  position: absolute;
+  inset: -120% auto -120% -30%;
+  width: 34%;
+  transform: rotate(18deg);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0));
+  transition: left 0.55s ease;
+}
+
+.runbtn:hover::after,
+.rbtn:hover::after,
+.secbtn:hover::after,
+.sp-btn:hover::after {
+  left: 115%;
+}
+
+.bph img,
+.mph img,
+#lb-img {
+  border-radius: 12px;
+}
+
+.bi {
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
+}
+
+.bi img {
+  transition: transform 0.45s ease, opacity 0.35s ease;
+}
+
+.bi:hover img {
+  transform: scale(1.03);
+  opacity: 0.92;
+}
+
+.bov {
+  background: linear-gradient(to top, rgba(7, 9, 14, 0.82), rgba(7, 9, 14, 0.18));
+}
+
+.diff-line span:last-child,
+.pr-filepath,
+.pr-num,
+.tl-ni-title,
+.tl-ni-date {
+  text-wrap: pretty;
+}
+
+.diff-topbar,
+.pr-topbar,
+.ttop,
+.gttop {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
+    rgba(7, 9, 14, 0.52);
+}
+
+.tl-ni.active {
+  background:
+    linear-gradient(90deg, rgba(189, 147, 249, 0.14), rgba(255, 121, 198, 0.08), transparent 68%);
+}
+
+/* =========================
+   6) FORMAL FOCUS SYSTEM
+   ========================= */
+button:focus-visible,
+[role="button"]:focus-visible,
+.tab:focus-visible,
+.bi:focus-visible {
+  outline: 1px solid var(--purple);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px rgba(189, 147, 249, 0.16);
+}
+
+/* =========================
+   7) MOBILE CONSISTENCY
+   ========================= */
+@media (max-width: 920px) {
+  .stitle {
+    max-width: 24ch;
+  }
+
+  .hero-names {
+    margin-bottom: var(--rf-space-5);
+  }
+
+  .hero-sub {
+    margin-bottom: var(--rf-space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  #hdr {
+    height: 48px;
+    padding: 0 var(--rf-space-3);
+  }
+
+  #chap-nav {
+    height: 60px;
+    padding: 0 var(--rf-space-2);
+  }
+
+  .sec {
+    padding-left: var(--rf-space-4);
+    padding-right: var(--rf-space-4);
+  }
+
+  .stitle {
+    font-size: clamp(28px, 8vw, 36px);
+    line-height: 1.12;
+    margin-bottom: var(--rf-space-5);
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.42);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    max-width: 34ch;
+  }
+
+  .hstat {
+    padding: 20px 12px;
+    border-radius: 14px;
+  }
+
+  .diff-footer-right {
+    display: none;
+  }
+
+  .chap-btn {
+    min-width: 88px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .runbtn,
+  .rbtn,
+  .secbtn {
+    width: min(100%, 320px);
+  }
+
+  .tab:hover {
+    transform: none;
+  }
+}
+
+/* =========================
+   8) REDUCED MOTION
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  #cur,
+  #ring,
+  #confetti-cv {
+    display: none !important;
+  }
+}
