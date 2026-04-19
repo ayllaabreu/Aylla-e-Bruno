@@ -123,7 +123,6 @@ function showChapter(id){
   if(id === 'conflict'){ setTimeout(function(){
     animateCounter(document.getElementById('cA'), days(MET));
     animateCounter(document.getElementById('cB'), days(TICKET));
-    animateCounter(document.getElementById('cM'), days(TICKET));
   }, 350); }
   if(id === 'timeline'){
     el.classList.add('tl-visible');
@@ -190,6 +189,15 @@ document.addEventListener('keydown', function(e){
   if(document.getElementById('modal').classList.contains('open')) return;
   if(e.key === 'ArrowRight') window.nextChapter();
   if(e.key === 'ArrowLeft')  window.prevChapter();
+});
+
+/* allow Enter/Space activation for tab-like div controls */
+document.addEventListener('keydown', function(e){
+  if(e.key !== 'Enter' && e.key !== ' ') return;
+  var el = e.target ? e.target.closest('.tab[role="button"]') : null;
+  if(!el) return;
+  e.preventDefault();
+  el.click();
 });
 
 /* ── COUNTERS with roll-up animation ── */
