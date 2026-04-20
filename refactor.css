@@ -27,6 +27,9 @@
   --rf-tint-purple: rgba(189, 147, 249, 0.16);
   --rf-tint-pink: rgba(255, 121, 198, 0.14);
   --rf-tint-green: rgba(80, 250, 123, 0.12);
+  --rf-surface-base: rgba(16, 22, 36, 0.88);
+  --rf-surface-elevated: rgba(20, 28, 44, 0.9);
+  --rf-surface-topbar: rgba(23, 31, 48, 0.84);
 }
 
 html {
@@ -175,7 +178,9 @@ main {
   box-shadow: var(--rf-shadow-soft);
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
-  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+    var(--rf-surface-base) !important;
 }
 
 .hstat:hover,
@@ -184,6 +189,28 @@ main {
 .tl-panel-wrap:hover {
   border: var(--rf-border-strong);
   box-shadow: var(--rf-shadow-glow);
+}
+
+/* equilibrio de fundo entre todos os blocos principais */
+.diff-viewer,
+.prc,
+.tw,
+.gtw,
+.tl-panel-wrap {
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    var(--rf-surface-elevated) !important;
+}
+
+/* uniformiza as camadas internas para evitar "patchwork" de tons */
+.diff-counters,
+.diff-code,
+.diff-footer,
+.prb,
+.tbody,
+.gtbody,
+.tl-panel-inner {
+  background-color: transparent !important;
 }
 
 .hstat.s1 { border-color: rgba(255, 121, 198, 0.24); }
@@ -262,8 +289,8 @@ main {
 .ttop,
 .gttop {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0)),
-    rgba(7, 9, 14, 0.52);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+    var(--rf-surface-topbar) !important;
 }
 
 .tl-ni.active {

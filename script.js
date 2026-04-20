@@ -193,6 +193,8 @@ document.addEventListener('keydown', function(e){
 
 /* allow Enter/Space activation for tab-like div controls */
 document.addEventListener('keydown', function(e){
+  var modal = document.getElementById('modal');
+  if(modal && modal.classList.contains('open')) return;
   if(e.key !== 'Enter' && e.key !== ' ') return;
   var el = e.target ? e.target.closest('.tab[role="button"]') : null;
   if(!el) return;
